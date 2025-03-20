@@ -1,0 +1,67 @@
+﻿@model UserSignInForm
+
+@{
+    ViewBag.Title = "Sign In";
+}
+
+
+
+@* <div id="signin" class="form-card center-screen ">
+
+    <form id="signin-form" asp-action="SignIn" asp-asp-controller="Auth" method="post" novalidate validate>
+
+   
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <div class="field-group">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="form-error"></span>
+            </div>
+        </div>
+      
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <div class="field-group">
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="form-error"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="alert alert-danger" role="alert">
+                @ViewData["ErrorMessage"]
+            </div>
+           
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Sign In</button>
+    </form>
+</div> *@
+
+<div id="signin" class="center-screen">
+    <div class="card form-card">
+        <h1 class="pt-5">Log in</h1>
+        <button class="btn-grey mt-3 btn-google"><img src="~/images/google-icon.svg"> Login with google</button>
+        <form id="signin-form" asp-action="SignIn" asp-asp-controller="Auth" method="post" novalidate validate>
+        
+            <div class="mb-3 mt-3">
+                <label asp-for="Email"></label>
+                <div class="field-group">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="form-error"></span>
+                  
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password"></label>
+                <div class="field-group">
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="form-error"></span>
+            </div>
+           </div>
+            <div class="alert alert-danger" role="alert">
+                @ViewData["ErrorMessage"]
+            </div>
+            <button type="submit" class="btn-standard btn-submit">Submit</button>
+        </form>
+    </div>
+</div>

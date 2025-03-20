@@ -1,0 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+:root {
+    --font-standard: "Nunito", sans-serif;
+    --font-logo: "Comfortaa", sans-serif;
+    --font-regular: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+    --font-extrabold: 800;
+    --font-black: 900;
+
+    --size-tablet: 768px;
+    --size-desktop: 992px;
+
+    --white-100: #FFFFFF;
+    --white-200: #F1F3F7;
+    --grey-100: #F5F7FA;
+    --grey-200: #F0F1F5;
+    --grey-300: #E8EAED;
+    --grey-400: #E3E5E8;
+    --grey-500: #E8E8E8;
+    --grey-600: #9E9E9E;
+    --dark-200: #637085;
+    --dark-300: #38383B;
+    --dark-400: #28263B;
+    --dark-500: #202123;
+    --dark-600: #1A1926;
+    --border-100: #EBEEF2;
+    --border-200: #E3E5E8;
+    --border-300: #C6C8CC;
+    --yellow: #FFD422;
+    --yellow-dark: #FCBB42;
+    --orange: #FF9640;
+    --orange-dark: #F09330;
+    --red: #FF6640;
+    --red-10: rgba(255, 102, 64, 0.1);
+    --red-dark: #E94D3F;
+    --green: #31D482;
+    --green-dark: #24B26B;
+    --blue: #2CD9D9;
+    --blue-dark: #2D7DCC;
+    --accent: #2D99FF;
+    --accent-10: rgba(45, 153, 255, 0.1);
+    --accent-dark: #2682D9;
+    --purple: #826AF9;
+    --purple-dark: #634CD4;
+
+    --background: var(--white-200);
+    --surface: var(--white-100);
+    --border: var(--border-200));
+
+    --headline-color: var(--dark-600);
+    --text-light: var(--dark-200);
+    --text-dark: var(--dark-400);
+    --btn-standard-text-color: var(--white-100);
+    --btn-standard-bg-color: var(--accent);
+    --btn-standard-border-color: var(--white-100);
+    --btn-grey-text-color: var(--headline-color);
+    --btn-grey-bg-color: var(--grey-100);
+    --btn-grey-border-color: var(--grey-100);
+    --btn-grey-bg-hover-color: var(--grey-300);
+    
+ }   
+    [data-theme="dark"]
+
+{
+    --background: var(--dark-600);
+    --surface: var(--dark-500);
+    --border: var(--border-200);
+    --headline-color: var(--white-100);
+    --text-light: var(--grey-500);
+    --text-dark: var(--grey-600);
+    --btn-standard-border-color: var(--accent);
+    --btn-grey-bg-color: var(--grey-300);
+}
+
+
+
+
+html, body {
+    margin: 0;
+    color: var(--text-dark);
+    background-color: var(--background);
+    font-size: 16px;
+    font-family: var(--font-standard);
+}
+
+.center-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/*TYPOGAPHY*/
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-standard);
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: var(--font-bold);
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: var(--font-bold);
+}
+
+h3 {
+    font-size: 28px;
+    font-weight: var(--font-bold);
+}
+
+h4 {
+    font-size: 24px;
+    font-weight: var(--font-semibold);
+}
+
+h5 {
+    font-size: 20px;
+    font-weight: var(--font-semibold);
+}
+
+h5 {
+    font-size: 18px;
+    font-weight: var(--font-semibold);
+}
+
+/*LINKS*/
+
+.nav-links {
+    font-family: var(--font-standard);
+    font-weight: var(--font-semibold);
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.tab-links {
+    font-family: var(--font-standard);
+    font-weight: var(--font-bold);
+    font-size: 15px;
+}
+
+/*BUTTONS*/
+
+.btn-standard {
+    color: var(--btn-standard-text-color);
+    background-color: var(--btn-standard-bg-color);
+    border: 1px solid var(--btn-grey-border-color);
+    border-radius: 14px;
+    padding: 0.5em;
+}
+.btn-standard:hover {
+    background-color: var(--accent-dark);
+    cursor: pointer;
+}
+
+.btn-grey {
+    color: var(--btn-grey-text-color);
+    background-color: var(--btn-grey-bg-color);
+    border: 1px solid var(--btn-grey-border-color);
+    border-radius: 14px;
+    padding: 0.5em;
+
+}
+.btn-grey:hover{
+
+    background-color: var(--btn-grey-bg-hover-color);
+    cursor: pointer;
+}
+
+
+/*FORM SIGN IN AND OUT*/
+
+.form-card {
+    background-color: var(--surface);
+    border: none;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 5rem;
+    box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
+}
+
+.btn-google {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto 1fr;
+    font-size: 15px;
+    width: 100%;
+    padding-left: 0.8rem;
+}
+
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+
+    .separator::before,
+    .separator::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid var(--border-200);
+    }
+
+    .separator::before {
+        margin-right: 10px;
+    }
+
+    .separator::after {
+        margin-left: 10px;
+    }
+
+    .separator span {
+        color: var(--text-light);
+        font-size: 12px;
+    }
+
+.btn-submit {
+    width: 100%;
+
+}
+.checkbox {
+    display: flex;
+    gap: 1rem;
+    align-content:center;
+    align-items: center;
+}
+
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-100);
+    border-radius: 8px;
+    font-size: 0,8rem;
+}
+
+.form-error{
+    color: var(--red);
+    font-size: 12px;
+}
+
+
+/*PORTAL*/
+
+.portal {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "logo top" "side main";
+}
+
+.logo {
+    grid-area: logo;
+    align-items: center;
+    padding: 1rem;
+    padding-right: 3rem;
+    border-right: 1px solid var(--border-200);
+}
+
+.alpha-logo {
+    display: flex;
+    gap: 1rem;
+    font-family: var(--font-logo);
+    color: var(--headline-color);
+    font-size: 26px;
+    font-weight: var(--font-bold);
+    text-decoration: none;
+}
+
+.top {
+    grid-area: top;
+    display: grid;
+    gap: 2rem;
+    padding: 1rem;
+    align-items: center;
+    grid-template-columns: 1fr auto;
+    border-bottom: 1px solid var(--border-200);
+}
+
+.search {
+    align-items: center;
+}
+
+.search-bar {
+    padding: 0.7em;
+    width: 85%;
+    background-color: var(--background);
+    border: none;
+}
+
+.break {
+    color: var(--border-200);
+    font-size: 24px;
+}
+
+.icon-nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.side {
+    grid-area: side;
+    border-right: 1px solid var(--border-200);
+    height: 100dvh;
+}
+
+.main {
+    grid-area: main;
+}
