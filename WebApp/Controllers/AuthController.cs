@@ -1,70 +1,96 @@
-﻿using Business.DTO;
+﻿using Business.Interfaces;
+using Business.Models;
 using Business.Services;
 using Data.Entites;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using WebApp.Models;
 
 
-namespace WebApp.Controllers
+namespace WebApp.Controllers;
+
+public class AuthController(IAuthenticationService authenticationService,  SignInManager<MemberEntity> signInManager) : Controller
 {
-    public class AuthController(UserService userService, SignInManager<AppUser> signInManager) : Controller
+   
+    private readonly IAuthenticationService _authenticationService = authenticationService;
+    private readonly SignInManager<MemberEntity> _signInManager = signInManager;
+
+    public IActionResult SignUp()
     {
-       
+        return View();
+    }
 
-        private readonly UserService _userService = userService;
-        private readonly SignInManager<AppUser> _signInManager = signInManager;
+    [HttpPost]
+    public async Task<IActionResult> SignUp(MemberSignUpViewModel model)
+    {
 
-        public IActionResult SignUp()
+        if (!ModelState.IsValid)
+            return View(model);
+
+        MemberSignUpForm memberSignUpForm = model;
+
+
+        if (await _authenticationService.ExistAsync(model.Email))
         {
-            return View();
+            ModelState.AddModelError("Email", "Email already exists");
+            return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> SignUp(UserSignUpForm form)
+        var result = _authenticationService.CreateAsync(memberSignUpForm);
+
+        if(result.Result)
+            return RedirectToAction("SignIn", "Auth");
+        
+        
+            ModelState.AddModelError("NotCreated", "Something went wrong, User not created.");
+            return View(model);
+      
+    }
+
+    public IActionResult SignIn()
+    {
+        ViewBag.ErrorMessage = null!;
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> SignIn(MemberSignInViewModel model)
+    {
+        ViewBag.ErrorMessage = null!;
+
+        if (string.IsNullOrEmpty(model.Email) || (string.IsNullOrEmpty(model.Password)))
         {
+            ViewBag.ErrorMessage = "Enter email and password to log in";
+            return View(model);
+        }
 
-            if (!ModelState.IsValid)
-                return View(form);
-           
+        if(!await _authenticationService.ExistAsync(model.Email))
+        {
+            ViewBag.ErrorMessage = "Email does not exist.";
+            return View(model);
+        }
 
-            if (await _userService.ExistAsync(form.Email))
+        if (ModelState.IsValid)
+        {
+            MemberSignInForm memberSignInForm = model;
+
+            if (await _authenticationService.SignInAsync(model))
             {
-                ModelState.AddModelError("Email", "Email already exists");
-                return View(form);
+                return RedirectToAction("Index", "Admin");
             }
 
-            var result = _userService.CreateAsync(form);
-            if(result.Result)
-                return RedirectToAction("SignIn", "Auth");
+        }
             
-            
-                ModelState.AddModelError("NotCreated", "Something went wrong, User not created.");
-                return View(form);
-          
-
-        }
-
-        public IActionResult SignIn()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SignIn(UserSignInForm form)
-        {
-
-            if (ModelState.IsValid)
-            {  
-                var result = await _signInManager.PasswordSignInAsync(form.Email, form.Password, false, false);
-                if(result.Succeeded)
-                return RedirectToAction("Index", "Home");
-            }
-                
-                ViewData["ErrorMessage"] = "Invalid email or password";
-                return View(form);
-
-
-        }
+            ViewData["ErrorMessage"] = "Invalid email or password";
+            return View(model);
 
     }
+
+    public async new Task<IActionResult> SignOut()
+    {
+        await _authenticationService.SignOutAsync();
+        return RedirectToAction("Auth", "SignIn");
+    }
+
 }

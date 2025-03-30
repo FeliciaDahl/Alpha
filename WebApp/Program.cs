@@ -1,4 +1,5 @@
 
+using Business.Interfaces;
 using Business.Services;
 using Data.Contexts;
 using Data.Entites;
@@ -10,9 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("LocalDB")));
-builder.Services.AddScoped<UserService>();
 
-builder.Services.AddIdentity<AppUser, IdentityRole>(x =>
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+
+builder.Services.AddIdentity<MemberEntity, IdentityRole>(x =>
 {
     x.Password.RequiredLength = 8;
     x.User.RequireUniqueEmail = true;
@@ -21,6 +24,13 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(x =>
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(x =>
+{
+    x.LoginPath = "/Auth/SignIn";
+    x.AccessDeniedPath = "/Account/AccessDenied";
+    x.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    x.SlidingExpiration = true;
+});
 
 builder.Services.AddControllersWithViews();
 
@@ -37,7 +47,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Admin}/{action=Clients}/{id?}")
     .WithStaticAssets();
 
 
