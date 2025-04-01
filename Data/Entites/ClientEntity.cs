@@ -18,6 +18,13 @@ public class ClientEntity
     [Required]
     [Column(TypeName = "nvarchar(100)")]
     public string ContactPerson { get; set; } = null!;
+
+
+    public string Email { get; set; } = null!;
+
+    [Required]
+    [Column(TypeName = "nvarchar(100)")]
+    public string Location { get; set; } = null!;
     public string? Phone { get; set; }
 
     public virtual ICollection<ProjectEntity> Projects { get; set; } = null!;

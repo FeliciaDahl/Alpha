@@ -31,6 +31,7 @@
     --dark-400: #28263B;
     --dark-500: #202123;
     --dark-600: #1A1926;
+    --dark-600-30: rgba(26, 25, 38, 0.30);
     --border-100: #EBEEF2;
     --border-200: #E3E5E8;
     --border-300: #C6C8CC;
@@ -73,6 +74,8 @@
     --table-tbody-row-background-hover-color: var(--accent-10);
     --status-badge-text-active: var(--green);
     --status-badge-background-active: var(--green-10);
+    --modal-screen-background: var(--dark-600-30);
+    --modal-background-color: var(--white-100);
 }   
 
 
@@ -167,6 +170,17 @@ h5 {
     font-size: 15px;
 }
 
+/*    BADGESES*/
+.badge-success {
+    display: inline-block;
+    color: var(--status-badge-text-active);
+    background-color: var(--status-badge-background-active);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    text-align: center;
+}
+
+
 /*BUTTONS*/
 
 .btn-standard {
@@ -195,19 +209,71 @@ h5 {
     cursor: pointer;
 }
 
+.btn-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    padding: 0.8em 1.5em;
+    min-width: 170px;
+}
 
-/*FORM SIGN IN AND OUT*/
-
-.form-card {
-    background-color: var(--surface);
-    border: none;
-    width: 500px;
-    border-radius: 16px;
+.close-btn {
+    display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
-    box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
+    color: black;
+    background-color: transparent;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
 }
+   
+    /*MODAL*/
+.modal {
+    display: flex;
+    background-color: var(--modal-screen-background);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+    .modal .modal-content {
+        padding: 2rem;
+        background-color: var(--modal-background-color);
+        border-radius: 14px;
+        box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
+    }
+
+    .modal .modal-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+.client-modal .modal-content {
+    max-width: 600px;
+}
+
+
+
+
+    /*FORM SIGN IN AND OUT*/
+    .form-card {
+        background-color: var(--surface);
+        border: none;
+        width: 500px;
+        border-radius: 16px;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
+    }
 
 .btn-google {
     display: grid;
@@ -486,24 +552,18 @@ main {
     
 }
 
-.btn-add {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5em;
-    padding: 0.8em 1.5em;
-    min-width: 170px;
-}
+
 
 
 /*TABLES*/
 
 table {
     width: 100%;
-    height: 100%;
-    border-collapse:collapse;
+   
+    border-collapse: collapse;
     background: var(--table-background);
     border-radius: 12px;
+    box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
 }
 
 table tr {
@@ -563,15 +623,7 @@ table tbody a {
         color: var(--text-light);
     }
 
-/*    BADGESES*/
-.badge-success {
-    display:inline-block;
-    color: var(--status-badge-text-active);
-    background-color: var(--status-badge-background-active);
-    padding: 0.5rem 1rem;
-    border-radius:12px;
-    text-align:center;
-}
+
 
 
 /*CLIENTS*/
