@@ -54,15 +54,23 @@ namespace WebApp.Controllers
 
 
         //[Authorize(Roles = "admin")]
-        public IActionResult Clients()
-        {
-            return View();
-        }
+        //public IActionResult Clients()
+        //{
+         
+        //}
 
+        //[HttpPost]
+        //public IActionResult AddClient(ClientRegistrationViewModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View(model);
+        //}
 
-        public IActionResult Clientss()
-        {
-            return View();
-        }
+        //[HttpPost]
+        //public IActionResult EditClient(ClientRegistrationViewModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View(model);
+        //}
     }
 }
