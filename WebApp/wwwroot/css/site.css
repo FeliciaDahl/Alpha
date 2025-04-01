@@ -10,17 +10,14 @@
 :root {
     --font-standard: "Nunito", sans-serif;
     --font-logo: "Comfortaa", sans-serif;
-
     --font-regular: 400;
     --font-medium: 500;
     --font-semibold: 600;
     --font-bold: 700;
     --font-extrabold: 800;
     --font-black: 900;
-
     --size-tablet: 768px;
     --size-desktop: 992px;
-
     --white-100: #FFFFFF;
     --white-200: #F1F3F7;
     --grey-100: #F5F7FA;
@@ -45,6 +42,7 @@
     --red-10: rgba(255, 102, 64, 0.1);
     --red-dark: #E94D3F;
     --green: #31D482;
+    --green-10: rgb(49, 212, 130, 0.1);
     --green-dark: #24B26B;
     --blue: #2CD9D9;
     --blue-dark: #2D7DCC;
@@ -66,11 +64,18 @@
     --btn-grey-bg-color: var(--grey-100);
     --btn-grey-border-color: var(--grey-100);
     --btn-grey-bg-hover-color: var(--grey-300);
-
-    --side-nav-text-color: var(--headline-color);
+    --side-nav-text-color: var (--headline-color);
     --side-nav-text-hover-color: var(--accent);
     --side-nav-background-hover-color: var(--accent-10);
+    --table-background: var(--white-100);
+    --table-head-background-color: var(--white-200);
+    --table-head-text-color: var(--dark-200);
+    --table-tbody-row-background-hover-color: var(--accent-10);
+    --status-badge-text-active: var(--green);
+    --status-badge-background-active: var(--green-10);
 }   
+
+
     [data-theme="dark"]
 
 {
@@ -488,4 +493,119 @@ main {
     gap: 0.5em;
     padding: 0.8em 1.5em;
     min-width: 170px;
+}
+
+
+/*TABLES*/
+
+table {
+    width: 100%;
+    height: 100%;
+    border-collapse:collapse;
+    background: var(--table-background);
+    border-radius: 12px;
+}
+
+table tr {
+    display: grid;
+  
+    align-items: center;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+table th,
+table td {
+    width: 100%;
+    padding: 0 1rem;
+    text-align:left;
+
+}
+
+table thead,
+table tbody{
+    display: contents;
+}
+
+table thead tr {
+    
+    margin: 1rem 0.5rem;
+    padding: 1rem 0.8rem;
+    background-color: var(--table-head-background-color);
+    color: var(--table-head-text-color);
+}
+
+    table tbody tr {
+        padding: 0.5rem 1rem;
+        margin: 0.5rem;
+    }
+
+  
+    table tbody tr:hover {
+        background-color: var(--table-tbody-row-background-hover-color);
+    }
+
+.client-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+table tbody a {
+    width: 20px;
+    height: 20px;
+    color: var(--text-dark);
+    background-color: transparent;
+    border: none;
+}
+
+    table tbody a:hover {
+        cursor:pointer;
+        color: var(--text-light);
+    }
+
+/*    BADGESES*/
+.badge-success {
+    display:inline-block;
+    color: var(--status-badge-text-active);
+    background-color: var(--status-badge-background-active);
+    padding: 0.5rem 1rem;
+    border-radius:12px;
+    text-align:center;
+}
+
+
+/*CLIENTS*/
+
+#clients {
+    height: 100%;
+    display:grid;
+    grid-template-rows: auto 1fr;
+}
+
+.client-table table tr {
+    grid-template-areas: "check info location phone date status actions";
+    grid-template-columns: auto 3fr 2fr 2fr 2fr 2fr 1fr;
+}
+
+.client-info {
+    display:grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "image name" "image email";
+    column-gap: 1rem;
+    align-items: center;
+}
+
+.client-info .client-img {
+    grid-area: image;
+    width: 50px;
+    height: 50px;
+}
+.client-info .client-name {
+    grid-area: name;
+    font-weight: var(--font-semibold);
+       
+}
+.client-info .client-email {
+    grid-area: email;
+    font-size:14px;
 }
