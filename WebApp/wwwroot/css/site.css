@@ -228,6 +228,10 @@ h5 {
     font-size: 25px;
     cursor: pointer;
 }
+
+.btn-submit {
+    width: 100%;
+}
    
     /*MODAL*/
 .modal {
@@ -243,6 +247,7 @@ h5 {
 }
 
     .modal .modal-content {
+        max-width: 600px;
         padding: 2rem;
         background-color: var(--modal-background-color);
         border-radius: 14px;
@@ -256,24 +261,69 @@ h5 {
         margin-bottom: 2rem;
     }
 
-.client-modal .modal-content {
-    max-width: 600px;
+
+
+/*FORMS*/
+
+form input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-100);
+    border-radius: 8px;
+    font-size: 0,8rem;
+}
+    form input:active,
+    form input:focus {
+        outline: none;
+        box-shadow: 0 0 5px var(--accent);
+    }
+
+form label {
+    padding-top: 1rem;
+    font-weight: var(--font-semibold);
 }
 
+form input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
 
-
-
-    /*FORM SIGN IN AND OUT*/
-    .form-card {
-        background-color: var(--surface);
-        border: none;
-        width: 500px;
-        border-radius: 16px;
-        justify-content: center;
-        align-items: center;
-        padding: 2rem;
-        box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
+    form input[type="checkbox"]:checked {
+        background-color: var(--accent);
     }
+
+    form input[type="checkbox"]:focus {
+        outline: none;
+        box-shadow: 0 0 5px var(--accent);
+    }
+
+/*FORM VALIDATION-ERROR*/
+form .field-validation-error {
+    color: var(--red);
+    font-size: 14px;
+}
+
+form .input-validation-error {
+    background-color: var(--red-10);
+    border: 1px solid var(--red);
+}
+
+.field-validation-error::before {
+    content: "-";
+}
+
+/*FORMS SIGN IN AND OUT*/
+
+.form-card {
+    background-color: var(--surface);
+    border: none;
+    width: 500px;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
+}
 
 .btn-google {
     display: grid;
@@ -291,67 +341,28 @@ h5 {
     width: 100%;
     margin-top: 2px;
 }
-
     .separator::before,
     .separator::after {
         content: "";
         flex: 1;
         border-bottom: 1px solid var(--border-300);
-    }
-
-    .separator::before {
         margin-right: 10px;
     }
-
-    .separator::after {
-        margin-left: 10px;
-    }
-
     .separator span {
         color: var(--text-light);
         font-size: 12px;
     }
 
 
-.btn-submit {
-    width: 100%;
-
-}
-
-
 #signup-form {
     width:100%;
-}
-
-#signup-form label {
-    font-weight: var(--font-semibold);
 }
 
 #signin-form {
     width: 100%;
 }
 
-    #signin-form label {
-        font-weight: var(--font-semibold);
-    }
-
-form input 
-{
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid var(--border-100);
-    border-radius: 8px;
-    font-size: 0,8rem;
-}
-
-    form input:active,
-    form input:focus {
-        outline: none;
-        box-shadow: 0 0 5px var(--accent);
-    }
-
-
-.checkbox-signup{
+.checkbox-signup {
     width:100%;
 }
 .checkbox-signin {
@@ -366,81 +377,21 @@ form input
     gap: 0.5rem; 
 }
 
-.checkbox-signin input {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-}
-
 .forgot-password a {
     text-decoration: none;
     color: var(--accent);
     font-size: 14px;
 }
 
-.checkbox {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
 
-    .checkbox input {
-        width: 16px;
-        height: 16px;
-        cursor: pointer;
-    }
-
-    .checkbox label {
-        font-size: 14px;
-       
-    }
-
-    .checkbox a {
-        font-size: 14px;
-        text-decoration: none;
-        color: var(--accent);
-        cursor: pointer;
-    }
-    .checkbox-bla {
-        width:100%;
-    }
-    .checkbox input:checked {
-        background-color: var(--accent);
-    }
-    .checkbox input:focus {
-        outline: none;
-        box-shadow: 0 0 5px var(--accent);
-    }
-
-
-/*TYDLIGARE ERROR FÖR TERMS?*/
-
-
-
-form .field-validation-error {
-    color: var(--red);
+.checkbox-terms a {
     font-size: 14px;
+    text-decoration: none;
+    color: var(--accent);
+    cursor: pointer;
 }
-
-
-form .input-validation-error {
-    background-color: var(--red-10);
-    border: 1px solid var(--red);
-}
-.checkbox-signup .field-validation-error {
-    text-align:center;
-    padding: 0.3rem;
-    background-color: var(--red-10);
-    color: var(--text-light);
-    border-radius: 4px;
-   border: 1px solid var(--red);
-}
-
-.field-validation-error::before {
-    content: "-";
-
-}
-
+ 
+   
 /*PORTAL*/
 .portal {
     display: grid;
@@ -527,7 +478,6 @@ form .input-validation-error {
         transition: all 0.3s;
     }
 
- 
     .nav-link span {
         padding-left: 0.3rem;
     }
@@ -559,7 +509,6 @@ main {
 
 table {
     width: 100%;
-   
     border-collapse: collapse;
     background: var(--table-background);
     border-radius: 12px;
@@ -624,8 +573,6 @@ table tbody a {
     }
 
 
-
-
 /*CLIENTS*/
 
 #clients {
@@ -635,7 +582,7 @@ table tbody a {
 }
 
 .client-table table tr {
-    grid-template-areas: "check info location phone date status actions";
+    grid-template-areas: "check info contact phone location status actions";
     grid-template-columns: auto 3fr 2fr 2fr 2fr 2fr 1fr;
 }
 

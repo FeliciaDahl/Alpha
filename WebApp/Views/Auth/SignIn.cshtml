@@ -18,7 +18,7 @@
             <span>OR</span>
         </div>
 
-        <form id="signin-form" asp-action="SignIn" asp-asp-controller="Auth" method="post" novalidate validate>
+        <form id="signin-form" asp-action="SignIn" asp-asp-controller="Auth" method="post" novalidate >
         
             <div class="mb-3 mt-3">
                 <label asp-for="Email"></label>
@@ -62,6 +62,7 @@
             <span>Don't have an account?</span>
             <a href="/Auth/SignUp">Sign Up</a>
     </div>
+</div>
 </div>
 
     @await Html.PartialAsync("_ValidationScripts")

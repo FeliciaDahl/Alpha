@@ -19,7 +19,8 @@ public class ClientEntity
     [Column(TypeName = "nvarchar(100)")]
     public string ContactPerson { get; set; } = null!;
 
-
+    [Required]
+    [Column(TypeName = "nvarchar(150)")]
     public string Email { get; set; } = null!;
 
     [Required]

@@ -1,10 +1,13 @@
-﻿@{
+﻿@model MemberRegistrationViewModel
+@{
     ViewData["Title"] = "Members";
 }
 
+<partial name="Partials/Sections/_AddMemberModal" />
+
+<section id="members">
 <div class="page-header">
     <h1>@ViewData["Title"]</h1>
-    <button class="btn-standard btn-add"><i class="bi bi-plus-lg"></i>Add Member</button>
-
-    <partial name="Partials/_MemberRegistrationForm" />
+        <button type="button" data-modal="true" data-target="#addMemberModal" class="btn-standard btn-add"><i class="bi bi-plus-lg"></i>Add Member</button> 
 </div>
+</section>

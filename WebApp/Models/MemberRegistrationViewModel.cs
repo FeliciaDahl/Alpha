@@ -8,27 +8,27 @@ public class MemberRegistrationViewModel
 
     [Required(ErrorMessage = "You must enter a name")]
     [DataType(DataType.Text)]
-    [Display(Name = "First Name", Prompt = "Enter your first name")]
+    [Display(Name = "First Name", Prompt = "Enter a first name")]
     public string FirstName { get; set; } = null!;
 
     [Required(ErrorMessage = "You must enter a name")]
     [DataType(DataType.Text)]
-    [Display(Name = "Last Name", Prompt = "Enter your last name")]
+    [Display(Name = "Last Name", Prompt = "Enter a last name")]
     public string LastName { get; set; } = null!;
 
     [Required(ErrorMessage = "You must enter a email")]
     [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", ErrorMessage = "Invalid email format")]
     [DataType(DataType.EmailAddress)]
-    [Display(Name = "Email", Prompt = "Enter your email")]
+    [Display(Name = "Email", Prompt = "Enter a email")]
     public string Email { get; set; } = null!;
 
     [DataType(DataType.PhoneNumber)]
-    [Display(Name = "Phone", Prompt = "Enter your phone number")]
+    [Display(Name = "Phone", Prompt = "Enter phone number")]
     public string? Phone { get; set; }
 
-    public static implicit operator MemberSignUpForm(MemberRegistrationViewModel model)
+    public static implicit operator MemberRegistrationForm(MemberRegistrationViewModel model)
     {
-        return model == null ? null! : new MemberSignUpForm
+        return model == null ? null! : new MemberRegistrationForm
         {
             FirstName = model.FirstName,
             LastName = model.LastName,

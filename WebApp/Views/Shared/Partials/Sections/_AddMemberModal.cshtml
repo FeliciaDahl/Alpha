@@ -1,14 +1,17 @@
 ﻿@model MemberRegistrationViewModel
 
-    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
-        {
-            <div>
-                <div class="alert alert-danger" role="alert">
-                    @ViewBag.ErrorMessage
-                </div>
-            </div>
-        }
-    <form asp-post="AddMember" asp-controller="Admin" method="post" novalidate>
+
+
+<div id="addMemberModal" class="modal member-modal">
+
+    <div class="modal-content">
+        <div class="modal-head">
+            <h3>Add Member</h3>
+            <button class="close-btn" data-close="true"><i class="bi bi-x-lg"></i></button>
+        </div>
+  
+    <form id="addMember-form" asp-action="AddMember" asp-controller="Admin" method="post" novalidate>
+
         <div class="form-group">
             <label asp-for="FirstName"></label>
             <div class="field-group">
@@ -38,7 +41,9 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Add Member</button>
+        <button type="submit" class="btn-submit btn-standard mt-3">Add Member</button>
     </form>
 
+    </div>
+</div>
 @await Html.PartialAsync("_ValidationScripts")
