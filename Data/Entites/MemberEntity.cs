@@ -7,7 +7,6 @@ namespace Data.Entites;
 
 public class MemberEntity : IdentityUser
 {
-
     public string? Image { get; set; }
 
     [ProtectedPersonalData]

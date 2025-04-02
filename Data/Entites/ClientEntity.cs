@@ -9,7 +9,7 @@ namespace Data.Entites;
 public class ClientEntity
 {
     [Key]
-    public string Id { get; set; } = null!;
+    public int Id { get; set; }
 
     public string? Image { get; set; }
 

@@ -8,7 +8,7 @@ public class ProjectEntity
 {
 
     [Key]
-    public string Id { get; set; } = Guid.NewGuid().ToString();
+    public int Id { get; set; } 
 
     public string? Image { get; set; }
 
@@ -32,11 +32,11 @@ public class ProjectEntity
     public DateTime Created { get; set; } = DateTime.Now;
 
     [ForeignKey(nameof(Client))]
-    public string ClientId { get; set; } = null!;
+    public int ClientId { get; set; } 
     public virtual ClientEntity Client { get; set; } = null!;
 
     [ForeignKey(nameof(Status))]
-    public string StatusId { get; set; } = null!;
+    public int StatusId { get; set; }
     public virtual StatusEntity Status { get; set; } = null!;
 
     public virtual ICollection<ProjectMemberEntity> ProjectMembers { get; set; } = null!;

@@ -3,7 +3,7 @@ namespace Data.Entites;
 
 public class ProjectMemberEntity
 {
-    public string ProjectId { get; set; } = null!;
+    public int ProjectId { get; set; }
     public virtual ProjectEntity Project { get; set; } = null!;
 
     public string MemberId { get; set; } = null!;

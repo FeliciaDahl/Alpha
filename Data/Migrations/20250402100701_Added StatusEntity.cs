@@ -6,42 +6,20 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedStatusEntityandupdates : Migration
+    public partial class AddedStatusEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_ProjectMembers_Projects_ProjectId",
-                table: "ProjectMembers");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Projects",
-                table: "Projects");
-
-            migrationBuilder.DropColumn(
+            migrationBuilder.RenameColumn(
                 name: "ProjectId",
-                table: "Projects");
+                table: "Projects",
+                newName: "Id");
 
             migrationBuilder.RenameColumn(
                 name: "Name",
                 table: "Clients",
                 newName: "Location");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "ClientId",
-                table: "Projects",
-                type: "nvarchar(450)",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Id",
-                table: "Projects",
-                type: "nvarchar(450)",
-                nullable: false,
-                defaultValue: "");
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "Created",
@@ -56,29 +34,12 @@ namespace Data.Migrations
                 type: "nvarchar(max)",
                 nullable: true);
 
-            migrationBuilder.AddColumn<string>(
+            migrationBuilder.AddColumn<int>(
                 name: "StatusId",
                 table: "Projects",
-                type: "nvarchar(450)",
+                type: "int",
                 nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "ProjectId",
-                table: "ProjectMembers",
-                type: "nvarchar(450)",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Id",
-                table: "Clients",
-                type: "nvarchar(450)",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int")
-                .OldAnnotation("SqlServer:Identity", "1, 1");
+                defaultValue: 0);
 
             migrationBuilder.AddColumn<string>(
                 name: "ClientName",
@@ -106,16 +67,12 @@ namespace Data.Migrations
                 type: "nvarchar(max)",
                 nullable: true);
 
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Projects",
-                table: "Projects",
-                column: "Id");
-
             migrationBuilder.CreateTable(
                 name: "Statuses",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     StatusName = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -141,14 +98,6 @@ namespace Data.Migrations
                 unique: true);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_ProjectMembers_Projects_ProjectId",
-                table: "ProjectMembers",
-                column: "ProjectId",
-                principalTable: "Projects",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_Projects_Statuses_StatusId",
                 table: "Projects",
                 column: "StatusId",
@@ -161,19 +110,11 @@ namespace Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_ProjectMembers_Projects_ProjectId",
-                table: "ProjectMembers");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_Projects_Statuses_StatusId",
                 table: "Projects");
 
             migrationBuilder.DropTable(
                 name: "Statuses");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Projects",
-                table: "Projects");
 
             migrationBuilder.DropIndex(
                 name: "IX_Projects_StatusId",
@@ -182,10 +123,6 @@ namespace Data.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_Clients_ClientName",
                 table: "Clients");
-
-            migrationBuilder.DropColumn(
-                name: "Id",
-                table: "Projects");
 
             migrationBuilder.DropColumn(
                 name: "Created",
@@ -216,55 +153,14 @@ namespace Data.Migrations
                 table: "AspNetUsers");
 
             migrationBuilder.RenameColumn(
+                name: "Id",
+                table: "Projects",
+                newName: "ProjectId");
+
+            migrationBuilder.RenameColumn(
                 name: "Location",
                 table: "Clients",
                 newName: "Name");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "ClientId",
-                table: "Projects",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(450)");
-
-            migrationBuilder.AddColumn<int>(
-                name: "ProjectId",
-                table: "Projects",
-                type: "int",
-                nullable: false,
-                defaultValue: 0)
-                .Annotation("SqlServer:Identity", "1, 1");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "ProjectId",
-                table: "ProjectMembers",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(450)");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "Id",
-                table: "Clients",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(450)")
-                .Annotation("SqlServer:Identity", "1, 1");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Projects",
-                table: "Projects",
-                column: "ProjectId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ProjectMembers_Projects_ProjectId",
-                table: "ProjectMembers",
-                column: "ProjectId",
-                principalTable: "Projects",
-                principalColumn: "ProjectId",
-                onDelete: ReferentialAction.Cascade);
         }
     }
 }
