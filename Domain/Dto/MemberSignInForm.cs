@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Business.Models;
+namespace Domain.Dto;
 
 public class MemberSignInForm
 {

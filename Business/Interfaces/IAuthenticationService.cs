@@ -1,4 +1,5 @@
-﻿using Business.Models;
+﻿
+using Domain.Dto;
 
 namespace Business.Interfaces
 {

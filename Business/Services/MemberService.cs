@@ -2,24 +2,20 @@
 using Business.Factories;
 using Business.Models;
 using Data.Entites;
+using Data.Interfaces;
+using Domain.Extensions;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq.Expressions;
 
 namespace Business.Services;
 
-public class MemberService(UserManager<MemberEntity> userManager)
+public class MemberService(IMemberRepository memberRepository, UserManager<MemberEntity> userManager)
 {
+    private readonly IMemberRepository _memberRepository = memberRepository;
     private readonly UserManager<MemberEntity> _userManager = userManager;
 
-
-    public async Task<IEnumerable<Member>> GetMembersAsync()
+    public async Task<MemberResult> GetClientsAsync()
     {
-        var users = await _userManager.Users.ToListAsync();
-        return users.Select(MemberFactory.ToModel);
+        var result = await _memberRepository.GetAllAsync();
+        return result.MapTo<MemberResult>();
     }
-
-  
-
 }

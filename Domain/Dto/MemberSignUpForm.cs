@@ -1,6 +1,4 @@
-﻿
-
-namespace Business.Models;
+﻿namespace Domain.Dto;
 
 public class MemberSignUpForm
    

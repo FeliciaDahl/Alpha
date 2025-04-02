@@ -3,6 +3,8 @@ using Business.Interfaces;
 using Business.Services;
 using Data.Contexts;
 using Data.Entites;
+using Data.Interfaces;
+using Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +15,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("LocalDB")));
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IMemberService, MemberService>();
+
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+builder.Services.AddScoped<IMemberAdressRepository, MemberAdressRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IProjectMemberRepository, ProjectMemberRepository>();
+
 
 
 builder.Services.AddIdentity<MemberEntity, IdentityRole>(x =>

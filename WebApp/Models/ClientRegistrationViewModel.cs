@@ -1,5 +1,6 @@
 ﻿
 using Business.Models;
+using Domain.Dto;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Models;
