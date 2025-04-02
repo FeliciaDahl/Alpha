@@ -2,17 +2,20 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Entites;
-
+[Index(nameof(ClientName), IsUnique = true)]
 public class ClientEntity
 {
     [Key]
-    public int Id { get; set; }
+    public string Id { get; set; } = null!;
+
+    public string? Image { get; set; }
 
     [Required]
     [Column(TypeName = "nvarchar(100)")]
-    public string Name { get; set; } = null!;
+    public string ClientName { get; set; } = null!;
 
     [ProtectedPersonalData]
     [Required]

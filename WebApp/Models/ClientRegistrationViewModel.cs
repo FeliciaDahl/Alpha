@@ -6,6 +6,8 @@ namespace WebApp.Models;
 
 public class ClientRegistrationViewModel
 {
+    
+
     [Required(ErrorMessage = "You must enter a name")]
     [DataType(DataType.Text)]
     [Display(Name = "Name", Prompt = "Enter name")]

@@ -11,6 +11,7 @@ public class DataContext(DbContextOptions<DataContext> options) : IdentityDbCont
     public virtual DbSet<ClientEntity> Clients { get; set; }
     public virtual DbSet<ProjectEntity> Projects { get; set; }
     public virtual DbSet<ProjectMemberEntity> ProjectMembers { get; set; }
+    public virtual DbSet<StatusEntity> Statuses { get; set; }
 
 
     //I denna del av koden har jag delvis fått hjälp av ChatGPT. Koden skapar relationer mellan entiteter i databasen.
@@ -33,6 +34,12 @@ public class DataContext(DbContextOptions<DataContext> options) : IdentityDbCont
             .WithMany(c => c.Projects)
             .HasForeignKey(p => p.ClientId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ProjectEntity>()
+          .HasOne(p => p.Status)
+          .WithMany(c => c.Projects)
+          .HasForeignKey(p => p.StatusId)
+          .OnDelete(DeleteBehavior.Restrict);
 
         // Mellantabell på grund av många-många relation, en användare kan vara med i flera projekt och ett projekt kan ha flera användare
         modelBuilder.Entity<ProjectMemberEntity>()

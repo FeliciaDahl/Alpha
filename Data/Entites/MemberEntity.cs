@@ -7,6 +7,9 @@ namespace Data.Entites;
 
 public class MemberEntity : IdentityUser
 {
+
+    public string? Image { get; set; }
+
     [ProtectedPersonalData]
     [Required]
     [Column(TypeName = "nvarchar(100)")]
