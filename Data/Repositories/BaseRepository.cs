@@ -5,13 +5,18 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using Data.Interfaces;
+using Data.Models;
+using System.Globalization;
 
 namespace Data.Repositories;
+
+
 
 public abstract class BaseRepository<TEntity>(DataContext context) : IBaseRepository<TEntity> where TEntity : class
 {
     protected readonly DataContext _context = context;
     protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
+
     private IDbContextTransaction _transaction = null!;
 
     #region Transaction Management
@@ -45,90 +50,142 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
 
     #endregion
 
-    public virtual void Add(TEntity entity)
+    public virtual async Task<RepositoryResults<bool>> AddAsync(TEntity entity)
     {
+        if (entity == null)
+        {
+            return RepositoryResults<bool>.Failed(400, "Entity cant be null");
+        }
         try
         {
-            _dbSet.AddAsync(entity);
+            await _dbSet.AddAsync(entity);
+            return RepositoryResults<bool>.Success(true);
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error occurred while creating {nameof(TEntity)} entity : {ex.Message}");
-
+            return RepositoryResults<bool>.Failed(500, $"An error occurred: {ex.Message}");
         }
     }
 
-    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeExpression = null)
+    public virtual async Task<RepositoryResults<IEnumerable<TEntity>>> GetAllAsync(bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes)
     {
 
         try
         {
-
             IQueryable<TEntity> query = _dbSet;
 
-            if (includeExpression != null)
-                query = includeExpression(query);
+            if (where != null)
+                query = query.Where(where);
 
-            return await query.ToListAsync();
+            if (includes != null && includes.Length != 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            if (sortBy != null)
+            {
+                if (orderByDescending)
+                    query = query.OrderByDescending(sortBy);
+                else
+                    query = query.OrderBy(sortBy);
+            }
+
+            var entities = await query.ToListAsync();
+            return RepositoryResults<IEnumerable<TEntity>>.Success(entities);
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error occurred while loading {nameof(TEntity)} : {ex.Message}");
-            return null!;
+            return RepositoryResults<IEnumerable<TEntity>>.Failed(500, $"An error occurred: {ex.Message}");
 
         }
     }
 
-    public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeExpression = null)
+    public virtual async Task<RepositoryResults<TEntity?>> GetAsync( Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes)
     {
 
         try
         {
-
             IQueryable<TEntity> query = _dbSet;
 
-            if (includeExpression != null)
-                query = includeExpression(query);
+            if (includes != null && includes.Length != 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
 
-            return await query.FirstOrDefaultAsync(predicate);
 
+            var entity = await query.FirstOrDefaultAsync(where);
+
+
+            if (entity == null)
+                return RepositoryResults<TEntity?>.Failed(404, $"{nameof(TEntity)} not found");
+
+            return RepositoryResults<TEntity?>.Success(entity);
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error occurred while loading {nameof(TEntity)} : {ex.Message}");
-            return null!;
+            return RepositoryResults<TEntity?>.Failed(500, $"An error occurred: {ex.Message}");
 
         }
 
     }
 
-    public virtual void Update(TEntity entity)
+    public virtual async Task<RepositoryResults<bool>> UpdateAsync(TEntity entity)
     {
         try
         {
+            if (entity == null)
+                return RepositoryResults<bool>.Failed(400, "Entity cant be null");
+
             _dbSet.Update(entity);
+            return RepositoryResults<bool>.Success(true);
 
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error occurred while updating {nameof(TEntity)} entity : {ex.Message}");
+            return RepositoryResults<bool>.Failed(500, $"An error occurred: {ex.Message}");
 
         }
     }
 
-    public virtual void Delete(TEntity entity)
+    public virtual async Task<RepositoryResults<bool>> DeleteAsync(TEntity entity)
     {
         try
         {
-            _dbSet.Remove(entity);
+            if (entity == null)
+                return RepositoryResults<bool>.Failed(400, "Entity cant be null");
 
+
+            _dbSet.Remove(entity);
+            return RepositoryResults<bool>.Success(true);
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error occurred while deleting {nameof(TEntity)} entity : {ex.Message}");
-
+            return RepositoryResults<bool>.Failed(500, $"An error occurred: {ex.Message}");
         }
 
+    }
+
+    public virtual async Task<RepositoryResults<bool>> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
+    {
+        try
+        {
+            var exists = await _dbSet.AnyAsync(predicate);
+
+            if (!exists)
+                return RepositoryResults<bool>.Failed(404, $"{nameof(TEntity)} not found");
+
+            return RepositoryResults<bool>.Success(exists);
+        }
+        catch (Exception ex)
+        {
+            return RepositoryResults<bool>.Failed(500, $"An error occurred: {ex.Message}");
+        }
     }
 
     public virtual async Task<int> SaveAsync()
