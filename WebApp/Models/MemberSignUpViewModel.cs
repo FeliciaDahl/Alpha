@@ -44,14 +44,14 @@ public class MemberSignUpViewModel
     [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept terms and conditions")]
     public bool TermsAndConditions { get; set; }
 
-    public static implicit operator MemberSignUpForm(MemberSignUpViewModel model)
-    {
-        return model == null ? null! : new MemberSignUpForm
-        {
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Email = model.Email,
-            Password = model.Password
-        };
-    }
+    //public static implicit operator MemberSignUpForm(MemberSignUpViewModel model)
+    //{
+    //    return model == null ? null! : new MemberSignUpForm
+    //    {
+    //        FirstName = model.FirstName,
+    //        LastName = model.LastName,
+    //        Email = model.Email,
+    //        Password = model.Password
+    //    };
+    //}
 }

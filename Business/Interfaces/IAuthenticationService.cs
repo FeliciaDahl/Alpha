@@ -1,13 +1,14 @@
 ﻿
+using Business.Models;
 using Domain.Dto;
 
 namespace Business.Interfaces
 {
     public interface IAuthenticationService
     {
-        Task<bool> CreateAsync(MemberSignUpForm form);
+        Task<ServiceResult<bool>> CreateAsync(MemberSignUpForm form);
         Task<bool> ExistAsync(string email);
-        Task<bool> SignInAsync(MemberSignInForm form);
+        Task<ServiceResult<bool>> SignInAsync(MemberSignInForm form);
         Task SignOutAsync();
     }
 }

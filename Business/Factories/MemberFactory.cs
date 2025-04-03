@@ -1,6 +1,8 @@
 ﻿
 using Business.Models;
 using Data.Entites;
+using Domain.Dto;
+using Domain.Models;
 
 namespace Business.Factories;
 
@@ -23,7 +25,7 @@ public class MemberFactory
     {
         return user == null ? new Member() : new Member()
         {
-            Id = user.Id,
+           
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email!,

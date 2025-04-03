@@ -177,7 +177,7 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         {
             var exists = await _dbSet.AnyAsync(predicate);
 
-            if (!exists)
+            if (exists)
                 return RepositoryResults<bool>.Failed(404, $"{nameof(TEntity)} not found");
 
             return RepositoryResults<bool>.Success(exists);

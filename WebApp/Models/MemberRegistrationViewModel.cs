@@ -27,16 +27,16 @@ public class MemberRegistrationViewModel
     [Display(Name = "Phone", Prompt = "Enter phone number")]
     public string? Phone { get; set; }
 
-    public static implicit operator MemberRegistrationForm(MemberRegistrationViewModel model)
-    {
-        return model == null ? null! : new MemberRegistrationForm
-        {
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Email = model.Email,
-            Phone = model?.Phone,
+    //public static implicit operator MemberRegistrationForm(MemberRegistrationViewModel model)
+    //{
+    //    return model == null ? null! : new MemberRegistrationForm
+    //    {
+    //        FirstName = model.FirstName,
+    //        LastName = model.LastName,
+    //        Email = model.Email,
+    //        Phone = model?.Phone,
 
-        };
-    }
+    //    };
+    //}
 
 }

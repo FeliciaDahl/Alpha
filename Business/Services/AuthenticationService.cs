@@ -22,24 +22,26 @@ public class AuthenticationService : IAuthenticationService
     {
         return await _userManager.Users.AnyAsync(x => x.Email == email);
     }
-    public async Task<bool> CreateAsync(MemberSignUpForm form)
+    public async Task<ServiceResult<bool>> CreateAsync(MemberSignUpForm form)
     {
-        if (form != null)
+        if (form == null)
         {
-            var newMember = MemberFactory.ToEntity(form);
-            var result = await _userManager.CreateAsync(newMember, form.Password);
-            return result.Succeeded;
+            return ServiceResult<bool>.Failed(400, "Form can not be empty");
         }
-        return false;
+        var newMember = MemberFactory.ToEntity(form);
+        var result = await _userManager.CreateAsync(newMember, form.Password);
+        return ServiceResult<bool>.Success(true);
+
     }
-    public async Task<bool> SignInAsync(MemberSignInForm form)
+    public async Task<ServiceResult<bool>> SignInAsync(MemberSignInForm form)
     {
-        if (form != null)
+        if (form == null)
         {
-            var result = await _signInManager.PasswordSignInAsync(form.Email, form.Password, false, false);
-            return result.Succeeded;
+           return ServiceResult<bool>.Failed(400, "Client name can not be empty");
         }
-        return false;
+        
+        var result = await _signInManager.PasswordSignInAsync(form.Email, form.Password, false, false);
+        return ServiceResult<bool>.Success(true);
     }
     public async Task SignOutAsync()
     {

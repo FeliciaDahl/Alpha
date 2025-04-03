@@ -3,6 +3,7 @@ using Business.Models;
 using Business.Services;
 using Data.Entites;
 using Domain.Dto;
+using Domain.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
         if (!ModelState.IsValid)
             return View(model);
 
-        MemberSignUpForm memberSignUpForm = model;
+         var signUpForm = model.MapTo<MemberSignUpForm>();
 
 
         if (await _authenticationService.ExistAsync(model.Email))
@@ -38,9 +39,9 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
             return View(model);
         }
 
-        var result = _authenticationService.CreateAsync(memberSignUpForm);
+        var result = await _authenticationService.CreateAsync(signUpForm);
 
-        if(result.Result)
+        if(result.Succeeded)
             return RedirectToAction("SignIn", "Auth");
         
         
@@ -55,38 +56,37 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
         return View();
     }
 
-    [HttpPost]
-    public async Task<IActionResult> SignIn(MemberSignInViewModel model)
-    {
-        ViewBag.ErrorMessage = null!;
+    //[HttpPost]
+    //public async Task<IActionResult> SignIn(MemberSignInViewModel model)
+    //{
+    //    ViewBag.ErrorMessage = null!;
 
-        if (string.IsNullOrEmpty(model.Email) || (string.IsNullOrEmpty(model.Password)))
-        {
-            ViewBag.ErrorMessage = "Enter email and password to log in";
-            return View(model);
-        }
+    //    if (string.IsNullOrEmpty(model.Email) || (string.IsNullOrEmpty(model.Password)))
+    //    {
+    //        ViewBag.ErrorMessage = "Enter email and password to log in";
+    //        return View(model);
+    //    }
 
-        if(!await _authenticationService.ExistAsync(model.Email))
-        {
-            ViewBag.ErrorMessage = "Email does not exist.";
-            return View(model);
-        }
+    //    if(!await _authenticationService.ExistAsync(model.Email))
+    //    {
+    //        ViewBag.ErrorMessage = "Email does not exist.";
+    //        return View(model);
+    //    }
 
-        if (ModelState.IsValid)
-        {
-            MemberSignInForm memberSignInForm = model;
+      
+    //        signInForm = model.MapTo<MemberSignInForm>();
 
-            if (await _authenticationService.SignInAsync(model))
-            {
-                return RedirectToAction("Index", "Admin");
-            }
+    //    result = await _authenticationService.SignInAsync(signInForm)
+          
+    //            return RedirectToAction("Index", "Admin");
+          
 
-        }
+        
             
-            ViewData["ErrorMessage"] = "Invalid email or password";
-            return View(model);
+    //        ViewData["ErrorMessage"] = "Invalid email or password";
+    //        return View(model);
 
-    }
+    //}
 
     public async new Task<IActionResult> SignOut()
     {

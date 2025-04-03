@@ -1,4 +1,5 @@
 ﻿
+using Business.Interfaces;
 using Business.Models;
 using Data.Entites;
 using Data.Interfaces;
@@ -15,18 +16,18 @@ public class ClientService(IClientRepository clientRepository) : IClientService
     private readonly IClientRepository _clientRepository = clientRepository;
 
 
-    public async Task<ServiceResult<bool>> CreateClientAsync(ClientRegistrationForm form)
+    public async Task<ServiceResult<Client>> CreateClientAsync(ClientRegistrationForm form)
     {
         if (string.IsNullOrWhiteSpace(form.ClientName))
-            return ServiceResult<bool>.Failed(400, "Client name can not be empty");
+            return ServiceResult<Client>.Failed(400, "Client name can not be empty");
 
         var clientExist = await _clientRepository.ExistsAsync(c => c.Email == form.Email);
 
         if (!clientExist.Succeeded)
-            return ServiceResult<bool>.Failed(500, "Something went wrong");
+            return ServiceResult<Client>.Failed(500, "Something went wrong");
 
         if (clientExist.Result)
-            return ServiceResult<bool>.Failed(400, "Client with this email already exist");
+            return ServiceResult<Client>.Failed(400, "Client with this email already exist");
 
         await _clientRepository.BeginTransactionAsync();
 
@@ -37,12 +38,14 @@ public class ClientService(IClientRepository clientRepository) : IClientService
             await _clientRepository.SaveAsync();
 
             await _clientRepository.CommitTransactionAsync();
-            return ServiceResult<bool>.Success(true);
+
+            var client = clientEntity.MapTo<Client>();
+            return ServiceResult<Client>.Success(client);
         }
         catch (Exception e)
         {
             await _clientRepository.RollbackTransactionAsync();
-            return ServiceResult<bool>.Failed(500, e.Message);
+            return ServiceResult<Client>.Failed(500, e.Message);
         }
     }
 
@@ -86,6 +89,7 @@ public class ClientService(IClientRepository clientRepository) : IClientService
     public async Task<ServiceResult<bool>> DeleteClientAsync(int id)
     {
         var existingClientResult = await _clientRepository.GetAsync(c => c.Id == id);
+
         if (!existingClientResult.Succeeded || existingClientResult.Result == null)
             return ServiceResult<bool>.Failed(404, "Client not found");
 
