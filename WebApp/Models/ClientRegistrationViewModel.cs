@@ -7,7 +7,9 @@ namespace WebApp.Models;
 
 public class ClientRegistrationViewModel
 {
-    
+    [Display(Name = "Client Image", Prompt = "Enter image")]
+    [DataType(DataType.Upload)]
+    public IFormFile? Image { get; set; }
 
     [Required(ErrorMessage = "You must enter a name")]
     [DataType(DataType.Text)]

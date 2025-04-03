@@ -258,13 +258,37 @@ h5 {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 2rem;
+       
     }
 
+/* IMAGE MODAL*/
 
+.image-previewer {
+    border: 1px solid var(--border-200);
+    width: 150px;
+    height: 150px;
+    margin: 1rem auto;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--grey-200);
+    cursor: pointer;
+}
+    .image-previewer::after {
+        content: 'Upload photo';
+        font-size: 14px; 
+    }
+
+    .image-previewer:hover {
+        border: 1px solid var(--border-300);
+    }
+    .hide {
+        display: none;
+    }
 
 /*FORMS*/
-
 form input {
     width: 100%;
     padding: 0.5rem;

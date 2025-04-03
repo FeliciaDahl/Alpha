@@ -35,7 +35,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Clients(ClientRegistrationViewModel model)
+        public async Task<IActionResult> AddClient(ClientRegistrationViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
