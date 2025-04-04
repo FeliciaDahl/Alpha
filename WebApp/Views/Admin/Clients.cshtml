@@ -1,10 +1,14 @@
-﻿@{
+﻿
+@model ClientViewModel
+@{
     ViewData["Title"] = "Clients";
 }
 
-
-<partial name="Partials/Sections/_AddClientModal"/>
-<partial name="Partials/Sections/_EditClientModal" />
+@* //FORTSÄTT MED ATT VISA LISTA! *@
+<partial name="Partials/Sections/_AddClientModal" model="Model.ClientRegistration" /> 
+<partial name="Partials/Sections/_EditClientModal" model="Model.ClientEdit" />
+@* <partial name="Partials/Sections/_AddClientModal"/> *@
+@* <partial name="Partials/Sections/_EditClientModal" /> *@
 
 <section id="clients">
 <div class="page-header">
@@ -14,7 +18,7 @@
      
 <div class="client-table mt-4">
 
-        <partial name="Partials/Sections/_ClientList" />
+        <partial name="Partials/Sections/_ClientList" model="Model.Clients" />
        
 </div>
 </section>

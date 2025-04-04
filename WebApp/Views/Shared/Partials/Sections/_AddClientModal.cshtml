@@ -7,8 +7,10 @@
             <h3>Add Client</h3>
             <button class="close-btn" data-close="true"><i class="bi bi-x-lg"></i></button>
         </div>
-        <form asp-action="AddClient" asp-controller="Admin" method="post" novalidate>
+        <form asp-action="AddClient" asp-controller="Clients" method="post" novalidate>
 
+
+          @*  LÄGG TILL JS FÖR BILDER! *@
             <div class="image-previewer circle">
                 <img src="" class="image-preview"/>
                 <input asp-for="Image" accept="image/*" class="hide"/>

@@ -1,13 +1,12 @@
-﻿
-using Business.Models;
-using Domain.Dto;
-using Domain.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Models;
 
-public class ClientRegistrationViewModel
+public class ClientEditViewModel
 {
+
+    public int Id { get; set; }
+
     [Display(Name = "Client Image", Prompt = "Enter image")]
     [DataType(DataType.Upload)]
     public IFormFile? Image { get; set; }
@@ -37,5 +36,4 @@ public class ClientRegistrationViewModel
     [Display(Name = "Phone", Prompt = "Enter phone number")]
     public string? Phone { get; set; }
 
- 
 }

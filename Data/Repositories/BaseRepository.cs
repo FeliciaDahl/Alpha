@@ -7,12 +7,13 @@ using System.Linq.Expressions;
 using Data.Interfaces;
 using Data.Models;
 using System.Globalization;
+using Domain.Extensions;
 
 namespace Data.Repositories;
 
 
 
-public abstract class BaseRepository<TEntity>(DataContext context) : IBaseRepository<TEntity> where TEntity : class
+public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBaseRepository<TEntity, TModel> where TEntity : class
 {
     protected readonly DataContext _context = context;
     protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
@@ -67,7 +68,7 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         }
     }
 
-    public virtual async Task<RepositoryResults<IEnumerable<TEntity>>> GetAllAsync(bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes)
+    public virtual async Task<RepositoryResults<IEnumerable<TModel>>> GetAllAsync(bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes)
     {
 
         try
@@ -94,16 +95,19 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
             }
 
             var entities = await query.ToListAsync();
-            return RepositoryResults<IEnumerable<TEntity>>.Success(entities);
+
+            var result = entities.Select(e => e.MapTo<TModel>());
+            return RepositoryResults<IEnumerable<TModel>>.Success(result);
+
         }
         catch (Exception ex)
         {
-            return RepositoryResults<IEnumerable<TEntity>>.Failed(500, $"An error occurred: {ex.Message}");
+            return RepositoryResults<IEnumerable<TModel>>.Failed(500, $"An error occurred: {ex.Message}");
 
         }
     }
 
-    public virtual async Task<RepositoryResults<TEntity?>> GetAsync( Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes)
+    public virtual async Task<RepositoryResults<TModel?>> GetAsync( Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes)
     {
 
         try
@@ -123,13 +127,15 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
 
 
             if (entity == null)
-                return RepositoryResults<TEntity?>.Failed(404, $"{nameof(TEntity)} not found");
+                return RepositoryResults<TModel?>.Failed(404, $"{nameof(TEntity)} not found");
 
-            return RepositoryResults<TEntity?>.Success(entity);
+            var result = entity.MapTo<TModel>();
+
+            return RepositoryResults<TModel?>.Success(result);
         }
         catch (Exception ex)
         {
-            return RepositoryResults<TEntity?>.Failed(500, $"An error occurred: {ex.Message}");
+            return RepositoryResults<TModel?>.Failed(500, $"An error occurred: {ex.Message}");
 
         }
 
@@ -142,7 +148,7 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
             if (entity == null)
                 return RepositoryResults<bool>.Failed(400, "Entity cant be null");
 
-            _dbSet.Update(entity);
+             _dbSet.Update(entity);
             return RepositoryResults<bool>.Success(true);
 
         }

@@ -1,9 +1,12 @@
 ﻿
+using Microsoft.AspNetCore.Http;
+
 namespace Domain.Dto;
 
 public class ClientEditForm
 {
     public int Id { get; set; }
+    public IFormFile? Image { get; set; }
     public string ClientName { get; set; } = null!;
     public string ContactPerson { get; set; } = null!;
     public string Email { get; set; } = null!;

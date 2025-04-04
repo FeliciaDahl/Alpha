@@ -2,6 +2,7 @@
 using Business.Models;
 using Domain.Dto;
 using Domain.Extensions;
+using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace WebApp.Controllers
     public class AdminController(IClientService clientService) : Controller
     {
         private readonly IClientService _clientService = clientService;
-
+       
         public IActionResult Index()
         {
             return View();
@@ -29,28 +30,22 @@ namespace WebApp.Controllers
         {
             return View();
         }
-        public IActionResult Clients()
+        public async Task<IActionResult> Clients()
         {
-            return View();
-        }
+            var clientResult = await _clientService.GetClientsAsync();
 
-        [HttpPost]
-        public async Task<IActionResult> AddClient(ClientRegistrationViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var registrationForm = model.MapTo<ClientRegistrationForm>();
-
-            var result = await _clientService.CreateClientAsync(registrationForm);
-          if(result.Succeeded)
+            var viewModel = new ClientViewModel
             {
-                return RedirectToAction("Projects");
-            }
+                Clients = clientResult.Result.ToList(),
 
-          ViewBag.ErrorMessage = result.Error;
-            return View(model);
+                ClientRegistration = new ClientRegistrationViewModel(),
+                ClientEdit = new ClientEditViewModel()
+            };
+
+            return View(viewModel);
+
         }
+
 
     }
 }

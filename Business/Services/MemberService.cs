@@ -13,7 +13,7 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
     private readonly IMemberRepository _memberRepository = memberRepository;
     private readonly UserManager<MemberEntity> _userManager = userManager;
 
-    public async Task<MemberResult> GetClientsAsync()
+    public async Task<MemberResult> GetMembersAsync()
     {
         var result = await _memberRepository.GetAllAsync();
         return result.MapTo<MemberResult>();

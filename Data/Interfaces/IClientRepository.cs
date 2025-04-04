@@ -1,7 +1,8 @@
 ﻿using Data.Entites;
+using Domain.Models;
 
 namespace Data.Interfaces;
 
-public interface IClientRepository : IBaseRepository<ClientEntity>
+public interface IClientRepository : IBaseRepository<ClientEntity, Client>
 {
 }

@@ -4,6 +4,7 @@ using Business.Models;
 using Data.Entites;
 using Data.Interfaces;
 using Data.Models;
+using Data.Repositories;
 using Domain.Dto;
 using Domain.Extensions;
 using Domain.Models;
@@ -49,7 +50,7 @@ public class ClientService(IClientRepository clientRepository) : IClientService
         }
     }
 
-    public async Task<ServiceResult<bool>> EditClientAsync(int id, ClientRegistrationForm form)
+    public async Task<ServiceResult<bool>> EditClientAsync(int id, ClientEditForm form)
     {
 
         var existingClientResult = await _clientRepository.GetAsync(c => c.Id == id);
@@ -70,8 +71,9 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
         try
         {
+            var clientEntity = existingClient.MapTo<ClientEntity>();
 
-            await _clientRepository.UpdateAsync(existingClient);
+            await _clientRepository.UpdateAsync(clientEntity);
             await _clientRepository.SaveAsync();
             await _clientRepository.CommitTransactionAsync();
 
@@ -95,11 +97,13 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
         var existingClient = existingClientResult.Result;
 
+        var clientEntity = existingClient.MapTo<ClientEntity>();
+
         await _clientRepository.BeginTransactionAsync();
 
         try
         {
-            await _clientRepository.DeleteAsync(existingClient);
+            await _clientRepository.DeleteAsync(clientEntity);
             await _clientRepository.SaveAsync();
 
             await _clientRepository.CommitTransactionAsync();
@@ -113,6 +117,17 @@ public class ClientService(IClientRepository clientRepository) : IClientService
     }
 
 
+    public async Task<ServiceResult<Client>> GetClientAsync(int id)
+    {
+        var result = await _clientRepository.GetAsync(
+            where: x => x.Id == id);
+        var client  = result.Result?.MapTo<Client>();
+
+        if(!result.Succeeded)
+            return ServiceResult<Client>.Failed(404, "Client not found");
+
+        return ServiceResult<Client>.Success(client);
+    }
 
     public async Task<ClientResult> GetClientsAsync()
     {

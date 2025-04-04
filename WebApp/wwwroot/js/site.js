@@ -18,8 +18,18 @@
     closeButtons.forEach(button => {
         button.addEventListener('click', () => {
             const modal = button.closest('.modal')
-            if (modal)
+            if (modal) {
                 modal.style.display = 'none';
+
+                modal.querySelectorAll('form').forEach(form => {
+                    form.reset();
+                })
+            }
+                
         })
     })
+
+    /*Handle Form Submission*/
+
+    
 })
