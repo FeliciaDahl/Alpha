@@ -52,17 +52,6 @@ namespace WebApp.Controllers
 
 
 
-        [HttpGet]
-        public async Task<IActionResult> GetClients(int id)
-        {
-            var client = await _clientService.GetClientsAsync(id);
-            if (client == null)
-            {
-                return NotFound(new { Message = "Client not found" });
-            }
-            var clientViewModel = client.MapTo<ClientViewModel>();
-            return Ok(clientViewModel);
-        }
 
         [HttpPut]
         public async Task<IActionResult> EditClient(int id, ClientEditViewModel model)
@@ -78,11 +67,9 @@ namespace WebApp.Controllers
                 return BadRequest(new { sucess = false, errors });
             }
 
-            var existingClient = await _clientService.GetClientsAsync(id);
+            var editForm = model.MapTo<ClientEditForm>();
 
-            var registrationForm = model.MapTo<ClientEditForm>();
-
-            var result = await _clientService.EditClientAsync(id, registrationForm);
+            var result = await _clientService.EditClientAsync(id, editForm);
 
             if (result.Succeeded)
             {

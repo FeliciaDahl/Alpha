@@ -119,8 +119,8 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
     public async Task<ServiceResult<Client>> GetClientAsync(int id)
     {
-        var result = await _clientRepository.GetAsync(
-            where: x => x.Id == id);
+        var result = await _clientRepository.GetAsync(where: x => x.Id == id);
+            
         var client  = result.Result?.MapTo<Client>();
 
         if(!result.Succeeded)
