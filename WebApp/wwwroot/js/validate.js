@@ -26,14 +26,14 @@
         errorSpan.classList.remove("field-validation-error")
         errorSpan.classList.add("field-validation-valid")
         errorSpan.textContent = ""
-}
+    }
 
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('form')
 
-    if (!form) return 
+    if (!form) return
 
     const fields = form.querySelectorAll("input[data-val='true']")
 
@@ -42,4 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
             validateField(field)
         })
     })
+
+    
 })
+

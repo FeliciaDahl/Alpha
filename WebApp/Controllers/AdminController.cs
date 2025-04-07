@@ -32,7 +32,7 @@ namespace WebApp.Controllers
         }
         public async Task<IActionResult> Clients()
         {
-            var clientResult = await _clientService.GetClientsAsync();
+            var clientResult = await _clientService.GetAllClientsAsync();
 
             var viewModel = new ClientViewModel
             {

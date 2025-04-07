@@ -54,25 +54,26 @@ public class ClientService(IClientRepository clientRepository) : IClientService
     {
 
         var existingClientResult = await _clientRepository.GetAsync(c => c.Id == id);
-
+      
         if (!existingClientResult.Succeeded || existingClientResult.Result == null)
             return ServiceResult<bool>.Failed(404, "Client not found");
 
         var existingClient = existingClientResult.Result;
 
+        var clientEntity = existingClient.MapTo<ClientEntity>();
 
-        existingClient.ClientName = form.ClientName;
-        existingClient.ContactPerson = form.ContactPerson;
-        existingClient.Email = form.Email;
-        existingClient.Location = form.Location;
-        existingClient.Phone = form.Phone;
+       
+        clientEntity.ClientName = form.ClientName;
+        clientEntity.ContactPerson = form.ContactPerson;
+        clientEntity.Email = form.Email;
+        clientEntity.Location = form.Location;
+        clientEntity.Phone = form.Phone;
 
         await _clientRepository.BeginTransactionAsync();
 
         try
         {
-            var clientEntity = existingClient.MapTo<ClientEntity>();
-
+           
             await _clientRepository.UpdateAsync(clientEntity);
             await _clientRepository.SaveAsync();
             await _clientRepository.CommitTransactionAsync();
@@ -129,7 +130,7 @@ public class ClientService(IClientRepository clientRepository) : IClientService
         return ServiceResult<Client>.Success(client);
     }
 
-    public async Task<ClientResult> GetClientsAsync()
+    public async Task<ClientResult> GetAllClientsAsync()
     {
         var result = await _clientRepository.GetAllAsync();
         return result.MapTo<ClientResult>();

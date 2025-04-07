@@ -18,10 +18,7 @@ public class AuthenticationService : IAuthenticationService
         _userManager = userManager;
         _signInManager = signInManager;
     }
-    public async Task<bool> ExistAsync(string email)
-    {
-        return await _userManager.Users.AnyAsync(x => x.Email == email);
-    }
+  
     public async Task<ServiceResult<bool>> CreateAsync(MemberSignUpForm form)
     {
         if (form == null)
@@ -46,6 +43,11 @@ public class AuthenticationService : IAuthenticationService
     public async Task SignOutAsync()
     {
         await _signInManager.SignOutAsync();
+    }
+
+    public async Task<bool> ExistAsync(string email)
+    {
+        return await _userManager.Users.AnyAsync(x => x.Email == email);
     }
 
 }

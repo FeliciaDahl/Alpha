@@ -44,17 +44,31 @@ namespace WebApp.Controllers
             var result = await _clientService.CreateClientAsync(registrationForm);
             if (result.Succeeded)
             {
-                return Ok(new { Message = "Client updated successfully" });
+                return RedirectToAction("Clients", "Admin");
             }
 
             return BadRequest(new { sucess = false });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EditClient(int id)
+        {
+            var client = await _clientService.GetClientAsync(id);
 
+            if (client == null)
+            {
+                return NotFound();
+            }
 
+            var model = client.Result?.MapTo<ClientEditViewModel>();
 
-        [HttpPut]
-        public async Task<IActionResult> EditClient(int id, ClientEditViewModel model)
+            return Ok(model);
+        }
+
+        //Be om hjälp med denna!
+        [HttpPatch]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> EditClient(int id, [FromForm] ClientEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -73,7 +87,7 @@ namespace WebApp.Controllers
 
             if (result.Succeeded)
             {
-                return Ok(new { Message = "Client updated successfully" });
+                return RedirectToAction("Clients", "Admin");
             }
 
             return BadRequest(new { sucess = false });
