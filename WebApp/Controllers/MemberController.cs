@@ -1,14 +1,16 @@
-﻿using Domain.Dto;
+﻿using Business.Interfaces;
+using Domain.Dto;
 using Domain.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using WebApp.Models;
 
 namespace WebApp.Controllers;
 
-public class MemberController : Controller
+public class MemberController(IMemberService memberService) : Controller
 {
 
-    private
+    private readonly IMemberService _memberService = memberService;
 
     public IActionResult Index()
     {
@@ -16,7 +18,7 @@ public class MemberController : Controller
     }
 
     [HttpPost]
-    public IActionResult AddMember(MemberRegistrationViewModel model)
+    public async Task<IActionResult> AddMember(MemberRegistrationViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -29,15 +31,16 @@ public class MemberController : Controller
             return BadRequest(new { sucess = false, errors });
         }
 
-        var registrationForm = model.MapTo<MemberRegistrationForm>();
+        var registrationForm = model.MapTo<MemberSignUpForm>();
 
-        var result = 
+        var result = await _memberService.AddMember(registrationForm);
+
         if (result.Succeeded)
         {
-            return RedirectToAction("Clients", "Admin");
+            return RedirectToAction("Members", "Admin");
         }
 
         return BadRequest(new { sucess = false });
     }
 }
-}
+

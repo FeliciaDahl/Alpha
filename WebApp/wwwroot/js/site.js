@@ -87,7 +87,7 @@
                 if (modal) {
                     modal.style.display = 'none';
 
-                    widowow.location.reload()
+                    window.location.reload()
                 }
             }
 

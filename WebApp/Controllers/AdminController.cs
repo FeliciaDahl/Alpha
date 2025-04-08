@@ -11,10 +11,12 @@ using WebApp.Models;
 namespace WebApp.Controllers
 {
     //[Authorize]
-    public class AdminController(IClientService clientService) : Controller
+    public class AdminController(IClientService clientService, IMemberService memberService, IProjectService projectService) : Controller
     {
         private readonly IClientService _clientService = clientService;
-       
+        private readonly IMemberService _memberService = memberService;
+        private readonly IProjectService _projectService = projectService;
+
         public IActionResult Index()
         {
             return View();
@@ -25,11 +27,19 @@ namespace WebApp.Controllers
             return View();
         }
 
-        //[Authorize(Roles ="admin")]
-        public IActionResult Members()
+
+        public async Task<IActionResult> Members()
         {
-            return View();
+            var membersResult = await _memberService.GetAllMembersAsync();
+            var viewModel = new MemberViewModel
+            {
+                Members = membersResult.Result.ToList(),
+
+                MemberRegistration = new MemberRegistrationViewModel(),
+            };
+            return View(viewModel);
         }
+
         public async Task<IActionResult> Clients()
         {
             var clientResult = await _clientService.GetAllClientsAsync();

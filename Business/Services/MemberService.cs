@@ -16,13 +16,8 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
     private readonly IMemberRepository _memberRepository = memberRepository;
     private readonly UserManager<MemberEntity> _userManager = userManager;
 
-    public async Task<MemberResult> GetMembersAsync()
-    {
-        var result = await _memberRepository.GetAllAsync();
-        return result.MapTo<MemberResult>();
-    }
-
-    public async Task<ServiceResult<Member>> AddMember(MemberRegistrationForm form)
+  
+    public async Task<ServiceResult<Member>> AddMember(MemberSignUpForm form)
     {
 
         var memberExist = await _memberRepository.ExistsAsync(m => m.Email == form.Email);
@@ -34,8 +29,10 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
 
         try
         {
-            var memberEntity = form.MapTo<MemberEntity>();
+            var memberEntity = MemberFactory.ToEntity(form);
+          
             var result = await _userManager.CreateAsync(memberEntity);
+
             await _memberRepository.SaveAsync();
             await _memberRepository.CommitTransactionAsync();
 
@@ -49,5 +46,11 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
             return ServiceResult<Member>.Failed(500, "Error while adding member");
         }
 
+    }
+
+    public async Task<MemberResult> GetAllMembersAsync()
+    {
+        var result = await _memberRepository.GetAllAsync();
+        return result.MapTo<MemberResult>();
     }
 }

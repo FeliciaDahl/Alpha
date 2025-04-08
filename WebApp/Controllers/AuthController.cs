@@ -41,13 +41,14 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
 
         var result = await _authenticationService.CreateAsync(signUpForm);
 
-        if(result.Succeeded)
-            return RedirectToAction("SignIn", "Auth");
-        
-        
+        if(!result.Succeeded)
+        {
             ModelState.AddModelError("NotCreated", "Something went wrong, User not created.");
             return View(model);
-      
+        }
+        return RedirectToAction("SignIn", "Auth");
+
+
     }
 
     public IActionResult SignIn()

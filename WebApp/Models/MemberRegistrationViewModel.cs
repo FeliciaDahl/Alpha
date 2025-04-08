@@ -15,6 +15,7 @@ public class MemberRegistrationViewModel
     [Display(Name = "First Name", Prompt = "Enter a first name")]
     public string FirstName { get; set; } = null!;
 
+
     [Required(ErrorMessage = "You must enter a name")]
     [DataType(DataType.Text)]
     [Display(Name = "Last Name", Prompt = "Enter a last name")]
@@ -29,4 +30,8 @@ public class MemberRegistrationViewModel
     [DataType(DataType.PhoneNumber)]
     [Display(Name = "Phone", Prompt = "Enter phone number")]
     public string? Phone { get; set; }
+
+    [DataType(DataType.Text)]
+    [Display(Name = "Job Title", Prompt = "Select Title")]
+    public string? JobTitle { get; set; }
 }

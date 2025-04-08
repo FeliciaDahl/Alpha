@@ -6,7 +6,7 @@ namespace Business.Interfaces
 {
     public interface IMemberService
     {
-        Task<ServiceResult<Member>> AddMember(MemberRegistrationForm form);
-        Task<MemberResult> GetMembersAsync();
+        Task<ServiceResult<Member>> AddMember(MemberSignUpForm form);
+        Task<MemberResult> GetAllMembersAsync();
     }
 }

@@ -10,5 +10,8 @@ public class MemberRegistrationForm
 
     public string? Phone { get; set; }
 
+    public string? JobTitle { get; set; }
 }
+
+
 

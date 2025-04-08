@@ -1,0 +1,21 @@
+﻿@using Domain.Models
+@model List<Member>
+
+
+<div class="member-list">
+
+@foreach (var member in Model)
+{
+    <div class="list-cards member-card">
+            <div class="member-actions dropdown"><i class="bi bi-three-dots"></i></div>
+            <div class="image"><img class="member-img" src="~/images/Avatar-2.svg" alt="Client 1" /></div>
+        <div class="name">@member.FirstName @member.LastName</div>
+            <div class="jobtitle"><span>JobTitle</span></div>
+        <div class="email">@member.Email</div>
+         <div class="phone">@member.PhoneNumber</div>
+    </div>
+}
+
+
+</div>
+    

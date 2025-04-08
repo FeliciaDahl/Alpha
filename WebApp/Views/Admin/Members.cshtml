@@ -8,6 +8,10 @@
 <section id="members">
 <div class="page-header">
     <h1>@ViewData["Title"]</h1>
-        <button type="button" data-modal="true" data-target="#addMemberModal" class="btn-standard btn-add"><i class="bi bi-plus-lg"></i>Add Member</button> 
-</div>
+        <button type="button" data-modal="true" data-target="#addMemberModal" class="btn-standard btn-add"><i class="bi bi-plus-lg"></i>Add Member</button>
+    </div>
+
+        <partial name="Partials/Sections/_MemberList" model="Model.Members" />
+
+    
 </section>
