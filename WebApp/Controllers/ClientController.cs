@@ -8,11 +8,11 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApp.Controllers
 {
-    public class ClientsController : Controller
+    public class ClientController : Controller
     {
         private readonly IClientService _clientService;
        
-        public ClientsController(IClientService clientService)
+        public ClientController(IClientService clientService)
         {
             _clientService = clientService;
         }

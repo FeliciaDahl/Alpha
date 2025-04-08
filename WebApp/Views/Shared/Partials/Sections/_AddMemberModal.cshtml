@@ -10,7 +10,14 @@
             <button class="close-btn" data-close="true"><i class="bi bi-x-lg"></i></button>
         </div>
   
-    <form id="addMember-form" asp-action="AddMember" asp-controller="Admin" method="post" novalidate>
+    <form id="addMember-form" asp-action="AddMember" asp-controller="Member" method="post" novalidate>
+
+
+            @*  LÄGG TILL JS FÖR BILDER! *@
+            <div class="image-previewer circle">
+                <img src="" class="image-preview" />
+                <input asp-for="Image" accept="image/*" class="hide" />
+            </div>
 
         <div class="form-group">
             <label asp-for="FirstName"></label>

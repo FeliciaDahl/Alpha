@@ -61,6 +61,8 @@
         });
     });
 
+
+
     /*Handle Form Submisson*/
 
     const forms = document.querySelectorAll('form')

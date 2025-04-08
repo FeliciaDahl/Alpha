@@ -7,7 +7,7 @@
             <h3>Edit Client</h3>
             <button class="close-btn" data-close="true"><i class="bi bi-x-lg"></i></button>
         </div>
-        <form  asp-action="EditClient" asp-controller="Clients" method="post" data-method="patch" novalidate>
+        <form  asp-action="EditClient" asp-controller="Client" method="post" data-method="patch" novalidate>
             <input id="clientId" asp-for="Id" readonly type="hidden" value="@Model.Id" />
 
             @*  LÄGG TILL JS FÖR BILDER! *@

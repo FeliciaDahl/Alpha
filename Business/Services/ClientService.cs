@@ -19,15 +19,13 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
     public async Task<ServiceResult<Client>> CreateClientAsync(ClientRegistrationForm form)
     {
+        //Onödig validering?
         if (string.IsNullOrWhiteSpace(form.ClientName))
             return ServiceResult<Client>.Failed(400, "Client name can not be empty");
-
+        
         var clientExist = await _clientRepository.ExistsAsync(c => c.Email == form.Email);
 
-        if (!clientExist.Succeeded)
-            return ServiceResult<Client>.Failed(500, "Something went wrong");
-
-        if (clientExist.Result)
+        if (clientExist.Succeeded && clientExist.Result)
             return ServiceResult<Client>.Failed(400, "Client with this email already exist");
 
         await _clientRepository.BeginTransactionAsync();

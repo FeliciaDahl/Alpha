@@ -1,9 +1,9 @@
-﻿@model MemberRegistrationViewModel
+﻿@model MemberViewModel
 @{
     ViewData["Title"] = "Members";
 }
 
-<partial name="Partials/Sections/_AddMemberModal" />
+<partial name="Partials/Sections/_AddMemberModal" model="Model.MemberRegistration"/>
 
 <section id="members">
 <div class="page-header">

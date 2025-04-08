@@ -6,6 +6,9 @@ namespace WebApp.Models;
 
 public class MemberRegistrationViewModel
 {
+    [Display(Name = "Member Image", Prompt = "Enter image")]
+    [DataType(DataType.Upload)]
+    public IFormFile? Image { get; set; }
 
     [Required(ErrorMessage = "You must enter a name")]
     [DataType(DataType.Text)]
@@ -26,7 +29,4 @@ public class MemberRegistrationViewModel
     [DataType(DataType.PhoneNumber)]
     [Display(Name = "Phone", Prompt = "Enter phone number")]
     public string? Phone { get; set; }
-
-
-
 }
