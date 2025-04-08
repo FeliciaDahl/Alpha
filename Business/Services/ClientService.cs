@@ -60,7 +60,7 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
         var clientEntity = existingClient.MapTo<ClientEntity>();
 
-       
+
         clientEntity.ClientName = form.ClientName;
         clientEntity.ContactPerson = form.ContactPerson;
         clientEntity.Email = form.Email;
@@ -71,7 +71,6 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
         try
         {
-           
             await _clientRepository.UpdateAsync(clientEntity);
             await _clientRepository.SaveAsync();
             await _clientRepository.CommitTransactionAsync();

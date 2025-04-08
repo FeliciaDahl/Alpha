@@ -49,6 +49,7 @@ namespace WebApp.Controllers
                 Clients = clientResult.Result.ToList(),
 
                 ClientRegistration = new ClientRegistrationViewModel(),
+
                 ClientEdit = new ClientEditViewModel()
             };
 

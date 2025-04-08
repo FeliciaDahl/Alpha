@@ -81,6 +81,7 @@ namespace WebApp.Controllers
                 return BadRequest(new { sucess = false, errors });
             }
 
+        
             var editForm = model.MapTo<ClientEditForm>();
 
             var result = await _clientService.EditClientAsync(id, editForm);

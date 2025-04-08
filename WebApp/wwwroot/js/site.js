@@ -37,7 +37,7 @@
             if (!clientId) return;
 
             try {
-                const res = await fetch(`/Clients/EditClient?id=${clientId}`);
+                const res = await fetch(`/Client/EditClient?id=${clientId}`);
                 if (res.ok) {
                     const client = await res.json();
 
@@ -52,7 +52,8 @@
                     const modal = document.querySelector('#editClientModal');
                     if (modal)
                         modal.style.display = 'flex';
-                } else {
+                }
+                else {
                     console.error('Could not load data');
                 }
             } catch (error) {
@@ -61,7 +62,20 @@
         });
     });
 
+    /* Open delete client modal*/
+    const deleteButtons = document.querySelectorAll('.btn-delete');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            console.log("Button clicked");
+            const clientId = this.getAttribute('data-id');
+            if (!clientId) return;
 
+            const modal = document.querySelector('#deleteClientModal');
+            if (modal) {
+                modal.style.display = 'flex'; 
+            }
+        });
+    });
 
     /*Handle Form Submisson*/
 

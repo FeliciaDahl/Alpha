@@ -28,8 +28,8 @@ public class MemberRegistrationViewModel
     public string Email { get; set; } = null!;
 
     [DataType(DataType.PhoneNumber)]
-    [Display(Name = "Phone", Prompt = "Enter phone number")]
-    public string? Phone { get; set; }
+    [Display(Name = "PhoneNumber", Prompt = "Enter phone number")]
+    public string? PhoneNumber { get; set; }
 
     [DataType(DataType.Text)]
     [Display(Name = "Job Title", Prompt = "Select Title")]

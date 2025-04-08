@@ -140,7 +140,7 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
         }
 
     }
-    //Be om hjälp med denna!
+    //Be om hjälp med denna! Den säger att det finns två med samma ID.. Vilket det ska finnas då det är samma som ska uppdateras...
     public virtual async Task<RepositoryResults<bool>> UpdateAsync(TEntity entity)
     {
         try
@@ -148,7 +148,10 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
             if (entity == null)
                 return RepositoryResults<bool>.Failed(400, "Entity cant be null");
 
-             _dbSet.Update(entity);
+           
+            _dbSet.Update(entity);
+           
+    
             return RepositoryResults<bool>.Success(true);
 
         }
