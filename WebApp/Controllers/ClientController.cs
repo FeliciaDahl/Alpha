@@ -6,96 +6,138 @@ using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace WebApp.Controllers
+namespace WebApp.Controllers;
+
+public class ClientController : Controller
 {
-    public class ClientController : Controller
+    private readonly IClientService _clientService;
+   
+    public ClientController(IClientService clientService)
     {
-        private readonly IClientService _clientService;
-       
-        public ClientController(IClientService clientService)
+        _clientService = clientService;
+    }
+
+    public IActionResult Index()
+    {
+        return View();
+    }
+
+ 
+
+    [HttpPost]
+    public async Task<IActionResult> AddClient(ClientRegistrationViewModel model)
+    {
+        if (!ModelState.IsValid)
         {
-            _clientService = clientService;
+            var errors = ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()  
+                );
+            return BadRequest(new {sucess =false, errors });
+        }
+            
+
+        var registrationForm = model.MapTo<ClientRegistrationForm>();
+
+        var result = await _clientService.CreateClientAsync(registrationForm);
+        if (result.Succeeded)
+        {
+            return RedirectToAction("Clients", "Admin");
         }
 
-        public IActionResult Index()
+        return BadRequest(new { sucess = false });
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> EditClient(int id)
+    {
+
+        var client = await _clientService.GetClientAsync(id);
+
+        if (client == null)
         {
-            return View();
+            return NotFound();
         }
 
-     
+        var model = client.Result?.MapTo<ClientEditViewModel>();
 
-        [HttpPost]
-        public async Task<IActionResult> AddClient(ClientRegistrationViewModel model)
+        return Ok(model);
+    }
+
+   
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> EditClient(int id, [FromForm] ClientEditViewModel model)
+    {
+        if (!ModelState.IsValid)
         {
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState
-                    .Where(x => x.Value?.Errors.Count > 0)
-                    .ToDictionary(
-                        kvp => kvp.Key,
-                        kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()  
-                    );
-                return BadRequest(new {sucess =false, errors });
-            }
-                
-
-            var registrationForm = model.MapTo<ClientRegistrationForm>();
-
-            var result = await _clientService.CreateClientAsync(registrationForm);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Clients", "Admin");
-            }
-
-            return BadRequest(new { sucess = false });
+            var errors = ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+            return BadRequest(new { sucess = false, errors });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> EditClient(int id)
+    
+        var editForm = model.MapTo<ClientEditForm>();
+
+        var result = await _clientService.EditClientAsync(id, editForm);
+
+        if (result.Succeeded)
         {
-            var client = await _clientService.GetClientAsync(id);
-
-            if (client == null)
-            {
-                return NotFound();
-            }
-
-            var model = client.Result?.MapTo<ClientEditViewModel>();
-
-            return Ok(model);
+            return RedirectToAction("Clients", "Admin");
         }
 
-        //Be om hjälp med denna!
-        [HttpPatch]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> EditClient(int id, [FromForm] ClientEditViewModel model)
+        return BadRequest(new { sucess = false });
+
+    }
+
+  //[HttpGet]
+  //  public async Task<IActionResult> DeleteClient(int id)
+  //  {
+
+  //      var client = await _clientService.GetClientAsync(id);
+
+  //      if (client == null)
+  //      {
+  //          return NotFound();
+  //      }
+
+  //      var model = client.Result?.MapTo<ClientEditViewModel>();
+
+  //      return Ok(model);
+  //  }
+
+    [HttpPost]
+   
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> DeleteClient(int id)
+    {
+        if (!ModelState.IsValid)
         {
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState
-                    .Where(x => x.Value?.Errors.Count > 0)
-                    .ToDictionary(
-                        kvp => kvp.Key,
-                        kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()
-                    );
-                return BadRequest(new { sucess = false, errors });
-            }
-
-        
-            var editForm = model.MapTo<ClientEditForm>();
-
-            var result = await _clientService.EditClientAsync(id, editForm);
-
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Clients", "Admin");
-            }
-
-            return BadRequest(new { sucess = false });
-
+            var errors = ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+            return BadRequest(new { sucess = false, errors });
         }
+
+        var result = await _clientService.DeleteClientAsync(id);
+
+        if (result.Succeeded)
+        {
+            return RedirectToAction("Clients", "Admin");
+        }
+
+        return BadRequest(new { sucess = false });
 
     }
 
 }
-

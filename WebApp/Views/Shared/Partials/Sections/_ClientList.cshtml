@@ -20,7 +20,7 @@
         <tr>
             <td class="client-check"><input type="checkbox" /></td>
             <td class="client-info">
-                <img class="client-img" src="~/images/Avatar-2.svg" alt="Client 1" />
+                <img id="image" class="client-img" src="~/images/Avatar-2.svg" alt="Client 1" />
                 <div class="client-name">@client.ClientName</div>
                 <div class="client-email">@client.Email</div>
             </td>
@@ -33,9 +33,9 @@
                 </div>
             </td>
             <td class="client-actions">
-                    <a class="btn-icons btn-edit" data-id="@client.Id">
+                    <a data-modal="true" data-target="#editClientModal" class="btn-icons btn-edit btn-edit-client" data-id="@client.Id">
                         <i class="bi bi-pencil-fill"></i></a>
-                    <a class="btn-icons btn-delete" data-id="@client.Id"><i class="bi bi-trash3-fill"></i></a>
+                    <a data-modal="true" data-target="#deleteClientModal" class="btn-icons btn-delete btn-delete-client" data-id="@client.Id"><i class="bi bi-trash3-fill"></i></a>
             </td>
         </tr>
         }

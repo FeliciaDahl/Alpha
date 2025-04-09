@@ -51,21 +51,18 @@ public class ClientService(IClientRepository clientRepository) : IClientService
     public async Task<ServiceResult<bool>> EditClientAsync(int id, ClientEditForm form)
     {
 
-        var existingClientResult = await _clientRepository.GetAsync(c => c.Id == id);
+        var existingClientResult = await _clientRepository.GetEntityAsync(c => c.Id == id);
       
         if (!existingClientResult.Succeeded || existingClientResult.Result == null)
             return ServiceResult<bool>.Failed(404, "Client not found");
 
-        var existingClient = existingClientResult.Result;
+        var clientEntity = existingClientResult.Result;
 
-        var clientEntity = existingClient.MapTo<ClientEntity>();
-
-
-        clientEntity.ClientName = form.ClientName;
-        clientEntity.ContactPerson = form.ContactPerson;
-        clientEntity.Email = form.Email;
-        clientEntity.Location = form.Location;
-        clientEntity.Phone = form.Phone;
+        clientEntity.ClientName = string.IsNullOrWhiteSpace(form.ClientName) ? clientEntity.ClientName : form.ClientName;
+        clientEntity.ContactPerson = string.IsNullOrWhiteSpace(form.ContactPerson) ? clientEntity.ContactPerson : form.ContactPerson;
+        clientEntity.Email = string.IsNullOrWhiteSpace(form.Email) ? clientEntity.Email : form.Email;
+        clientEntity.Location = string.IsNullOrWhiteSpace(form.Location) ? clientEntity.Location : form.Location;
+        clientEntity.Phone = string.IsNullOrWhiteSpace(form.Phone) ? clientEntity.Phone : form.Phone;
 
         await _clientRepository.BeginTransactionAsync();
 
@@ -74,6 +71,8 @@ public class ClientService(IClientRepository clientRepository) : IClientService
             await _clientRepository.UpdateAsync(clientEntity);
             await _clientRepository.SaveAsync();
             await _clientRepository.CommitTransactionAsync();
+
+           
 
             return ServiceResult<bool>.Success(true);
 
@@ -88,20 +87,18 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
     public async Task<ServiceResult<bool>> DeleteClientAsync(int id)
     {
-        var existingClientResult = await _clientRepository.GetAsync(c => c.Id == id);
+        var existingClientResult = await _clientRepository.GetEntityAsync(c => c.Id == id);
 
         if (!existingClientResult.Succeeded || existingClientResult.Result == null)
             return ServiceResult<bool>.Failed(404, "Client not found");
 
         var existingClient = existingClientResult.Result;
 
-        var clientEntity = existingClient.MapTo<ClientEntity>();
-
         await _clientRepository.BeginTransactionAsync();
 
         try
         {
-            await _clientRepository.DeleteAsync(clientEntity);
+            await _clientRepository.DeleteAsync(existingClient);
             await _clientRepository.SaveAsync();
 
             await _clientRepository.CommitTransactionAsync();

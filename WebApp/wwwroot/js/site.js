@@ -1,5 +1,14 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
 
+    OpenCloseModals();
+    initEditClient();
+    initDeleteModals();
+    initForms();
+
+});
+
+
+function OpenCloseModals() {
 
     /*Open Modal*/
     const modalButtons = document.querySelectorAll('[data-modal="true"]')
@@ -18,18 +27,18 @@
     closeButtons.forEach(button => {
         button.addEventListener('click', () => {
             const modal = button.closest('.modal')
+
             if (modal) {
                 modal.style.display = 'none';
-
-                modal.querySelectorAll('form').forEach(form => {
-                    form.reset();
-                })
-            }
+                modal.querySelectorAll('form').forEach(f => f.reset());
                 
+            }
+
         })
     })
-
-    /*  Open Clients EditModal  */
+}
+/*  Open Clients EditModal  */
+function initEditClient() { 
     const editButtons = document.querySelectorAll('.btn-edit');
     editButtons.forEach(button => {
         button.addEventListener('click', async function () {
@@ -49,9 +58,6 @@
                     document.querySelector('#clientPhone').value = client.phone;
 
                   
-                    const modal = document.querySelector('#editClientModal');
-                    if (modal)
-                        modal.style.display = 'flex';
                 }
                 else {
                     console.error('Could not load data');
@@ -61,24 +67,71 @@
             }
         });
     });
+}
 
-    /* Open delete client modal*/
-    const deleteButtons = document.querySelectorAll('.btn-delete');
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            console.log("Button clicked");
-            const clientId = this.getAttribute('data-id');
-            if (!clientId) return;
+function deleteModal(deleteBtnClass, modalId, deleteUrlBuilder) {
 
-            const modal = document.querySelector('#deleteClientModal');
-            if (modal) {
-                modal.style.display = 'flex'; 
-            }
+    const modal = document.querySelector(modalId);
+    if (!modal) return;
+
+    const confirmBtn = modal.querySelector('.confirm-delete');
+    const cancelBtn = modal.querySelector('.cancel-delete');
+    const imageFile = document.querySelector('#image');
+    let currentId = null;
+
+    document.querySelectorAll(deleteBtnClass).forEach(button => {
+        button.addEventListener('click', () => {
+            currentId = button.getAttribute('data-id');
+            modal.style.display = 'flex';
         });
     });
 
-    /*Handle Form Submisson*/
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => modal.style.display = 'none');
+    }
 
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', async () => {
+            if (!currentId) return;
+
+          
+            const formData = new FormData();
+            formData.append('id', currentId);  
+            formData.append('image', imageFile);  
+
+      
+
+            try {
+              
+                const res = await fetch(deleteUrlBuilder(currentId), {
+                    method: 'POST',
+                    body: formData  
+                });
+
+                if (res.ok) {
+                    modal.style.display = 'none';
+                    window.location.reload();
+                } else {
+                    const data = await res.json();
+                    console.error('Delete failed:', data);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+}
+
+function initDeleteModals() {
+    deleteModal('.btn-delete-client', '#deleteClientModal', (id) => `/Client/DeleteClient/${id}`);
+    deleteModal('.btn-delete-project', '#deleteProjectModal', (id) => `/Project/DeleteProject/${id}`);
+    deleteModal('.btn-delete-member', '#deleteMemberModal', (id) => `/Member/DeleteMember/${id}`);
+}
+
+
+
+    /*Handle Form Submisson*/
+function initForms() { 
     const forms = document.querySelectorAll('form')
     forms.forEach(form => {
     form.addEventListener("submit", async (e) => {
@@ -88,11 +141,11 @@
 
         const formData = new FormData(form)
 
-        const method = form.getAttribute("data-method") || "post";
+        //const method = form.getAttribute("data-method") || "post";
 
         try {
             const res = await fetch(form.action, {
-                method: method.toUpperCase(),
+                method: 'post',
                 body: formData
             });
 
@@ -108,6 +161,7 @@
             if (res.status === 400) {
                 const data = await res.json()
                 if (data.errors) {
+
                     Object.keys(data.errors).forEach(key => {
                         const input = form.querySelector(`[name="${key}"]`)
 
@@ -131,7 +185,7 @@
         }
     })
     })
-})
+}
 
 function clearErrorMessage(form) {
     form.querySelectorAll('[data-val="true"]').forEach(input => {

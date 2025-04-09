@@ -140,6 +140,40 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
         }
 
     }
+
+    public virtual async Task<RepositoryResults<TEntity?>> GetEntityAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes)
+    {
+
+        try
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (includes != null && includes.Length != 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            var entity = await query.FirstOrDefaultAsync(where);
+
+
+            if (entity == null)
+                return RepositoryResults<TEntity?>.Failed(404, $"{nameof(TEntity)} not found");
+
+            return RepositoryResults<TEntity?>.Success(entity);
+        }
+        catch (Exception ex)
+        {
+            return RepositoryResults<TEntity?>.Failed(500, $"An error occurred: {ex.Message}");
+
+        }
+
+    }
+
+
+
     //Be om hjälp med denna! Den säger att det finns två med samma ID.. Vilket det ska finnas då det är samma som ska uppdateras...
     public virtual async Task<RepositoryResults<bool>> UpdateAsync(TEntity entity)
     {
