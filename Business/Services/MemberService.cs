@@ -4,6 +4,7 @@ using Business.Interfaces;
 using Business.Models;
 using Data.Entites;
 using Data.Interfaces;
+using Data.Repositories;
 using Domain.Dto;
 using Domain.Extensions;
 using Domain.Models;
@@ -48,9 +49,14 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
 
     }
 
-    public async Task<MemberResult> GetAllMembersAsync()
+    public async Task<ServiceResult<IEnumerable<Member>>> GetAllMembersAsync()
     {
         var result = await _memberRepository.GetAllAsync();
-        return result.MapTo<MemberResult>();
+        var members = result.Result?.Select(c => c.MapTo<Member>());
+
+        return ServiceResult<IEnumerable<Member>>.Success(members!);
     }
+
+
+
 }

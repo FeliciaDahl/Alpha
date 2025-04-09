@@ -68,7 +68,6 @@ public class ClientController : Controller
 
    
     [HttpPost]
-    [ValidateAntiForgeryToken]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> EditClient(int id, [FromForm] ClientEditViewModel model)
     {
@@ -97,24 +96,9 @@ public class ClientController : Controller
 
     }
 
-  //[HttpGet]
-  //  public async Task<IActionResult> DeleteClient(int id)
-  //  {
 
-  //      var client = await _clientService.GetClientAsync(id);
-
-  //      if (client == null)
-  //      {
-  //          return NotFound();
-  //      }
-
-  //      var model = client.Result?.MapTo<ClientEditViewModel>();
-
-  //      return Ok(model);
-  //  }
 
     [HttpPost]
-   
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> DeleteClient(int id)
     {

@@ -22,9 +22,16 @@ namespace WebApp.Controllers
             return View();
         }
 
-        public IActionResult Projects()
+        public async Task<IActionResult> Projects()
         {
-            return View();
+            var projectResult = await _projectService.GetAllProjectsAsync();
+            var viewModel = new ProjectViewModel
+            {
+                Projects = projectResult.Result!.ToList(),
+
+                ProjectRegistration = new ProjectRegistrationViewModel(),
+            };
+            return View(viewModel);
         }
 
 
@@ -33,7 +40,7 @@ namespace WebApp.Controllers
             var membersResult = await _memberService.GetAllMembersAsync();
             var viewModel = new MemberViewModel
             {
-                Members = membersResult.Result.ToList(),
+                Members = membersResult.Result!.ToList(),
 
                 MemberRegistration = new MemberRegistrationViewModel(),
             };
@@ -46,7 +53,7 @@ namespace WebApp.Controllers
 
             var viewModel = new ClientViewModel
             {
-                Clients = clientResult.Result.ToList(),
+                Clients = clientResult.Result!.ToList(),
 
                 ClientRegistration = new ClientRegistrationViewModel(),
 

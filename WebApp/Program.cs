@@ -18,12 +18,14 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IStatusService, StatusService>();
 
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<IMemberAdressRepository, MemberAdressRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IProjectMemberRepository, ProjectMemberRepository>();
+builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 
 
 
@@ -59,7 +61,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=Index}/{id?}")
+    pattern: "{controller=Admin}/{action=Projects}/{id?}")
     .WithStaticAssets();
 
 

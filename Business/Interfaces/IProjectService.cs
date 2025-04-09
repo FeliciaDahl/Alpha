@@ -1,9 +1,11 @@
 ﻿using Business.Models;
+using Domain.Models;
 
 namespace Business.Interfaces
 {
     public interface IProjectService
     {
-        Task<ProjectResult> GetAllProjectsAsync();
+        Task<ServiceResult<IEnumerable<Project>>> GetAllProjectsAsync();
+  
     }
 }

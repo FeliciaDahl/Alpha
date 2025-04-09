@@ -1,7 +1,7 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
 
     OpenCloseModals();
-    initEditClient();
+    EditClient();
     initDeleteModals();
     initForms();
 
@@ -37,8 +37,8 @@ function OpenCloseModals() {
         })
     })
 }
-/*  Open Clients EditModal  */
-function initEditClient() { 
+/*   Clients EditModal  */
+function EditClient() { 
     const editButtons = document.querySelectorAll('.btn-edit');
     editButtons.forEach(button => {
         button.addEventListener('click', async function () {
@@ -76,7 +76,7 @@ function deleteModal(deleteBtnClass, modalId, deleteUrlBuilder) {
 
     const confirmBtn = modal.querySelector('.confirm-delete');
     const cancelBtn = modal.querySelector('.cancel-delete');
-    const imageFile = document.querySelector('#image');
+    const imageFile = document.querySelector('.image');
     let currentId = null;
 
     document.querySelectorAll(deleteBtnClass).forEach(button => {
@@ -125,7 +125,6 @@ function deleteModal(deleteBtnClass, modalId, deleteUrlBuilder) {
 function initDeleteModals() {
     deleteModal('.btn-delete-client', '#deleteClientModal', (id) => `/Client/DeleteClient/${id}`);
     deleteModal('.btn-delete-project', '#deleteProjectModal', (id) => `/Project/DeleteProject/${id}`);
-    deleteModal('.btn-delete-member', '#deleteMemberModal', (id) => `/Member/DeleteMember/${id}`);
 }
 
 

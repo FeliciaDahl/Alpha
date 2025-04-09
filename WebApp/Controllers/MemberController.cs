@@ -1,4 +1,5 @@
 ﻿using Business.Interfaces;
+using Business.Services;
 using Domain.Dto;
 using Domain.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -42,5 +43,6 @@ public class MemberController(IMemberService memberService) : Controller
 
         return BadRequest(new { sucess = false });
     }
+
 }
 

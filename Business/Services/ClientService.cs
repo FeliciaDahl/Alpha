@@ -19,7 +19,7 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
     public async Task<ServiceResult<Client>> CreateClientAsync(ClientRegistrationForm form)
     {
-        //Onödig validering?
+        
         if (string.IsNullOrWhiteSpace(form.ClientName))
             return ServiceResult<Client>.Failed(400, "Client name can not be empty");
         
@@ -118,15 +118,17 @@ public class ClientService(IClientRepository clientRepository) : IClientService
             
         var client  = result.Result?.MapTo<Client>();
 
-        if(!result.Succeeded)
-            return ServiceResult<Client>.Failed(404, "Client not found");
+        return result.Succeeded
+            ? ServiceResult<Client>.Success(client!)
+            : ServiceResult<Client>.Failed(result.StatusCode, "Client not found");
 
-        return ServiceResult<Client>.Success(client);
     }
 
-    public async Task<ClientResult> GetAllClientsAsync()
+    public async Task<ServiceResult<IEnumerable<Client>>> GetAllClientsAsync()
     {
         var result = await _clientRepository.GetAllAsync();
-        return result.MapTo<ClientResult>();
+        var clients = result.Result?.Select(c => c.MapTo<Client>());
+
+        return ServiceResult<IEnumerable<Client>>.Success(clients!);
     }
 }

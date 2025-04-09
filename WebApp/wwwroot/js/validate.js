@@ -48,8 +48,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-function initEditModals() {
-    registerEditModal('.btn-edit-client', '#editClientModal', (id) => `/Client/EditClient/${id}`);
-    registerDeleteModal('.btn-edit-project', '#editProjectModal', (id) => `/Project/EditProject/${id}`);
-    registerDeleteModal('.btn-edit-member', '#editMemberModal', (id) => `/Member/EditMember/${id}`);
-}
+

@@ -10,6 +10,6 @@ namespace Business.Interfaces
         Task<ServiceResult<bool>> DeleteClientAsync(int id);
         Task<ServiceResult<bool>> EditClientAsync(int id, ClientEditForm form);
         Task<ServiceResult<Client>> GetClientAsync(int id);
-        Task<ClientResult> GetAllClientsAsync();
+        Task<ServiceResult<IEnumerable<Client>>> GetAllClientsAsync();
     }
 }

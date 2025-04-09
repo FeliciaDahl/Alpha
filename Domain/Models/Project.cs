@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Models;
+﻿namespace Domain.Models;
 
 public class Project
 {
@@ -19,16 +11,16 @@ public class Project
    
     public DateTime StartDate { get; set; }
 
-
     public DateTime EndDate { get; set; }
-
 
     public decimal? Budget { get; set; }
 
     public DateTime Created { get; set; } 
 
-    public int ClientId { get; set; }
+    public Client Client { get; set; } = null!;
 
-    public int StatusId { get; set; }
-   
+    public Status Status { get; set; } = null!;
+
+    public ProjectMember ProjectMember { get; set; } = null!;
+
 }

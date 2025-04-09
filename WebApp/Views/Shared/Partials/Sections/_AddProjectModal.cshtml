@@ -1,1 +1,75 @@
-﻿
+﻿@model ProjectRegistrationViewModel
+
+<div id="addProjectModal" class="modal client-modal">
+
+    <div class="modal-content">
+        <div class="modal-head">
+            <h3>Add Project</h3>
+            <button class="close-btn" data-close="true"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <form asp-action="AddProject" asp-controller="Projects" method="post" novalidate>
+
+
+            @*  LÄGG TILL JS FÖR BILDER! *@
+            <div class="image-previewer circle">
+                <img src="" class="image-preview" />
+                <input asp-for="Image" accept="image/*" class="hide" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <div class="field-group">
+                    <input asp-for="Title" />
+                    <span asp-validation-for="Title"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <div class="field-group">
+                    <input asp-for="Description" />
+                    <span asp-validation-for="Description"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate"></label>
+                <div class="field-group">
+                    <input asp-for="StartDate" />
+                    <span asp-validation-for="StartDate"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate"></label>
+                <div class="field-group">
+                    <input asp-for="EndDate" />
+                    <span asp-validation-for="EndDate"> </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Budget"></label>
+                <div class="field-group">
+                    <input asp-for="Budget" />
+                    <span asp-validation-for="Budget"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit btn-standard mt-3">Add Project</button>
+        </form>
+    </div>
+</div>
+        @* public string? Image { get; set; }
+
+        public string Title { get; set; } = null!;
+
+        public string? Description { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+
+        public decimal? Budget { get; set; }
+
+        public DateTime Created { get; set; }
+
+        public int ClientName { get; set; }
+
+        public int Status { get; set; } *@

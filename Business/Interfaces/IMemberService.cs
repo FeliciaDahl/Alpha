@@ -2,11 +2,10 @@
 using Domain.Dto;
 using Domain.Models;
 
-namespace Business.Interfaces
+namespace Business.Interfaces;
+
+public interface IMemberService
 {
-    public interface IMemberService
-    {
-        Task<ServiceResult<Member>> AddMember(MemberSignUpForm form);
-        Task<MemberResult> GetAllMembersAsync();
-    }
+    Task<ServiceResult<Member>> AddMember(MemberSignUpForm form);
+    Task<ServiceResult<IEnumerable<Member>>> GetAllMembersAsync();
 }

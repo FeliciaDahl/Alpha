@@ -26,7 +26,7 @@ public class AuthenticationService : IAuthenticationService
             return ServiceResult<bool>.Failed(400, "Form can not be empty");
         }
         var memberEntity = MemberFactory.ToEntity(form);
-        var result = await _userManager.CreateAsync(memberEntity, form.Password);
+        var result = await _userManager.CreateAsync(memberEntity, form.Password!);
         return ServiceResult<bool>.Success(true);
 
     }

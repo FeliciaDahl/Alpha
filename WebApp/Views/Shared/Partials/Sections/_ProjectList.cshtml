@@ -1,0 +1,36 @@
+﻿@* @using Domain.Models
+@model List<Project> *@
+
+
+<div class="project-list">
+
+@*     @foreach (var project in Model){ *@
+    
+        <div class="list-cards project-card">
+
+        <div class="card-top">
+            <div class="image"><img class="project-img" src="~/images/project-img.svg" alt="Project img" /></div>
+            <div class="project-actions"><i class="bi bi-three-dots"></i></div>
+            <div class="title"><h6>App Development</h6></div>
+            <div class="clientName">Nice AI INC</div>
+        </div>
+            
+         <div class="description">Development of apps for Nice AI</div>
+
+        <div class="card-bottom">
+            <div class="status">Started</div>
+            <div class="members">members list</div>
+        </div>
+    </div>
+
+</div>
+ @*    } *@
+
+
+@* @project.Title
+@project.ClientName
+@project.Description
+@project.ProjectStatus
+@project.ProjectMembers *@
+
+  

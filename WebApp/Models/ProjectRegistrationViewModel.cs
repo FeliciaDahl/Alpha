@@ -2,7 +2,6 @@
 
 public class ProjectRegistrationViewModel
 {
-    
 
         public string? Image { get; set; }
 
@@ -12,9 +11,7 @@ public class ProjectRegistrationViewModel
 
         public DateTime StartDate { get; set; }
 
-
         public DateTime EndDate { get; set; }
-
 
         public decimal? Budget { get; set; }
 
