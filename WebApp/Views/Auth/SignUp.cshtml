@@ -9,7 +9,7 @@
 
 <div id="signup" class="center-screen">
     <div class="card form-card">
-        <h1 class="pt-3 pb-2">@ViewData["Title"]</h1>
+        <h1>@ViewData["Title"]</h1>
 
     
         <button class="btn-grey mt-4 mb-2 btn-google"><img src="~/images/google-icon.svg"> Sign Up with Google</button>
@@ -20,7 +20,7 @@
 
         <form id="signup-form" asp-controller="Auth" asp-action="SignUp" method="post" novalidate>
 
-            <div class="mb-2 mt-2">
+            <div class="form-group">
                 <label asp-for="FirstName"></label>
                 <div class="field-group">
                     <input asp-for="FirstName" />
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="mb-3">
+            <div class="form-group">
                 <label asp-for="LastName"></label>
                 <div class="field-group">
                     <input asp-for="LastName"/>
@@ -36,21 +36,21 @@
                 </div>
             </div>
 
-            <div class="mb-3">
+            <div class="form-group">
                 <label asp-for="Email"></label>
                 <div class="field-group">
                     <input asp-for="Email" />
                     <span asp-validation-for="Email"></span>
                 </div>
             </div>
-            <div class="mb-3">
+            <div class="form-group">
                 <label asp-for="Password"></label>
                 <div class="field-group">
                     <input asp-for="Password"  />
                     <span asp-validation-for="Password"></span>
                 </div>
             </div>
-            <div class="mb-3">
+            <div class="form-group">
                 <label asp-for="ConfirmPassword"></label>
                 <div class="field-group">
                     <input asp-for="ConfirmPassword"/>

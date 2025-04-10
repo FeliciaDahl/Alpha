@@ -10,7 +10,7 @@
 
 <div id="signin" class="center-screen">
     <div class="card form-card">
-        <h1 class="pt-5">@ViewData["Title"]</h1>
+        <h1>@ViewData["Title"]</h1>
 
         <button class="btn-grey mt-4 btn-google"><img src="~/images/google-icon.svg"> Login with google</button>
 
@@ -20,7 +20,7 @@
 
         <form id="signin-form" asp-action="SignIn" asp-asp-controller="Auth" method="post" novalidate >
         
-            <div class="mb-3 mt-3">
+            <div class="form-group">
                 <label asp-for="Email"></label>
                 <div class="field-group">
                     <input asp-for="Email"/>
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="mb-3">
+            <div class="form-group">
                 <label asp-for="Password"></label>
                 <div class="field-group">
                     <input asp-for="Password" />
