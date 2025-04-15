@@ -1,54 +1,65 @@
-﻿@model ProjectRegistrationViewModel
+﻿@model ProjectViewModel
 
-<div id="addProjectModal" class="modal client-modal">
+<div id="addProjectModal" class="modal ">
 
     <div class="modal-content">
         <div class="modal-head">
             <h3>Add Project</h3>
             <button class="close-btn" data-close="true"><i class="bi bi-x-lg"></i></button>
         </div>
-        <form asp-action="AddProject" asp-controller="Projects" method="post" novalidate>
+        <form asp-action="AddProject" asp-controller="Project" method="post" novalidate>
 
 
             @*  LÄGG TILL JS FÖR BILDER! *@
             <div class="image-previewer circle">
                 <img src="" class="image-preview" />
-                <input asp-for="Image" accept="image/*" class="hide" />
+                <input asp-for="@Model.ProjectRegistration.Image" accept="image/*" class="hide" />
             </div>
 
             <div class="form-group">
-                <label asp-for="Title"></label>
+                <label asp-for="@Model.ProjectRegistration.Title"></label>
                 <div class="field-group">
-                    <input asp-for="Title" />
-                    <span asp-validation-for="Title"></span>
+                    <input asp-for="@Model.ProjectRegistration.Title" />
+                    <span asp-validation-for="@Model.ProjectRegistration.Title"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.ProjectRegistration.ClientId"></label>
+                <select asp-for="@Model.ProjectRegistration.ClientId" asp-items="@Model.ClientList" class="form-select">
+                  <option value="">Choose client</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.ProjectRegistration.Description"></label>
+                <div class="field-group">
+                    <textarea asp-for="@Model.ProjectRegistration.Description"></textarea>
+                    <span asp-validation-for="@Model.ProjectRegistration.Description"></span>
+                </div>
+            </div>
+            <div class="form-date-group">
+            <div class="form-group">
+                    <label asp-for="@Model.ProjectRegistration.StartDate"></label>
+                <div class="field-group">
+                        <input asp-for="@Model.ProjectRegistration.StartDate" type="date" />
+                        <span asp-validation-for="@Model.ProjectRegistration.StartDate"></span>
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="Description"></label>
+                    <label asp-for="@Model.ProjectRegistration.EndDate"></label>
                 <div class="field-group">
-                    <input asp-for="Description" />
-                    <span asp-validation-for="Description"></span>
+                        <input asp-for="@Model.ProjectRegistration.EndDate" type="date" />
+                        <span asp-validation-for="@Model.ProjectRegistration.EndDate"> </span>
                 </div>
             </div>
-            <div class="form-group">
-                <label asp-for="StartDate"></label>
-                <div class="field-group">
-                    <input asp-for="StartDate" />
-                    <span asp-validation-for="StartDate"></span>
-                </div>
             </div>
+         
             <div class="form-group">
-                <label asp-for="EndDate"></label>
+                <label asp-for="@Model.ProjectRegistration.Budget"></label>
                 <div class="field-group">
-                    <input asp-for="EndDate" />
-                    <span asp-validation-for="EndDate"> </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Budget"></label>
-                <div class="field-group">
-                    <input asp-for="Budget" />
-                    <span asp-validation-for="Budget"></span>
+                    <input asp-for="@Model.ProjectRegistration.Budget" />
+                    <span asp-validation-for="@Model.ProjectRegistration.Budget"></span>
                 </div>
             </div>
 

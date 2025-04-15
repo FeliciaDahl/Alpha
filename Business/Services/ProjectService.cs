@@ -20,18 +20,17 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
     {
 
         if (form == null)
-           return ServiceResult<Project>.Failed(400, "Form can not be empty");
+           return ServiceResult<Project>.Failed(400, "All required filed has to be filled in.");
       
         await _projectRepository.BeginTransactionAsync();
 
         try
-        {
-            var projectEntity = form.MapTo<ProjectEntity>();
-            var statusId = await _statusService.GetStatusByIdAsync(1);
+        { var statusId = await _statusService.GetStatusByIdAsync(1);
             var status = statusId.Result;
 
-            projectEntity.StatusId = status!.Id;
-
+            form.StatusId = status!.Id;
+            var projectEntity = form.MapTo<ProjectEntity>();
+           
             await _projectRepository.AddAsync(projectEntity);
             await _projectRepository.SaveAsync();
 

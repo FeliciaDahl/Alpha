@@ -31,8 +31,9 @@ public class StatusService(IStatusRepository statusRepository) : IStatusService
 
         var status = result.Result?.MapTo<Status>();
         return result.Succeeded
-            ? ServiceResult<Status>.Failed(result.StatusCode, "Client not found")
-            : ServiceResult<Status>.Success(status!);
+
+            ? ServiceResult<Status>.Success(status!)
+            : ServiceResult<Status>.Failed(result.StatusCode, "Status not found");
     }
 
     public async Task<ServiceResult<Status>> GetStatusByNameAsync(string statusName)
@@ -41,7 +42,7 @@ public class StatusService(IStatusRepository statusRepository) : IStatusService
 
         var status = result.Result?.MapTo<Status>();
         return result.Succeeded
-            ? ServiceResult<Status>.Failed(result.StatusCode, "Client not found")
-            : ServiceResult<Status>.Success(status!);
+            ? ServiceResult<Status>.Success(status!)
+            : ServiceResult<Status>.Failed(result.StatusCode, "Status not found");
     }
 }

@@ -23,7 +23,6 @@ public class ClientController : Controller
     }
 
  
-
     [HttpPost]
     public async Task<IActionResult> AddClient(ClientRegistrationViewModel model)
     {
@@ -38,7 +37,6 @@ public class ClientController : Controller
             return BadRequest(new {sucess =false, errors });
         }
             
-
         var registrationForm = model.MapTo<ClientRegistrationForm>();
 
         var result = await _clientService.CreateClientAsync(registrationForm);

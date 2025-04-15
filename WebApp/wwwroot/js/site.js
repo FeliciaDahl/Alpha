@@ -196,5 +196,18 @@ function clearErrorMessage(form) {
     })
 }
 
+const dropdowns = document.querySelectorAll('[data-type="dropdown"]')
+dropdowns.forEach(dropdown => {
+    
+    dropdown.addEventListener('click', () => {
+        const targetId = dropdown.getAttribute('data-target')
+        console.log(targetId)
+        const targetElement = document.querySelector(targetId)
 
+            if (targetElement) {
+                targetElement.classList.toggle('dropdown-show')
+            }
+        })
+    
+})
 

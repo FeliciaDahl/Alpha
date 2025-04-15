@@ -8,21 +8,19 @@
         <button type="button" data-type="dropdown" data-target="#notifications-dropdown" class="btn-notification">
             <i class="bi bi-bell-fill"></i>
         </button>
-        <div id="notifications-dropdown" class="dropdown hide">
+        <div id="notifications-dropdown" class="dropdown">
             <div class="dropdown-header">
                 <h4>Notifications</h4>
             </div>
             <div class="dropdown-body">
-                <a href="#" class="dropdown-item">Notification 1</a>
-                <a href="#" class="dropdown-item">Notification 2</a>
-                <a href="#" class="dropdown-item">Notification 3</a>
+              
             </div>
         </div>
 
 
     </div>
-    <div class="settings">
-        <a href="#"><i class="bi bi-gear-fill"></i></a>
+    <div class="settings ">
+        <a class="btn-setting" href="#"><i class="bi bi-gear-fill"></i></a>
     </div>
 
     <div class="break">|</div>
@@ -40,8 +38,8 @@
             </div>
           
             <div class="dropdown-body">
-                <a href="#" class="dropdown-item">Profile</a>
-                <a href="#" class="dropdown-item">Settings</a>
+                <a class=" dropdown-aciton" asp-controller="Auth" asp-action="SignOut"><i class="bi bi-box-arrow-right"></i>Dark Mode</a>
+                
                 <div class="separator"></div>
                 <a class="btn-logout dropdown-aciton" asp-controller="Auth" asp-action="SignOut"><i class="bi bi-box-arrow-right"></i>Log Out</a>
             </div>

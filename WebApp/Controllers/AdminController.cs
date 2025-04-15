@@ -5,7 +5,9 @@ using Domain.Extensions;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Localization;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -16,7 +18,8 @@ namespace WebApp.Controllers
         private readonly IClientService _clientService = clientService;
         private readonly IMemberService _memberService = memberService;
         private readonly IProjectService _projectService = projectService;
-
+ 
+      
         public IActionResult Index()
         {
             return View();
@@ -24,13 +27,12 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> Projects()
         {
-            var projectResult = await _projectService.GetAllProjectsAsync();
-            var viewModel = new ProjectViewModel
-            {
-                Projects = projectResult.Result!.ToList(),
+            var viewModel = new ProjectViewModel(_clientService, _projectService);
 
-                ProjectRegistration = new ProjectRegistrationViewModel(),
-            };
+            await viewModel.LoadProjectListAsync();
+            await viewModel.LoadClientListAsync();
+         
+
             return View(viewModel);
         }
 

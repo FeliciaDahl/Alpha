@@ -1,11 +1,12 @@
 ﻿using Business.Models;
+using Domain.Dto;
 using Domain.Models;
 
-namespace Business.Interfaces
+namespace Business.Interfaces;
+
+public interface IProjectService
 {
-    public interface IProjectService
-    {
-        Task<ServiceResult<IEnumerable<Project>>> GetAllProjectsAsync();
-  
-    }
+    Task<ServiceResult<Project>> CreateProjectAsync(ProjectRegistrationForm form);
+    Task<ServiceResult<IEnumerable<Project>>> GetAllProjectsAsync();
+    Task<ServiceResult<Project>> GetProjectAsync(int id);
 }

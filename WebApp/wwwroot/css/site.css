@@ -85,6 +85,9 @@
     --dropdown-account-name-background: var(--grey-200);
     --dropdown-account-img-border: var(--white-100);
     --separator: var(--border-200);
+
+    --form-input-border: var(--border-100);
+    --form-input-border-focus: var(--accent);
 }
 
     [data-theme="dark"]
@@ -309,17 +312,28 @@ h6 {
     }
 
 /*FORMS*/
-form input {
+
+.form-group {
+    width: 100%;
+}
+form input,
+form textarea {
     width: 100%;
     padding: 0.5rem;
-    border: 1px solid var(--border-100);
+    border: 1px solid var(--form-input-border);
     border-radius: 8px;
     font-size: 0,8rem;
 }
     form input:active,
     form input:focus {
         outline: none;
-        box-shadow: 0 0 5px var(--accent);
+        box-shadow: 0 0 5px var(--form-input-border-focus);
+    }
+
+    textarea:active,
+    textarea:focus {
+        outline: none;
+        box-shadow: 0 0 5px var(--form-input-border-focus);
     }
 
 form label {
@@ -341,11 +355,33 @@ form input[type="checkbox"] {
         box-shadow: 0 0 5px var(--accent);
     }
 
-/*FORM VALIDATION-ERROR*/
-form .field-validation-error {
-    color: var(--red);
-    font-size: 14px;
+.form-select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--form-input-border);
+    border-radius: 8px;
+    font-size: 0,8rem;
 }
+    .form-select:active,
+    .form-select:focus {
+        outline: none;
+        box-shadow: 0 0 5px var(--form-input-border-focus);
+    }
+
+
+.form-date-group {
+    display: flex;
+    gap:1rem;
+    justify-content:space-evenly;
+}
+  
+
+
+    /*FORM VALIDATION-ERROR*/
+    form .field-validation-error {
+        color: var(--red);
+        font-size: 14px;
+    }
 
 form .input-validation-error {
     background-color: var(--red-10);
@@ -511,6 +547,12 @@ form .input-validation-error {
         .icon-nav .btn-notification:hover {
             color: var(--text-light);
         }
+.btn-setting {
+    color: var(--text-dark);
+}
+    .btn-setting:hover {
+        color: var(--text-light);
+    }
 
 .btn-notification {
     border: none;
@@ -559,6 +601,7 @@ main {
 
 /*DROPDOWN*/
 .dropdown {
+    display:none;
     position: absolute;
     z-index:100;
     right: 0;
@@ -571,6 +614,11 @@ main {
     box-shadow: var(--box-shadow);
 }
 
+    .dropdown-show {
+        display: block;
+       
+    }
+
 .dropdown-aciton {
    display:flex;
     width: 100%;
@@ -579,6 +627,8 @@ main {
     color: var(--side-nav-text-color);
     border-radius: 12px;
 }
+
+
 
     .dropdown-aciton:hover,
     .dropdown-aciton:focus {
