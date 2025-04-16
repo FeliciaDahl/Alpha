@@ -19,7 +19,9 @@
     --size-tablet: 768px;
     --size-desktop: 992px;
     --box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
-  
+    --border-100: #EBEEF2;
+    --border-200: #E3E5E8;
+    --border-300: #C6C8CC;
     --white-100: #FFFFFF;
     --white-200: #F1F3F7;
     --grey-100: #F5F7FA;
@@ -28,15 +30,14 @@
     --grey-400: #E3E5E8;
     --grey-500: #E8E8E8;
     --grey-600: #9E9E9E;
+    --grey-700: 3333333;
+    --grey-700-77: rgba(51, 51, 51, 0.77);
     --dark-200: #637085;
     --dark-300: #38383B;
     --dark-400: #28263B;
     --dark-500: #202123;
     --dark-600: #1A1926;
     --dark-600-30: rgba(26, 25, 38, 0.30);
-    --border-100: #EBEEF2;
-    --border-200: #E3E5E8;
-    --border-300: #C6C8CC;
     --yellow: #FFD422;
     --yellow-dark: #FCBB42;
     --orange: #FF9640;
@@ -54,40 +55,54 @@
     --accent-dark: #2682D9;
     --purple: #826AF9;
     --purple-dark: #634CD4;
+    /*BACKGROUND*/
     --background: var(--white-200);
     --surface: var(--white-100);
-    --border: var(--border-200));
+    --list-card-background-color: var(--white-100);
+    /*TEXT*/
     --headline-color: var(--dark-600);
     --text-light: var(--dark-200);
     --text-dark: var(--dark-400);
+    --list-card-text-color: var(--dark-600);
+    /*BORDERS*/
+    --border: var(--border-200);
+    --form-input-border: var(--border-100);
+    --form-input-border-focus: var(--accent);
+    /*BUTTONS*/
     --btn-standard-text-color: var(--white-100);
     --btn-standard-bg-color: var(--accent);
     --btn-standard-border-color: var(--white-100);
-    --btn-grey-text-color: var(--headline-color);
+    --btn-grey-text-color: var(--dark-600);
     --btn-grey-bg-color: var(--grey-100);
     --btn-grey-border-color: var(--grey-100);
     --btn-grey-bg-hover-color: var(--grey-300);
-    --side-nav-text-color: var (--headline-color);
+    /*SIDE NAVIGATION*/
+    --side-nav-text-color: var(--dark-600);
     --side-nav-text-hover-color: var(--accent);
     --side-nav-background-hover-color: var(--accent-10);
+    /*TABLE*/
     --table-background: var(--white-100);
     --table-head-background-color: var(--white-200);
     --table-head-text-color: var(--dark-200);
     --table-tbody-row-background-hover-color: var(--accent-10);
+    /*STATUS-BADGES*/
     --status-badge-text-active: var(--green);
     --status-badge-background-active: var(--green-10);
+    --status-background-completed: var(--green-10);
+    /*MODALS*/
     --modal-screen-background: var(--dark-600-30);
     --modal-background-color: var(--white-100);
-    --list-card-background-color: var(--white-100);
-    --list-card-text-color: var (--headline-color);
-    --status-background-completed: var(--green-10);
+    /*DROPDOWNS*/
     --dropdown-background: var(--white-100);
     --dropdown-border: var(--border-200);
     --dropdown-account-name-background: var(--grey-200);
     --dropdown-account-img-border: var(--white-100);
     --separator: var(--border-200);
-    --form-input-border: var(--border-100);
-    --form-input-border-focus: var(--accent);
+    /*FROMS*/
+    /*IMAGE*/
+    --img-background-grey: var(--grey-700-77);
+    --img-border-grey: var(--border-300);
+    --img-icon-color-grey: var(--grey-300);
 }
 
     [data-theme="dark"]
@@ -126,6 +141,14 @@ html, body {
     justify-content: center;
     align-items: center;
     height: 100%;
+}
+
+.hide {
+
+    display:none;
+}
+.show {
+    display:block;
 }
 
 /*TYPOGAPHY*/
@@ -244,6 +267,36 @@ h6 {
 .btn-submit {
     width: 100%;
 }
+
+/* SEPARATOR */
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    margin: 0.5rem 0;
+}
+
+    .separator::before,
+    .separator::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid var(--separator);
+    }
+
+    .separator:not(:empty)::after {
+        margin-left: 1rem;
+    }
+
+    .separator:not(:empty)::before {
+        margin-right: 1rem;
+    }
+
+    .separator span {
+        color: var(--text-light);
+        font-size: 12px;
+    }
    
     /*MODAL*/
 .modal {
@@ -307,11 +360,20 @@ h6 {
     .image-previewer:hover {
         border: 1px solid var(--border-300);
     }
-    .hide {
-        display: none;
-    }
+  
 
 /*FORMS*/
+
+.form-card {
+    background-color: var(--surface);
+    border: none;
+    width: 500px;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
+}
 
 .form-group {
     width: 100%;
@@ -374,14 +436,13 @@ form input[type="checkbox"] {
     gap:1rem;
     justify-content:space-evenly;
 }
-  
 
+ /*FORM VALIDATION-ERROR*/
 
-    /*FORM VALIDATION-ERROR*/
-    form .field-validation-error {
-        color: var(--red);
-        font-size: 14px;
-    }
+form .field-validation-error {
+    color: var(--red);
+    font-size: 14px;
+}
 
 form .input-validation-error {
     background-color: var(--red-10);
@@ -392,20 +453,44 @@ form .input-validation-error {
     content: "-";
 }
 
-/*FORMS SIGN IN AND OUT*/
 
-.form-card {
-   
-    background-color: var(--surface);
-    border: none;
-    width: 500px;
-    border-radius: 16px;
+/* IMAGE */
+
+.image-preview-container {
+    display: flex;
+    padding: 1rem;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
-    box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
+    width: 130px;
+    height: 130px;
+    margin: auto;
+    border-radius: 30%;
+    border: 2px dashed var(--img-border-grey);
+
 }
 
+    #image-container i {
+        font-size: 20px;
+        color: var(--grey-400);
+        align-content: center;
+    }
+
+.circle {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+  .circle-grey {
+        background-color: var(--dark-200);
+       
+    }
+
+
+
+/*FORMS SIGN IN AND OUT*/
 .btn-google {
     display: grid;
     align-items: center;
@@ -414,31 +499,6 @@ form .input-validation-error {
     width: 100%;
     padding-left: 0.8rem;
 }
-
-.separator {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    margin: 0.5rem 0;
-}
-    .separator::before,
-    .separator::after {
-        content: "";
-        flex: 1;
-        border-bottom: 1px solid var(--separator); 
-    }
-    .separator:not(:empty)::after {
-       margin-left: 1rem;
-    }
-    .separator:not(:empty)::before {
-        margin-right: 1rem;
-    }
-    .separator span {
-        color: var(--text-light);
-        font-size: 12px;
-    }
-
 
 #signup-form {
     width: 100%;
@@ -616,7 +676,6 @@ main {
 
     .dropdown-show {
         display: block;
-       
     }
 
 .dropdown-action {
@@ -636,17 +695,17 @@ main {
         cursor:pointer;
     }
 
-     .btn-logout {
-         display:flex;
-         gap: 1rem;
-     }
+.btn-logout {
+    display:flex;
+    gap: 1rem;
+}
 
-    .dropdown-header {
-        display: flex;
-        justify-content: center;
-        margin: 0.3rem;
-        align-items: center;
-    }
+.dropdown-header {
+    display: flex;
+    justify-content: center;
+    margin: 0.3rem;
+    align-items: center;
+}
 .dropdown-body {
     margin:0.3rem;
 }
@@ -686,6 +745,7 @@ main {
     }
 
 /*TABLES*/
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -917,10 +977,10 @@ table tbody a {
     right: 25px;
 }
 
-.member-actions:hover {
-    cursor:pointer;
-    color: var(--text-light);
-}
+    .member-actions:hover {
+        cursor:pointer;
+        color: var(--text-light);
+    }
 
 
     .member-card .name {
