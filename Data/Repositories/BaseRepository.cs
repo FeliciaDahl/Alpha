@@ -141,6 +141,46 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
 
     }
 
+    public virtual async Task<RepositoryResults<IEnumerable<TEntity>>> GetAllEntitiesAsync(bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes)
+    {
+
+        try
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (where != null)
+                query = query.Where(where);
+
+            if (includes != null && includes.Length != 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            if (sortBy != null)
+            {
+                if (orderByDescending)
+                    query = query.OrderByDescending(sortBy);
+                else
+                    query = query.OrderBy(sortBy);
+            }
+
+            var entities = await query.ToListAsync();
+
+          
+            return RepositoryResults<IEnumerable<TEntity>>.Success(entities);
+
+        }
+        catch (Exception ex)
+        {
+            return RepositoryResults<IEnumerable<TEntity>>.Failed(500, $"An error occurred: {ex.Message}");
+
+        }
+    }
+
+
     public virtual async Task<RepositoryResults<TEntity?>> GetEntityAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes)
     {
 
@@ -174,7 +214,7 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
 
 
 
-    //Be om hjälp med denna! Den säger att det finns två med samma ID.. Vilket det ska finnas då det är samma som ska uppdateras...
+    
     public virtual async Task<RepositoryResults<bool>> UpdateAsync(TEntity entity)
     {
         try

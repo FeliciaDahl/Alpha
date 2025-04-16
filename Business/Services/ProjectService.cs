@@ -1,4 +1,5 @@
 ﻿
+using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
 using Data.Entites;
@@ -36,8 +37,8 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
 
             await _projectRepository.CommitTransactionAsync();
 
-            var client = projectEntity.MapTo<Project>();
-            return ServiceResult<Project>.Success(client);
+            var project = projectEntity.MapTo<Project>();
+            return ServiceResult<Project>.Success(project);
         }
         catch (Exception e)
         {
@@ -50,13 +51,13 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
 
     public async Task<ServiceResult<IEnumerable<Project>>> GetAllProjectsAsync()
     {
-        var result = await _projectRepository.GetAllAsync(orderByDescending: true, sortBy: s => s.Created, where: null,
+        var result = await _projectRepository.GetAllEntitiesAsync(orderByDescending: true, sortBy: s => s.Created, where: null,
           x => x.ProjectMembers,
           x => x.Client,
           x => x.Status
           );
 
-        var projects = result.Result?.Select(p => p.MapTo<Project>());
+        var projects = result.Result?.Select(ProjectFactory.ToModel);
 
         return ServiceResult<IEnumerable<Project>>.Success(projects!);
     }

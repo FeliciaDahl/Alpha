@@ -12,6 +12,7 @@ namespace Data.Interfaces
         Task<RepositoryResults<bool>> DeleteAsync(TEntity entity);
         Task<RepositoryResults<bool>> ExistsAsync(Expression<Func<TEntity, bool>> predicate);
         Task<RepositoryResults<IEnumerable<TModel>>> GetAllAsync(bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null,Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes);
+        Task<RepositoryResults<IEnumerable<TEntity>>> GetAllEntitiesAsync(bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes);
         Task<RepositoryResults<TModel>> GetAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes);
         Task<RepositoryResults<TEntity?>> GetEntityAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes);
         Task RollbackTransactionAsync();

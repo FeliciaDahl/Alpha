@@ -9,9 +9,9 @@ public class Project
   
     public string? Description { get; set; }
    
-    public DateTime StartDate { get; set; }
+    public DateTime? StartDate { get; set; }
 
-    public DateTime EndDate { get; set; }
+    public DateTime? EndDate { get; set; }
 
     public decimal? Budget { get; set; }
 
@@ -19,6 +19,6 @@ public class Project
 
     public Status Status { get; set; } = null!;
 
-    public ProjectMember? ProjectMember { get; set; } = null!;
+    public List<Member> ProjectMembers { get; set; } = new();
 
 }
