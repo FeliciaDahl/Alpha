@@ -12,6 +12,7 @@ public class ProjectFactory
     {
         return new Project
         {
+            Id = entity.Id,
             Title = entity.Title,
             Image = entity.Image,
             Description = entity.Description,

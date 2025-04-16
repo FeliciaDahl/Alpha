@@ -12,6 +12,10 @@ public class ProjectViewModel
     private readonly IClientService _clientService;
     private readonly IProjectService _projectService;
 
+     public ProjectViewModel()
+     {
+     }
+
     public ProjectViewModel(IClientService clientService, IProjectService projectService)
     {
         _clientService = clientService;
@@ -20,9 +24,7 @@ public class ProjectViewModel
 
     }
 
-    public ProjectViewModel()
-    {
-    }
+   
 
     public List<Project> Projects { get; set; } = new();
     public ProjectRegistrationViewModel ProjectRegistration { get; set; } 

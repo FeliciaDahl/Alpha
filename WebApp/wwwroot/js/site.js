@@ -197,17 +197,39 @@ function clearErrorMessage(form) {
 }
 
 const dropdowns = document.querySelectorAll('[data-type="dropdown"]')
-dropdowns.forEach(dropdown => {
+
     
-    dropdown.addEventListener('click', () => {
-        const targetId = dropdown.getAttribute('data-target')
-        console.log(targetId)
+document.addEventListener('click', function (e) {
+
+    let clickedOnDropdown = false
+
+        dropdowns.forEach(dropdownBtn => {
+        const targetId = dropdownBtn.getAttribute('data-target')
         const targetElement = document.querySelector(targetId)
 
-            if (targetElement) {
-                targetElement.classList.toggle('dropdown-show')
+
+            if (dropdownBtn.contains(e.target)) {
+                clickedOnDropdown = true
+
+                document.querySelectorAll('.dropdown-show').forEach(openDropdown => {
+                    if (openDropdown !== targetElement) {
+                        openDropdown.classList.remove('dropdown-show')
+                    }
+                })
+                targetElement?.classList.toggle('dropdown-show')
+            }
+            else if (targetElement && targetElement.contains(e.target)) {
+                clickedOnDropdown = true
             }
         })
-    
+
+            if (!clickedOnDropdown) {
+                document.querySelectorAll('.dropdown-show').forEach(openDropdown => {
+                    openDropdown.classList.remove('dropdown-show')
+                })
+
+    }
 })
+
+
 
