@@ -196,9 +196,7 @@ function clearErrorMessage(form) {
     })
 }
 
-const dropdowns = document.querySelectorAll('[data-type="dropdown"]')
-
-    
+const dropdowns = document.querySelectorAll('[data-type="dropdown"]')   
 document.addEventListener('click', function (e) {
 
     let clickedOnDropdown = false
@@ -227,6 +225,37 @@ document.addEventListener('click', function (e) {
                 document.querySelectorAll('.dropdown-show').forEach(openDropdown => {
                     openDropdown.classList.remove('dropdown-show')
                 })
+
+    }
+})
+
+const uploadTrigger = document.getElementById('upload-trigger')
+const fileInput = document.getElementById('file-upload')
+const imagePreview = document.getElementById('image-preview')
+const previewContainer = document.getElementById('image-container')
+const uploadIcon = document.getElementById('preview-camera') 
+const changeIcon = document.getElementById('preview-pencil') 
+
+uploadTrigger.addEventListener('click', function () {
+    fileInput.click()
+})
+
+fileInput.addEventListener('change', function (e) {
+    const file = e.target.files[0]
+
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+            imagePreview.src = e.target.result
+            imagePreview.classList.remove('hide')
+           
+            uploadIcon.classList.add('hide')
+            changeIcon.classList.remove('hide')
+            previewContainer.classList.add('image-change')
+
+        }
+
+        reader.readAsDataURL(file)
 
     }
 })

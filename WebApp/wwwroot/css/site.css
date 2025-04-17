@@ -102,7 +102,8 @@
     /*IMAGE*/
     --img-background-grey: var(--grey-700-77);
     --img-border-grey: var(--border-300);
-    --img-icon-color-grey: var(--grey-300);
+    --img-icon-color-grey: var(--grey-400);
+  
 }
 
     [data-theme="dark"]
@@ -461,32 +462,64 @@ form .input-validation-error {
     padding: 1rem;
     justify-content: center;
     align-items: center;
-    width: 130px;
-    height: 130px;
+    width: 150px;
+    height: 150px;
     margin: auto;
-    border-radius: 30%;
     border: 2px dashed var(--img-border-grey);
-
+    cursor: pointer;
+    position:relative;
+ 
 }
+
+#image-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-radius: inherit; 
+    z-index: 1;
+}
+
+    .preview-square {
+        border-radius: 30%;
+    }
+
+    .preview-circle {
+        border-radius: 50%;
+    }
+
 
     #image-container i {
         font-size: 20px;
-        color: var(--grey-400);
+        color: var(--img-icon-color-grey); 
         align-content: center;
     }
 
-.circle {
+
+.circle-grey {
     display: flex;
     align-content: center;
     justify-content: center;
     width: 48px;
     height: 48px;
     border-radius: 50%;
+    background-color: var(--img-background-grey);
+
 }
-  .circle-grey {
-        background-color: var(--dark-200);
-       
+
+    .circle-grey.image-change {
+        position: absolute;
+        bottom: 5px;
+        z-index: 10000;
     }
+
+
+
+
+
+
 
 
 

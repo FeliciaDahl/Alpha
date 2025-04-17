@@ -3,10 +3,29 @@ using Data.Entites;
 using Domain.Dto;
 using Domain.Models;
 
+
 namespace Business.Factories;
 
 public class ProjectFactory
 {
+    public static ProjectEntity Create(ProjectRegistrationForm form)
+    {
+        return new ProjectEntity
+        {
+          
+            Title = form.Title,
+            Image = form.ProjectImagePath,
+            Description = form.Description,
+            StartDate = form.StartDate,
+            EndDate = form.EndDate,
+            Budget = form.Budget,
+            ClientId = form.ClientId,
+            StatusId = form.StatusId,
+    
+        };
+        
+    }
+
 
     public static Project ToModel(ProjectEntity entity)
     {

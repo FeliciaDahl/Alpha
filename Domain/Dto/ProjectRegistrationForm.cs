@@ -6,7 +6,7 @@ namespace Domain.Dto;
 
 public class ProjectRegistrationForm
 {
-    public string? Image { get; set; }
+    public string? ProjectImagePath { get; set; }
 
     public string Title { get; set; } = null!;
 

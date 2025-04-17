@@ -7,6 +7,7 @@ using Data.Interfaces;
 using Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,7 @@ builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IStatusService, StatusService>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<IMemberAdressRepository, MemberAdressRepository>();

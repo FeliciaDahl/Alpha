@@ -9,7 +9,7 @@
     
         <div class="list-cards project-card">
         <div class="card-top">
-            <div class="image"><img class="project-img" src="~/images/project-img.svg" alt="Project img" /></div>
+                <div class="image"><img class="project-img" src="@Url.Content("~/" + project.Image)" alt="Project img" /></div>
 
                 <div class="dropdown-wrapper">
                 <button type="button" data-type="dropdown" data-target="#project-dropdown-@project.Id" class="project-actions">

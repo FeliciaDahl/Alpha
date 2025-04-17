@@ -30,8 +30,9 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
             var status = statusId.Result;
 
             form.StatusId = status!.Id;
-            var projectEntity = form.MapTo<ProjectEntity>();
-           
+            var projectEntity = ProjectFactory.Create(form);
+
+
             await _projectRepository.AddAsync(projectEntity);
             await _projectRepository.SaveAsync();
 

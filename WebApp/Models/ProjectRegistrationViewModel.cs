@@ -6,7 +6,9 @@ namespace WebApp.Models;
 public class ProjectRegistrationViewModel
 {
 
-    public string? Image { get; set; }
+    public IFormFile? ProjectImage { get; set; }
+
+    public string? ProjectImagePath { get; set; } = null!;
 
     [Required(ErrorMessage = "You must enter a title")]
     [DataType(DataType.Text)]
