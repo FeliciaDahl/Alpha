@@ -26,12 +26,14 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
         await _projectRepository.BeginTransactionAsync();
 
         try
-        { var statusId = await _statusService.GetStatusByIdAsync(1);
+
+        {  
+            var statusId = await _statusService.GetStatusByIdAsync(1);
             var status = statusId.Result;
 
             form.StatusId = status!.Id;
-            var projectEntity = ProjectFactory.Create(form);
 
+            var projectEntity = ProjectFactory.Create(form);
 
             await _projectRepository.AddAsync(projectEntity);
             await _projectRepository.SaveAsync();

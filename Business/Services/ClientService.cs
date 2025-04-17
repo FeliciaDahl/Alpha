@@ -1,4 +1,5 @@
 ﻿
+using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
 using Data.Entites;
@@ -31,8 +32,9 @@ public class ClientService(IClientRepository clientRepository) : IClientService
         await _clientRepository.BeginTransactionAsync();
 
         try
-        {
-            var clientEntity = form.MapTo<ClientEntity>();
+        { //FORTSÄTT HÄR- UPPDATERA CONTROLLER FOR BILD OSV -SOM PROJECT//
+            var clientEntity = ClientFactory.Create(form);
+
             await _clientRepository.AddAsync(clientEntity);
             await _clientRepository.SaveAsync();
 

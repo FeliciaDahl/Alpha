@@ -5,7 +5,8 @@ namespace WebApp.Models;
 
 public class ProjectRegistrationViewModel
 {
-
+    [Display(Name = "Project Image", Prompt = "Enter image")]
+    [DataType(DataType.Upload)]
     public IFormFile? ProjectImage { get; set; }
 
     public string? ProjectImagePath { get; set; } = null!;

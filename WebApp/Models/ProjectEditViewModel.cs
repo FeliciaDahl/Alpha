@@ -1,9 +1,16 @@
-﻿namespace WebApp.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebApp.Models;
 
 public class ProjectEditViewModel
 {
     public int Id { get; set; }
-    public string? Image { get; set; }
+
+    [Display(Name = "Project Image", Prompt = "Enter image")]
+    [DataType(DataType.Upload)]
+    public IFormFile? ProjectImage { get; set; }
+
+    public string? ProjectImagePath { get; set; } = null!;
 
     public string Title { get; set; } = null!;
 
