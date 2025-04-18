@@ -32,7 +32,7 @@ public class ClientService(IClientRepository clientRepository) : IClientService
         await _clientRepository.BeginTransactionAsync();
 
         try
-        { //FORTSÄTT HÄR- UPPDATERA CONTROLLER FOR BILD OSV -SOM PROJECT//
+        { 
             var clientEntity = ClientFactory.Create(form);
 
             await _clientRepository.AddAsync(clientEntity);
@@ -60,6 +60,7 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
         var clientEntity = existingClientResult.Result;
 
+        
         clientEntity.ClientName = string.IsNullOrWhiteSpace(form.ClientName) ? clientEntity.ClientName : form.ClientName;
         clientEntity.ContactPerson = string.IsNullOrWhiteSpace(form.ContactPerson) ? clientEntity.ContactPerson : form.ContactPerson;
         clientEntity.Email = string.IsNullOrWhiteSpace(form.Email) ? clientEntity.Email : form.Email;

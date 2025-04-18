@@ -301,7 +301,7 @@ h6 {
    
     /*MODAL*/
 .modal {
-    display: flex;
+    display: none;
     background-color: var(--modal-screen-background);
     position: fixed;
     top: 0;

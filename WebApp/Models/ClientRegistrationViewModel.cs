@@ -11,7 +11,8 @@ public class ClientRegistrationViewModel
     [Display(Name = "Client Image", Prompt = "Enter image")]
     [DataType(DataType.Upload)]
     public IFormFile? ClientImage { get; set; }
-    public string ImagePath { get; set; } = null!;  
+
+    public string? ClientImagePath { get; set; } = null!;  
 
     [Required(ErrorMessage = "You must enter a name")]
     [DataType(DataType.Text)]

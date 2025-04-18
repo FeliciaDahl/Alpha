@@ -18,7 +18,6 @@ public class ProjectRegistrationForm
 
     public decimal? Budget { get; set; }
 
-
     public int ClientId { get; set; }
 
     public string ProjectMemberId { get; set; } = null!;

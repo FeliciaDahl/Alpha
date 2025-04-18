@@ -4,18 +4,16 @@ using Domain.Extensions;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
+using WebApp.Services;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApp.Controllers;
 
-public class ClientController : Controller
+public class ClientController(IClientService clientService, IFileService fileService) : Controller
 {
-    private readonly IClientService _clientService;
-   
-    public ClientController(IClientService clientService)
-    {
-        _clientService = clientService;
-    }
+    private readonly IClientService _clientService = clientService;
+
+    private readonly IFileService _fileService = fileService;
 
     public IActionResult Index()
     {
@@ -36,7 +34,13 @@ public class ClientController : Controller
                 );
             return BadRequest(new {sucess =false, errors });
         }
-            
+
+        if (model.ClientImage != null)
+        {
+            var filePath = await _fileService.SaveFileAsync(model.ClientImage, "clients");
+            model.ClientImagePath = filePath;
+        }
+
         var registrationForm = model.MapTo<ClientRegistrationForm>();
 
         var result = await _clientService.CreateClientAsync(registrationForm);

@@ -9,8 +9,16 @@
     
         <div class="list-cards project-card">
         <div class="card-top">
-                <div class="image"><img class="project-img" src="@Url.Content("~/" + project.Image)" alt="Project img" /></div>
 
+                @if (!string.IsNullOrEmpty(project.Image))
+                {
+                    <div class="image"><img class="project-img" src="@Url.Content("~/" + project.Image)" alt="Project image" /></div>
+                }
+                else
+                {
+                    <div class="image"><img class="project-img" src="~/images/project-img.svg" alt="Project image" /></div>
+                }
+                
                 <div class="dropdown-wrapper">
                 <button type="button" data-type="dropdown" data-target="#project-dropdown-@project.Id" class="project-actions">
                     <i class="bi bi-three-dots"></i>
