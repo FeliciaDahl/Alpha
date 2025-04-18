@@ -2,6 +2,7 @@
 
     OpenCloseModals();
     EditClient();
+    EditProject();
     initDeleteModals();
     initForms();
 
@@ -39,7 +40,7 @@ function OpenCloseModals() {
 }
 /*   Clients EditModal  */
 function EditClient() { 
-    const editButtons = document.querySelectorAll('.btn-edit');
+    const editButtons = document.querySelectorAll('.btn-edit-client');
     editButtons.forEach(button => {
         button.addEventListener('click', async function () {
             const clientId = this.getAttribute('data-id');
@@ -50,6 +51,7 @@ function EditClient() {
                 if (res.ok) {
                     const client = await res.json();
 
+                    document.querySelector('#clientImagePath').value = client.imagePath;
                     document.querySelector('#clientId').value = client.id;
                     document.querySelector('#clientName').value = client.clientName;
                     document.querySelector('#clientContact').value = client.contactPerson;
@@ -68,6 +70,41 @@ function EditClient() {
         });
     });
 }
+
+/*   Project EditModal  */
+
+function EditProject() {
+    const editButtons = document.querySelectorAll('.btn-edit');
+    editButtons.forEach(button => {
+        button.addEventListener('click', async function () {
+            const projectId = this.getAttribute('data-id');
+            if (!projectId) return;
+
+            try {
+                const res = await fetch(`/Project/EditProject?id=${projectId}`);
+                if (res.ok) {
+                    const project = await res.json();
+
+                    document.querySelector('#projectId').value = project.id;
+                    document.querySelector('#projectTitle').value = project.title;
+                    document.querySelector('#projectClientId').value = project.clientId;
+                    document.querySelector('#projectDescription').value = project.description;
+                    document.querySelector('#projectStart').value = project.startDate;
+                    document.querySelector('#projectEnd').value = project.endDate;
+                    document.querySelector('#projectBudget').value = project.budget;
+
+
+                }
+                else {
+                    console.error('Could not load data');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+}
+
 
 function deleteModal(deleteBtnClass, modalId, deleteUrlBuilder) {
 

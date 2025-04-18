@@ -60,7 +60,7 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
         var clientEntity = existingClientResult.Result;
 
-        
+        clientEntity.Image = string.IsNullOrWhiteSpace(form.ClientImagePath) ? clientEntity.Image : form.ClientImagePath;
         clientEntity.ClientName = string.IsNullOrWhiteSpace(form.ClientName) ? clientEntity.ClientName : form.ClientName;
         clientEntity.ContactPerson = string.IsNullOrWhiteSpace(form.ContactPerson) ? clientEntity.ContactPerson : form.ContactPerson;
         clientEntity.Email = string.IsNullOrWhiteSpace(form.Email) ? clientEntity.Email : form.Email;
@@ -74,8 +74,6 @@ public class ClientService(IClientRepository clientRepository) : IClientService
             await _clientRepository.UpdateAsync(clientEntity);
             await _clientRepository.SaveAsync();
             await _clientRepository.CommitTransactionAsync();
-
-           
 
             return ServiceResult<bool>.Success(true);
 

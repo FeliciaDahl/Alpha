@@ -1,0 +1,41 @@
+﻿@using Domain.Models
+@model List<Member>
+
+
+<div class="member-list">
+
+@foreach (var member in Model)
+{
+    <div class="list-cards member-card">
+            <div class="member-actions"><i class="bi bi-three-dots"></i></div>
+            <div class="image">
+                @if (!string.IsNullOrEmpty(member.Image))
+                {
+                    <img class="member-img" src="@Url.Content("~/" + member.Image)" alt="Project image" />
+                }
+                else
+                {
+                    <img class="member-img" src="~/images/avatar-member.svg" alt="Project image" />
+                }
+            </div>
+            <div class="name">@member.FirstName @member.LastName</div>
+           
+                @if (!string.IsNullOrEmpty(member.JobTitle))
+                { 
+                    <div class="jobtitle">
+                    <span>@member.JobTitle</span>
+                    </div>
+                }
+                else
+                {
+                <div class="jobtitle hide">
+                    <span>@member.JobTitle</span>
+                </div>
+                }
+        <div class="email">@member.Email</div>
+         <div class="phone">@member.PhoneNumber</div>
+    </div>
+}
+
+</div>
+    

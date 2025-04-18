@@ -4,7 +4,8 @@
     ViewData["Title"] = "Projects";
 }
 
-<partial name="Partials/Sections/_AddProjectModal" />
+<partial name="Partials/Sections/Project/_AddProjectModal" />
+<partial name="Partials/Sections/Project/_EditProjectModal"/>
 
 <section id="projects">
     <div class="page-header">
@@ -17,7 +18,7 @@
 
     <div class="client-table mt-4">
 
-        <partial name="Partials/Sections/_ProjectList" model="Model.Projects" />
+        <partial name="Partials/Sections/Project/_ProjectList" model="Model.Projects" />
 
     </div>
 </section>

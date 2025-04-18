@@ -21,13 +21,14 @@ public class ProjectViewModel
         _clientService = clientService;
         _projectService = projectService;
         ProjectRegistration = new ProjectRegistrationViewModel();
-
+        ProjectEdit = new ProjectEditViewModel();
     }
 
    
 
     public List<Project> Projects { get; set; } = new();
     public ProjectRegistrationViewModel ProjectRegistration { get; set; } 
+    public ProjectEditViewModel ProjectEdit { get; set; } = new();
     public List<SelectListItem> ClientList { get; set; } = new ();
 
     public async Task LoadProjectListAsync()

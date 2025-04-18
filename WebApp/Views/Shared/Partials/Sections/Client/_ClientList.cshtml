@@ -1,0 +1,49 @@
+﻿@using Domain.Models
+@model List<Client>
+<table>
+    <thead>
+        <tr>
+            <th class="client-check"><input type="checkbox" /></th>
+            <th class="client-info">Name</th>
+            <th class="client-contact">Contact Person</th>
+            <th class="client-phone">Phone</th>
+            <th class="client-location">Location</th>
+            <th class="client-status">Status</th>
+            <th class="client-actions"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td class="client-check"><input type="checkbox" /></td>
+                <td class="client-info">
+                    @if (!string.IsNullOrEmpty(client.Image))
+                    {
+                        <img class="client-img image" src="@Url.Content("~/" + client.Image)" alt="Client image" />
+                    }
+                    else
+                    {
+                        <img class="client-img image" src="~/images/Avatar-2.svg" alt="Client image" />
+                    }
+                   
+                <div class="client-name">@client.ClientName</div>
+                <div class="client-email">@client.Email</div>
+            </td>
+            <td class="client-contact">@client.ContactPerson</td>
+            <td class="client-phone">@client.Phone</td>
+            <td class="client-location">@client.Location</td>
+            <td class="client-status">
+                <div class="badge-success">
+                    active
+                </div>
+            </td>
+            <td class="client-actions">
+                    <a data-modal="true" data-target="#editClientModal" class=" btn-edit-client" data-id="@client.Id">
+                        <i class="bi bi-pencil-fill"></i></a>
+                    <a data-modal="true" data-target="#deleteClientModal" class=" btn-delete btn-delete-client" data-id="@client.Id"><i class="bi bi-trash3-fill"></i></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

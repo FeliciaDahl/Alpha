@@ -1,0 +1,67 @@
+﻿@model ClientRegistrationViewModel
+
+<div id="addClientModal" class="modal client-modal">
+
+    <div class="modal-content">
+        <div class="modal-head">
+            <h3>Add Client</h3>
+            <button class="close-btn" data-close="true"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <form asp-action="AddClient" asp-controller="Client" enctype="multipart/form-data" method="post" novalidate>
+
+            <div class="form-group">
+                <div id="upload-trigger" class="image-preview-container preview-circle">
+                    <div id="image-container" class="circle-grey">
+                        <i id="preview-camera" class="bi bi-camera-fill"></i>
+                        <i id="preview-pencil" class="bi bi-pencil-square hide"></i>
+                    </div>
+                    <input id="file-upload" asp-for="ClientImage" type="file" accept="image/*" class="hide" />
+
+                    <img id="image-preview" src="#" class="hide" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ClientName"></label>
+                <div class="field-group">
+                    <input asp-for="ClientName" />
+                    <span asp-validation-for="ClientName"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactPerson"></label>
+                <div class="field-group">
+                    <input asp-for="ContactPerson" />
+                    <span asp-validation-for="ContactPerson"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <div class="field-group">
+                    <input asp-for="Email" />
+                    <span asp-validation-for="Email"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location"></label>
+                <div class="field-group">
+                    <input asp-for="Location"/>
+                    <span asp-validation-for="Location"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone"></label>
+                <div class="field-group">
+                    <input asp-for="Phone"/>
+                    <span asp-validation-for="Phone"> </span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit btn-standard mt-3">Add Client</button>
+        </form>
+    </div>
+</div>
+
+
+
+

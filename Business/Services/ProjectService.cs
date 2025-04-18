@@ -79,5 +79,45 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
 
     }
 
+    public async Task<ServiceResult<bool>> EditProjectAsync(int id, ProjectEditForm form)
+    {
+
+        var existingProjectResult = await _projectRepository.GetEntityAsync(c => c.Id == id);
+
+        if (!existingProjectResult.Succeeded || existingProjectResult.Result == null)
+            return ServiceResult<bool>.Failed(404, "Project not found");
+
+        var projectEntity = existingProjectResult.Result;
+
+        projectEntity.Image = string.IsNullOrWhiteSpace(form.ProjectImagePath) ? projectEntity.Image : form.ProjectImagePath;
+        projectEntity.Title = string.IsNullOrWhiteSpace(form.Title) ? projectEntity.Title : form.Title;
+        projectEntity.Description = string.IsNullOrWhiteSpace(form.Description) ? projectEntity.Description : form.Description;
+        projectEntity.StartDate = form.StartDate ?? projectEntity.StartDate;
+        projectEntity.EndDate = form.EndDate ?? projectEntity.EndDate;
+        projectEntity.Budget = form.Budget ?? projectEntity.Budget;
+        projectEntity.ClientId = form.ClientId != 0 ? form.ClientId : projectEntity.ClientId;
+        projectEntity.StatusId = form.StatusId != 0 ? form.StatusId : projectEntity.StatusId;
+        projectEntity.ProjectMembers = form.ProjectMemberId != null ? new List<ProjectMemberEntity> { new ProjectMemberEntity { MemberId = form.ProjectMemberId } } : projectEntity.ProjectMembers;
+
+
+        await _projectRepository.BeginTransactionAsync();
+
+        try
+        {
+            await _projectRepository.UpdateAsync(projectEntity);
+            await _projectRepository.SaveAsync();
+            await _projectRepository.CommitTransactionAsync();
+
+            return ServiceResult<bool>.Success(true);
+
+        }
+        catch (Exception e)
+        {
+            await _projectRepository.RollbackTransactionAsync();
+            return ServiceResult<bool>.Failed(500, e.Message);
+
+        }
+    }
+
 
 }

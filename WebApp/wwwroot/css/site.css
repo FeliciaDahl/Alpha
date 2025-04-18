@@ -540,18 +540,20 @@ form .input-validation-error {
         text-decoration: underline;
     }
 
-
-.request {
+.modal-footer {
+    display: flex;
+    gap: 0.5rem;
     padding-top: 1rem;
 }
-.request a {
-   
-    color: var(--accent);
-    font-size: 14px;
-}
-.request a:hover {
-    text-decoration: underline;
-}
+
+    .modal-footer a {
+       
+        color: var(--accent);
+        font-size: 14px;
+    }
+        .modal-footer a:hover {
+            text-decoration: underline;
+        }
 
 .remember {
     display: flex;

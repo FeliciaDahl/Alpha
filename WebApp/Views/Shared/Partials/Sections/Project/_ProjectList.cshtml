@@ -1,0 +1,56 @@
+﻿@using Domain.Models
+@model List<Project>
+
+
+<div class="project-list">
+
+    @foreach (var project in Model)
+    {
+    
+        <div class="list-cards project-card">
+        <div class="card-top">
+                <div class="image">
+                @if (!string.IsNullOrEmpty(project.Image))
+                {
+                   <img class="project-img" src="@Url.Content("~/" + project.Image)" alt="Project image" />
+                }
+                else
+                {
+                    <img class="project-img" src="~/images/project-img.svg" alt="Project image" />
+                }
+                </div>
+                <div class="dropdown-wrapper">
+                <button type="button" data-type="dropdown" data-target="#project-dropdown-@project.Id" class="project-actions">
+                    <i class="bi bi-three-dots"></i>
+                </button>
+                <div id="project-dropdown-@project.Id" class="dropdown">
+                    <div class="dropdown-body">
+                        <a data-modal="true" data-target="#editProjectModal" class="dropdown-action btn-edit btn-edit-project" data-id="@project.Id">
+                            <i class="bi bi-pencil-fill"></i> Edit
+                        </a>
+                     
+                        <div class="separator"></div>
+                        <a data-modal="true" data-target="#deleteClientModal" class="btn-icons btn-delete btn-delete-project dropdown-action" data-id="@project.Id"><i class="bi bi-trash3-fill"></i>Delete</a>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="title">
+                <h6>@project.Title</h6>
+                <span class="clientName">@project.Client.ClientName</span>
+            </div>
+        </div>
+         
+         <div class="description">@project.Description</div>
+
+        <div class="card-bottom">
+            <div class="status">@project.Status.StatusName</div>
+            <div class="members">members list</div>
+        </div>
+    </div>
+    }
+
+</div>
+
+
+  

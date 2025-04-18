@@ -1,4 +1,5 @@
 ﻿using Business.Interfaces;
+using Data.Entites;
 using Domain.Dto;
 using Domain.Extensions;
 using Domain.Models;
@@ -55,7 +56,7 @@ public class ClientController(IClientService clientService, IFileService fileSer
     [HttpGet]
     public async Task<IActionResult> EditClient(int id)
     {
-
+        //KOLLA VARFÖR INTE IMAGEPATH FUNKAR VID EDIT ----> ÄNDRA MAPPNINGEN FRÅN IMAGE TILL IMAGEPATH
         var client = await _clientService.GetClientAsync(id);
 
         if (client == null)
