@@ -35,10 +35,11 @@
                     <span asp-validation-for="Password"></span>
                 </div>
            </div>
+
             <div class="mb-5 checkbox-signin">
                 <div class="remember">
-                    <input type="checkbox">
-                <label class="form-check-label">Remember me</label>
+                    <input type="checkbox"/>
+                <span>Remember me</span>
                 </div>
                 <div class="forgot-password">
                     <a href="#">Forgot your password?</a>
@@ -58,10 +59,10 @@
             <button type="submit" class="btn-standard btn-submit mb-2">Log In</button>
         </form>
 
-        <div class="mt-5">
+        <div class="request">
             <span>Don't have an account?</span>
-            <a href="/Auth/SignUp">Sign Up</a>
-    </div>
+            <a asp-controller="Auth" asp-action="SignUp">Sign Up!</a>
+        </div>
 </div>
 </div>
 

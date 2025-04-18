@@ -17,8 +17,10 @@ public class MemberFactory
             Image = form.MemberImagePath,
             FirstName = form.FirstName,
             LastName = form.LastName,
-            PhoneNumber = form.PhoneNumber,
+            JobTitle = form.JobTitle,
             Email = form.Email,
+            PhoneNumber = form.PhoneNumber
+            
           
         };
     }
@@ -27,9 +29,10 @@ public class MemberFactory
     {
         return user == null ? new Member() : new Member()
         {
-           
+            Image = user.Image,
             FirstName = user.FirstName,
             LastName = user.LastName,
+            JobTitle = user.JobTitle,
             Email = user.Email!,
             PhoneNumber = user.PhoneNumber
         };

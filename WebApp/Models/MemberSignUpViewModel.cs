@@ -23,9 +23,10 @@ public class MemberSignUpViewModel
     [Display(Name = "Email", Prompt = "Enter your email")]
     public string Email { get; set; } = null!;
 
-    [DataType(DataType.PhoneNumber)]
-    [Display(Name = "Phone", Prompt = "Enter your phone number")]
-    public string? Phone { get; set; }
+    [Required(ErrorMessage = "You must enter a title")]
+    [DataType(DataType.Text)]
+    [Display(Name = "JobTitle", Prompt = "Enter your JobTitle")]
+    public string JobTitle { get; set; } = null!;
 
     [Required(ErrorMessage = "You must enter a password")]
     [DataType(DataType.Password)]
@@ -44,14 +45,5 @@ public class MemberSignUpViewModel
     [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept terms and conditions")]
     public bool TermsAndConditions { get; set; }
 
-    //public static implicit operator MemberSignUpForm(MemberSignUpViewModel model)
-    //{
-    //    return model == null ? null! : new MemberSignUpForm
-    //    {
-    //        FirstName = model.FirstName,
-    //        LastName = model.LastName,
-    //        Email = model.Email,
-    //        Password = model.Password
-    //    };
-    //}
+   
 }

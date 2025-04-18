@@ -12,16 +12,20 @@ public class MemberRegistrationViewModel
 
     public string? MemberImagePath { get; set; } = null!;
 
-    [Required(ErrorMessage = "You must enter a name")]
+    [Required(ErrorMessage = "You must enter a firstname")]
     [DataType(DataType.Text)]
     [Display(Name = "First Name", Prompt = "Enter a first name")]
     public string FirstName { get; set; } = null!;
 
-
-    [Required(ErrorMessage = "You must enter a name")]
+    [Required(ErrorMessage = "You must enter a last name")]
     [DataType(DataType.Text)]
     [Display(Name = "Last Name", Prompt = "Enter a last name")]
     public string LastName { get; set; } = null!;
+
+    [Required(ErrorMessage = "You must enter a jobtitle")]
+    [DataType(DataType.Text)]
+    [Display(Name = "Job Title", Prompt = "Select Title")]
+    public string JobTitle { get; set; } = null!;
 
     [Required(ErrorMessage = "You must enter a email")]
     [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", ErrorMessage = "Invalid email format")]
@@ -33,7 +37,5 @@ public class MemberRegistrationViewModel
     [Display(Name = "PhoneNumber", Prompt = "Enter phone number")]
     public string? PhoneNumber { get; set; }
 
-    [DataType(DataType.Text)]
-    [Display(Name = "Job Title", Prompt = "Select Title")]
-    public string? JobTitle { get; set; }
+  
 }
