@@ -6,7 +6,7 @@ namespace Business.Factories;
 
 class ClientFactory
 {
-    public static ClientEntity Create(ClientRegistrationForm form)
+    public static ClientEntity ToEntity(ClientRegistrationForm form)
     {
         return new ClientEntity
         {  

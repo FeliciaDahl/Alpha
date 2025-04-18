@@ -8,7 +8,9 @@ public class MemberRegistrationViewModel
 {
     [Display(Name = "Member Image", Prompt = "Enter image")]
     [DataType(DataType.Upload)]
-    public IFormFile? Image { get; set; }
+    public IFormFile? MemberImage { get; set; }
+
+    public string? MemberImagePath { get; set; } = null!;
 
     [Required(ErrorMessage = "You must enter a name")]
     [DataType(DataType.Text)]

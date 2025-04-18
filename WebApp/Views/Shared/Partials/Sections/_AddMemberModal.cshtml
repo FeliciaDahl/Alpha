@@ -1,7 +1,6 @@
 ﻿@model MemberRegistrationViewModel
 
 
-
 <div id="addMemberModal" class="modal member-modal">
 
     <div class="modal-content">
@@ -10,15 +9,20 @@
             <button class="close-btn" data-close="true"><i class="bi bi-x-lg"></i></button>
         </div>
   
-    <form asp-action="AddMember" asp-controller="Member" method="post" novalidate>
+    <form asp-action="AddMember" asp-controller="Member" enctype="multipart/form-data" method="post" novalidate>
 
+            <div class="form-group">
+                <div id="upload-trigger" class="image-preview-container preview-circle">
+                    <div id="image-container" class="circle-grey">
+                        <i id="preview-camera" class="bi bi-camera-fill"></i>
+                        <i id="preview-pencil" class="bi bi-pencil-square hide"></i>
+                    </div>
+                    <input id="file-upload" asp-for="MemberImage" type="file" accept="image/*" class="hide" />
 
-            @*  LÄGG TILL JS FÖR BILDER! *@
-            <div class="image-previewer circle">
-                <img src="" class="image-preview" />
-                <input asp-for="Image" accept="image/*" class="hide" />
+                    <img id="image-preview" src="#" class="hide" />
+                </div>
             </div>
-
+           
         <div class="form-group">
             <label asp-for="FirstName"></label>
             <div class="field-group">

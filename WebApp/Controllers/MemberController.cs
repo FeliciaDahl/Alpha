@@ -5,13 +5,15 @@ using Domain.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp.Controllers;
 
-public class MemberController(IMemberService memberService) : Controller
+public class MemberController(IMemberService memberService, IFileService fileService) : Controller
 {
 
     private readonly IMemberService _memberService = memberService;
+    private readonly IFileService _fileService = fileService;
 
     public IActionResult Index()
     {
@@ -31,6 +33,13 @@ public class MemberController(IMemberService memberService) : Controller
                 );
             return BadRequest(new { sucess = false, errors });
         }
+
+        if (model.MemberImage != null)
+        {
+            var filePath = await _fileService.SaveFileAsync(model.MemberImage, "members");
+            model.MemberImagePath = filePath;
+        }
+
 
         var registrationForm = model.MapTo<MemberSignUpForm>();
 

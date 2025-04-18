@@ -14,6 +14,7 @@ public class MemberFactory
         return form == null ? new MemberEntity() : new MemberEntity()
         {
             UserName = form.Email,
+            Image = form.MemberImagePath,
             FirstName = form.FirstName,
             LastName = form.LastName,
             PhoneNumber = form.PhoneNumber,

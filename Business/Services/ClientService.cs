@@ -33,7 +33,7 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
         try
         { 
-            var clientEntity = ClientFactory.Create(form);
+            var clientEntity = ClientFactory.ToEntity(form);
 
             await _clientRepository.AddAsync(clientEntity);
             await _clientRepository.SaveAsync();

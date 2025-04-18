@@ -8,7 +8,16 @@
 {
     <div class="list-cards member-card">
             <div class="member-actions"><i class="bi bi-three-dots"></i></div>
-            <div class="image"><img class="member-img" src="~/images/Avatar-2.svg" alt="Client 1" /></div>
+            <div class="image">
+                @if (!string.IsNullOrEmpty(member.Image))
+                {
+                    <img class="member-img" src="@Url.Content("~/" + member.Image)" alt="Project image" />
+                }
+                else
+                {
+                    <img class="member-img" src="~/images/avatar-member.svg" alt="Project image" />
+                }
+            </div>
         <div class="name">@member.FirstName @member.LastName</div>
             <div class="jobtitle"><span>JobTitle</span></div>
         <div class="email">@member.Email</div>
