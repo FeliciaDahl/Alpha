@@ -56,20 +56,29 @@ public class ClientController(IClientService clientService, IFileService fileSer
     [HttpGet]
     public async Task<IActionResult> EditClient(int id)
     {
-        //KOLLA VARFÖR INTE IMAGEPATH FUNKAR VID EDIT ----> ÄNDRA MAPPNINGEN FRÅN IMAGE TILL IMAGEPATH
         var client = await _clientService.GetClientAsync(id);
 
-        if (client == null)
+        var result = client.Result;
+        if (result == null)
         {
             return NotFound();
         }
 
-        var model = client.Result?.MapTo<ClientEditViewModel>();
+        var model = new ClientEditViewModel
+        {
+            Id = result.Id,
+            ImagePath = result.Image,
+            ClientName = result.ClientName,
+            ContactPerson = result.ContactPerson,
+            Email = result.Email,
+            Location = result.Location,
+            Phone = result.Phone
+      
+        };
 
         return Ok(model);
     }
 
-   
     [HttpPost]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> EditClient(int id, [FromForm] ClientEditViewModel model)
@@ -85,7 +94,12 @@ public class ClientController(IClientService clientService, IFileService fileSer
             return BadRequest(new { sucess = false, errors });
         }
 
-    
+        if (model.ClientImage != null)
+        {
+            var filePath = await _fileService.SaveFileAsync(model.ClientImage, "clients");
+            model.ImagePath = filePath;
+        }
+
         var editForm = model.MapTo<ClientEditForm>();
 
         var result = await _clientService.EditClientAsync(id, editForm);
@@ -114,6 +128,7 @@ public class ClientController(IClientService clientService, IFileService fileSer
                     kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()
                 );
             return BadRequest(new { sucess = false, errors });
+          
         }
 
         var result = await _clientService.DeleteClientAsync(id);

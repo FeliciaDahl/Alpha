@@ -60,7 +60,7 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
         var clientEntity = existingClientResult.Result;
 
-        clientEntity.Image = string.IsNullOrWhiteSpace(form.ClientImagePath) ? clientEntity.Image : form.ClientImagePath;
+        clientEntity.Image = string.IsNullOrWhiteSpace(form.ImagePath) ? clientEntity.Image : form.ImagePath;
         clientEntity.ClientName = string.IsNullOrWhiteSpace(form.ClientName) ? clientEntity.ClientName : form.ClientName;
         clientEntity.ContactPerson = string.IsNullOrWhiteSpace(form.ContactPerson) ? clientEntity.ContactPerson : form.ContactPerson;
         clientEntity.Email = string.IsNullOrWhiteSpace(form.Email) ? clientEntity.Email : form.Email;
@@ -112,7 +112,7 @@ public class ClientService(IClientRepository clientRepository) : IClientService
         }
     }
 
-
+    
     public async Task<ServiceResult<Client>> GetClientAsync(int id)
     {
         var result = await _clientRepository.GetAsync(where: x => x.Id == id);

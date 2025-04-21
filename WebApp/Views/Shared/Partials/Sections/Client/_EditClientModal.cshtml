@@ -7,53 +7,56 @@
             <h3>Edit Client</h3>
             <button class="close-btn" data-close="true"><i class="bi bi-x-lg"></i></button>
         </div>
-        <form  asp-action="EditClient" asp-controller="Client" method="post" data-method="patch" novalidate>
-            <input id="clientId" asp-for="Id" readonly type="hidden" value="@Model.Id" />
+        <form asp-action="EditClient" asp-controller="Client" method="post" enctype="multipart/form-data" data-method="patch" novalidate>
+            <input id="clientId" asp-for="Id" readonly type="hidden" />
 
             <div class="form-group">
-                <div id="upload-trigger" class="image-preview-container preview-circle">
-                    <div id="image-container" class="circle-grey">
-                        <i id="preview-camera" class="bi bi-camera-fill"></i>
-                        <i id="preview-pencil" class="bi bi-pencil-square hide"></i>
+                <div id="edit-upload-trigger" class="image-preview-container preview-circle">
+                    <div id="edit-image-container" class="circle-grey">
+                 
+                        <i id="edit-preview-camera" class="bi bi-camera-fill"></i>
+                        <i id="edit-preview-pencil" class="bi bi-pencil-square"></i>
+
                     </div>
-                    <input id="file-upload" asp-for="ClientImage" type="file" accept="image/*" class="hide" />
-                    <input id="clientImagePath" asp-for="ImagePath" readonly type="hidden" value="@Model.ImagePath" />
-                    <img id="image-preview" src="#" class="hide" />
+
+                    <input id="edit-file-upload" type="file" asp-for="ClientImage" class="hide" />
+                    <img id="edit-image-preview" src="" class="client-img clientImagePath image-preview hide" alt="Client Image" />
+                  
                 </div>
             </div>
 
             <div class="form-group">
                 <label asp-for="ClientName"></label>
                 <div class="field-group">
-                    <input id="clientName" asp-for="ClientName" value="@Model.ClientName" />
+                    <input id="clientName" asp-for="ClientName"/>
                     <span asp-validation-for="ClientName"></span>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="ContactPerson"></label>
                 <div class="field-group">
-                    <input id="clientContact" asp-for="ContactPerson" value="@Model.ContactPerson" />
+                    <input id="clientContact" asp-for="ContactPerson"/>
                     <span asp-validation-for="ContactPerson"></span>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="Email"></label>
                 <div class="field-group">
-                    <input id="clientEmail" asp-for="Email" value="@Model.Email" />
+                    <input id="clientEmail" asp-for="Email"/>
                     <span asp-validation-for="Email"></span>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="Location"></label>
                 <div class="field-group">
-                    <input id="clientLocation" asp-for="Location" value="@Model.Location" />
+                    <input id="clientLocation" asp-for="Location" />
                     <span asp-validation-for="Location"></span>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="Phone"></label>
                 <div class="field-group">
-                    <input id="clientPhone" asp-for="Phone" value="@Model.Phone" />
+                    <input id="clientPhone" asp-for="Phone" />
                     <span asp-validation-for="Phone"> </span>
                 </div>
             </div>

@@ -333,7 +333,7 @@ h6 {
 
     /*DELETE MODAL */
 
-.delete-modal a {
+.delete-modal {
     display:flex;
     justify-content:center;
     width: 100%;
@@ -343,10 +343,18 @@ h6 {
     text-decoration: none;
 }
 
-
+.delete-alert {
+    display: flex;
+    margin-top: 1rem;
+    gap: 0.8rem;
+    text-align:left;
+    font-size: 18px;
+}
+ .delete-alert i {
+     font-size: 30px;
+ }
 
 /*FORMS*/
-
 .form-card {
     background-color: var(--surface);
     border: none;
@@ -447,7 +455,7 @@ form .input-validation-error {
  
 }
 
-#image-preview {
+.image-preview {
     position: absolute;
     top: 0;
     left: 0;
@@ -466,14 +474,6 @@ form .input-validation-error {
         border-radius: 50%;
     }
 
-
-    #image-container i {
-        font-size: 20px;
-        color: var(--img-icon-color-grey); 
-        align-content: center;
-    }
-
-
 .circle-grey {
     display: flex;
     align-content: center;
@@ -484,6 +484,13 @@ form .input-validation-error {
     background-color: var(--img-background-grey);
 
 }
+
+.circle-grey i {
+    font-size: 20px;
+    color: var(--img-icon-color-grey);
+    align-content: center;
+}
+
 
     .circle-grey.image-change {
         position: absolute;
