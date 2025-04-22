@@ -128,4 +128,30 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
     }
 
 
+    public async Task<ServiceResult<bool>> DeleteProjectAsync(int id)
+    {
+        var existingProjectResult = await _projectRepository.GetEntityAsync(c => c.Id == id);
+
+        if (!existingProjectResult.Succeeded || existingProjectResult.Result == null)
+            return ServiceResult<bool>.Failed(404, "Project not found");
+
+        var existingProject = existingProjectResult.Result;
+
+        await _projectRepository.BeginTransactionAsync();
+
+        try
+        {
+            await _projectRepository.DeleteAsync(existingProject);
+            await _projectRepository.SaveAsync();
+
+            await _projectRepository.CommitTransactionAsync();
+            return ServiceResult<bool>.Success(true);
+        }
+        catch (Exception e)
+        {
+            await _projectRepository.RollbackTransactionAsync();
+            return ServiceResult<bool>.Failed(500, e.Message);
+        }
+    }
+
 }

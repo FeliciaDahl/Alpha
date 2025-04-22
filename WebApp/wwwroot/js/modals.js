@@ -179,7 +179,7 @@
 
     /*Delete*/
 
-    function deleteModal(deleteBtnClass, modalId, deleteUrlBuilder) {
+    function deleteModal(deleteBtnClass, modalId, deleteUrlBuilder, errorMessage) {
 
         const modal = document.querySelector(modalId);
         if (!modal) return;
@@ -187,6 +187,9 @@
         const confirmBtn = modal.querySelector('.confirm-delete');
         const cancelBtn = modal.querySelector('.cancel-delete');
         const imageFile = document.querySelector('.image');
+        const deleteAlert = modal.querySelector('.delete-alert');
+        const messageAlert = modal.querySelector('.delete-error-message');
+
         let currentId = null;
 
         document.querySelectorAll(deleteBtnClass).forEach(button => {
@@ -221,8 +224,9 @@
                         window.location.reload();
                     } else {
                         const data = await res.json();
-                        modal.querySelector('.delete-alert').classList.remove('hide');
-                        modal.querySelector('.delete-error-message').innerText = data.error || 'Could not delete client. Make sure its not connected to a existing project';
+                        deleteAlert.classList.remove('hide');
+                        deleteAlert.style.display = 'flex';
+                        messageAlert.innerText = data.error || errorMessage;
 
                     }
                 } catch (error) {
@@ -232,8 +236,8 @@
         }
     }
     function initDeleteModals() {
-        deleteModal('.btn-delete-client', '#deleteClientModal', (id) => `/Client/DeleteClient/${id}`);
-        deleteModal('.btn-delete-project', '#deleteProjectModal', (id) => `/Project/DeleteProject/${id}`);
+        deleteModal('.btn-delete-client', '#deleteClientModal', (id) => `/Client/DeleteClient/${id}`, 'Could not delete client. Make sure its not connected to a existing project');
+        deleteModal('.btn-delete-project', '#deleteProjectModal', (id) => `/Project/DeleteProject/${id}`, 'Could not delete project. Try again.');
     }
 
 

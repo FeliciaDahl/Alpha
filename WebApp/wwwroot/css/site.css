@@ -273,6 +273,10 @@ h6 {
     width: 100%;
 }
 
+.btn-delete {
+    width: 100%;
+}
+
 /* SEPARATOR */
 
 .separator {
@@ -328,26 +332,21 @@ h6 {
         display: flex;
         justify-content: space-between;
         align-items: center;
-       
+        padding-bottom: 1rem;
     }
 
     /*DELETE MODAL */
 
-.delete-modal {
-    display:flex;
-    justify-content:center;
-    width: 100%;
-    text-align: center;
-    font-size: 14px;
-    padding:1rem;
-    text-decoration: none;
+.confirm-delete {
+
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
 .delete-alert {
-    display: flex;
     margin-top: 1rem;
     gap: 0.8rem;
-    text-align:left;
+    text-align: left;
     font-size: 18px;
 }
  .delete-alert i {

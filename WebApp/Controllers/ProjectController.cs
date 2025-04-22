@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Models;
 using WebApp.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApp.Controllers;
 
@@ -93,8 +94,7 @@ public class ProjectController(IProjectService projectService, IFileService file
         return Ok(model);
     }
 
-    //Får inte med mig ClientList i EditProject
-
+ 
     [HttpPost]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> EditProject(int id, [FromForm] ProjectEditViewModel model)
@@ -129,6 +129,33 @@ public class ProjectController(IProjectService projectService, IFileService file
         }
 
         return BadRequest(new { sucess = false });
+
+    }
+
+    [HttpPost]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> DeleteProject(int id)
+    {
+        if (!ModelState.IsValid)
+        {
+            var errors = ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+            return BadRequest(new { sucess = false, errors });
+
+        }
+
+        var result = await _projectService.DeleteProjectAsync(id);
+
+        if (result.Succeeded)
+        {
+            return RedirectToAction("Projects", "Admin");
+        }
+
+        return BadRequest(new { sucess = false});
 
     }
 
