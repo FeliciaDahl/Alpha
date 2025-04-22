@@ -6,7 +6,7 @@
     //initDeleteModals();
     
     uploadImage();
-    uploadEditImage();
+    //uploadEditImage();
     initForms();    
 
 
@@ -78,7 +78,76 @@
     }
 
 
+    /*Handle Dropdown*/
+    const dropdowns = document.querySelectorAll('[data-type="dropdown"]')
+    document.addEventListener('click', function (e) {
 
+        let clickedOnDropdown = false
+
+        dropdowns.forEach(dropdownBtn => {
+            const targetId = dropdownBtn.getAttribute('data-target')
+            const targetElement = document.querySelector(targetId)
+
+
+            if (dropdownBtn.contains(e.target)) {
+                clickedOnDropdown = true
+
+                document.querySelectorAll('.dropdown-show').forEach(openDropdown => {
+                    if (openDropdown !== targetElement) {
+                        openDropdown.classList.remove('dropdown-show')
+                    }
+                })
+                targetElement?.classList.toggle('dropdown-show')
+            }
+            else if (targetElement && targetElement.contains(e.target)) {
+                clickedOnDropdown = true
+            }
+        })
+
+        if (!clickedOnDropdown) {
+            document.querySelectorAll('.dropdown-show').forEach(openDropdown => {
+                openDropdown.classList.remove('dropdown-show')
+            })
+
+        }
+    })
+})
+
+function uploadImage() {
+
+    const uploadTrigger = document.getElementById('upload-trigger')
+    const fileInput = document.getElementById('file-upload')
+    const imagePreview = document.getElementById('image-preview')
+    const previewContainer = document.getElementById('image-container')
+    const uploadIcon = document.getElementById('preview-camera')
+    const changeIcon = document.getElementById('preview-pencil')
+
+    if (!uploadTrigger || !fileInput) return;
+
+    uploadTrigger.addEventListener('click', function () {
+        fileInput.click()
+    })
+
+
+    fileInput.addEventListener('change', function (e) {
+        const file = e.target.files[0]
+
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result
+                imagePreview.classList.remove('hide')
+
+                uploadIcon.classList.add('hide')
+                changeIcon.classList.remove('hide')
+                previewContainer.classList.add('image-change')
+            }
+
+            reader.readAsDataURL(file)
+        }
+    })
+
+}
 
     //let hasUploadedImage = false;
 
@@ -307,40 +376,7 @@
 
 
 
-    /*Handle Dropdown*/
-    const dropdowns = document.querySelectorAll('[data-type="dropdown"]')
-    document.addEventListener('click', function (e) {
 
-        let clickedOnDropdown = false
-
-        dropdowns.forEach(dropdownBtn => {
-            const targetId = dropdownBtn.getAttribute('data-target')
-            const targetElement = document.querySelector(targetId)
-
-
-            if (dropdownBtn.contains(e.target)) {
-                clickedOnDropdown = true
-
-                document.querySelectorAll('.dropdown-show').forEach(openDropdown => {
-                    if (openDropdown !== targetElement) {
-                        openDropdown.classList.remove('dropdown-show')
-                    }
-                })
-                targetElement?.classList.toggle('dropdown-show')
-            }
-            else if (targetElement && targetElement.contains(e.target)) {
-                clickedOnDropdown = true
-            }
-        })
-
-        if (!clickedOnDropdown) {
-            document.querySelectorAll('.dropdown-show').forEach(openDropdown => {
-                openDropdown.classList.remove('dropdown-show')
-            })
-
-        }
-    })
-})
 
 
 //function previewExitingImage(imagePath) {
@@ -366,41 +402,7 @@
 //}
 
 
-function uploadImage() {
 
-    const uploadTrigger = document.getElementById('upload-trigger')
-    const fileInput = document.getElementById('file-upload')
-    const imagePreview = document.getElementById('image-preview')
-    const previewContainer = document.getElementById('image-container')
-    const uploadIcon = document.getElementById('preview-camera')
-    const changeIcon = document.getElementById('preview-pencil')
-
-    if (!uploadTrigger || !fileInput) return;
-
-    uploadTrigger.addEventListener('click', function () {
-        fileInput.click()
-    })
-
-
-    fileInput.addEventListener('change', function (e) {
-        const file = e.target.files[0]
-
-        if (file && file.type.startsWith('image/')) {
-            const reader = new FileReader()
-            reader.onload = (e) => {
-                imagePreview.src = e.target.result
-                imagePreview.classList.remove('hide')
-
-                uploadIcon.classList.add('hide')
-                changeIcon.classList.remove('hide')
-                previewContainer.classList.add('image-change')
-            }
-
-            reader.readAsDataURL(file)
-        }
-    })
-
-}
 
 //function previewExitingImage(imagePath) {
 

@@ -67,17 +67,25 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
 
     public async Task<ServiceResult<Project>> GetProjectAsync(int id)
     {
-        var result = await _projectRepository.GetAsync( where: x => x.Id == id,
+        var entity = await _projectRepository.GetEntityAsync( where: x => x.Id == id,
           x => x.ProjectMembers,
           x => x.Client,
           x => x.Status
           );
 
-        return result.Succeeded
-            ? ServiceResult<Project>.Success(result.Result!.MapTo<Project>())
-            : ServiceResult<Project>.Failed(result.StatusCode, "Project not found");
+        if (entity.Succeeded && entity.Result != null)
+        {
+            var result = ProjectFactory.ToModel(entity.Result!);
+            return ServiceResult<Project>.Success(result);
+        }
+        else
+        {
+            return ServiceResult<Project>.Failed(500, "Project not found");
+        }
 
     }
+
+   
 
     public async Task<ServiceResult<bool>> EditProjectAsync(int id, ProjectEditForm form)
     {
@@ -92,7 +100,7 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
         projectEntity.Image = string.IsNullOrWhiteSpace(form.ProjectImagePath) ? projectEntity.Image : form.ProjectImagePath;
         projectEntity.Title = string.IsNullOrWhiteSpace(form.Title) ? projectEntity.Title : form.Title;
         projectEntity.Description = string.IsNullOrWhiteSpace(form.Description) ? projectEntity.Description : form.Description;
-        projectEntity.StartDate = form.StartDate ?? projectEntity.StartDate;
+        projectEntity.StartDate = form.StartDate ;
         projectEntity.EndDate = form.EndDate ?? projectEntity.EndDate;
         projectEntity.Budget = form.Budget ?? projectEntity.Budget;
         projectEntity.ClientId = form.ClientId != 0 ? form.ClientId : projectEntity.ClientId;

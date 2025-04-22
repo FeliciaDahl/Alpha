@@ -2,28 +2,31 @@
 using Business.Services;
 using Domain.Dto;
 using Domain.Extensions;
+using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Models;
 using WebApp.Services;
 
 namespace WebApp.Controllers;
 
-public class ProjectController(IProjectService projectService, IFileService fileService) : Controller
+public class ProjectController(IProjectService projectService, IFileService fileService, IClientService clientService) : Controller
 {
     private readonly IProjectService _projectService = projectService;
+    private readonly IClientService _clientService = clientService;
     private readonly IFileService _fileService = fileService;
 
     public IActionResult Index()
     {
+      
         return View();
     }
 
 
     [HttpPost]
-    public async Task<IActionResult> AddProject(ProjectViewModel model)
+    public async Task<IActionResult> AddProject(ProjectRegistrationViewModel model)
     {
-        var form = model.ProjectRegistration;
-
+        
         if (!ModelState.IsValid)
         {
             var errors = ModelState
@@ -35,13 +38,13 @@ public class ProjectController(IProjectService projectService, IFileService file
             return BadRequest(new { sucess = false, errors });
         }
 
-        if (model.ProjectRegistration.ProjectImage != null)
+        if (model.ProjectImage != null)
         {
-            var filePath = await _fileService.SaveFileAsync(model.ProjectRegistration.ProjectImage, "projects");
-            model.ProjectRegistration.ProjectImagePath = filePath;
+            var filePath = await _fileService.SaveFileAsync(model.ProjectImage, "projects");
+            model.ProjectImagePath = filePath;
         }
 
-        var registrationForm = form.MapTo<ProjectRegistrationForm>();
+        var registrationForm = model.MapTo<ProjectRegistrationForm>();
 
         var result = await _projectService.CreateProjectAsync(registrationForm);
         if (result.Succeeded)
@@ -59,21 +62,45 @@ public class ProjectController(IProjectService projectService, IFileService file
 
         var project = await _projectService.GetProjectAsync(id);
 
-        if (project == null)
+        var result = project.Result;
+        if (result == null)
         {
             return NotFound();
         }
 
-        var model = project.Result?.MapTo<ProjectEditViewModel>();
+        var clients = await _clientService.GetAllClientsAsync();
+        var clientList = clients.Result!.Select(x => new SelectListItem
+        {
+            Value = x.Id.ToString(),
+            Text = x.ClientName
+        }).ToList();
+
+        var model = new ProjectEditViewModel
+        {
+            Id = result.Id,
+            ProjectImagePath = result.Image,
+            Title = result.Title,
+            Description = result.Description,
+            StartDate = result.StartDate,
+            EndDate = result.EndDate,
+            Budget = result.Budget,
+            ClientId = result.Client.Id,
+            StatusId = result.Status.Id,
+            ClientList = clientList
+
+        };
 
         return Ok(model);
     }
 
+    //Får inte med mig ClientList i EditProject
 
     [HttpPost]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> EditProject(int id, [FromForm] ProjectEditViewModel model)
     {
+       
+
         if (!ModelState.IsValid)
         {
             var errors = ModelState
@@ -85,6 +112,12 @@ public class ProjectController(IProjectService projectService, IFileService file
             return BadRequest(new { sucess = false, errors });
         }
 
+
+        if (model.ProjectImage != null)
+        {
+            var filePath = await _fileService.SaveFileAsync(model.ProjectImage, "projects");
+            model.ProjectImagePath = filePath;
+        }
 
         var editForm = model.MapTo<ProjectEditForm>();
 

@@ -25,13 +25,12 @@ public class ProjectEditViewModel
     [Required(ErrorMessage = "You must enter a start date")]
     [DataType(DataType.Date)]
     [Display(Name = "Start Date", Prompt = "Enter project start date")]
-    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+  
     public DateTime? StartDate { get; set; }
 
     [Required(ErrorMessage = "You must enter a end date, you can always go back and edit")]
     [DataType(DataType.Date)]
     [Display(Name = "End Date", Prompt = "Enter project end date")]
-    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     public DateTime? EndDate { get; set; }
 
     [Display(Name = "Budget", Prompt = "Enter project budget")]

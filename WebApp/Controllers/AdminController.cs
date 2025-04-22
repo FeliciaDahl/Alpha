@@ -10,62 +10,96 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 using WebApp.Models;
 
-namespace WebApp.Controllers
+namespace WebApp.Controllers;
+
+//[Authorize]
+public class AdminController(IClientService clientService, IMemberService memberService, IProjectService projectService, IStatusService statusService) : Controller
 {
-    //[Authorize]
-    public class AdminController(IClientService clientService, IMemberService memberService, IProjectService projectService) : Controller
+    private readonly IClientService _clientService = clientService;
+    private readonly IMemberService _memberService = memberService;
+    private readonly IProjectService _projectService = projectService;
+    private readonly IStatusService _statusService = statusService;
+
+
+    public IActionResult Index()
     {
-        private readonly IClientService _clientService = clientService;
-        private readonly IMemberService _memberService = memberService;
-        private readonly IProjectService _projectService = projectService;
- 
-      
-        public IActionResult Index()
+        return View();
+    }
+
+    public async Task<IActionResult> Projects()
+    {
+        var viewModel = new ProjectViewModel
         {
-            return View();
-        }
+            Projects = await LoadProjectListAsync(),
+            ClientList = await LoadClientListAsync(),
+            StatusList = await LoadStatusListAsync(),
+            ProjectRegistration = new ProjectRegistrationViewModel() { ClientList = new List<SelectListItem>() },
+            ProjectEdit = new ProjectEditViewModel() { ClientList = new List<SelectListItem>() }
+        };
 
-        public async Task<IActionResult> Projects()
+        viewModel.ProjectRegistration.ClientList = viewModel.ClientList;
+        viewModel.ProjectEdit.ClientList = viewModel.ClientList;
+
+        return View(viewModel);
+    }
+
+
+    public async Task<IActionResult> Members()
+    {
+        var membersResult = await _memberService.GetAllMembersAsync();
+        var viewModel = new MemberViewModel
         {
-            var viewModel = new ProjectViewModel(_clientService, _projectService);
+            Members = membersResult.Result!.ToList(),
 
-            await viewModel.LoadProjectListAsync();
-            await viewModel.LoadClientListAsync();
-         
+            MemberRegistration = new MemberRegistrationViewModel(),
+        };
+        return View(viewModel);
+    }
 
-            return View(viewModel);
-        }
+    public async Task<IActionResult> Clients()
+    {
+        var clientResult = await _clientService.GetAllClientsAsync();
 
-
-        public async Task<IActionResult> Members()
+        var viewModel = new ClientViewModel
         {
-            var membersResult = await _memberService.GetAllMembersAsync();
-            var viewModel = new MemberViewModel
-            {
-                Members = membersResult.Result!.ToList(),
+            Clients = clientResult.Result!.ToList(),
 
-                MemberRegistration = new MemberRegistrationViewModel(),
-            };
-            return View(viewModel);
-        }
+            ClientRegistration = new ClientRegistrationViewModel(),
 
-        public async Task<IActionResult> Clients()
-        {
-            var clientResult = await _clientService.GetAllClientsAsync();
+            ClientEdit = new ClientEditViewModel()
+        };
 
-            var viewModel = new ClientViewModel
-            {
-                Clients = clientResult.Result!.ToList(),
-
-                ClientRegistration = new ClientRegistrationViewModel(),
-
-                ClientEdit = new ClientEditViewModel()
-            };
-
-            return View(viewModel);
-
-        }
-
+        return View(viewModel);
 
     }
+
+    private async Task<List<Project>> LoadProjectListAsync()
+    {
+        var projectResult = await _projectService.GetAllProjectsAsync();
+        return projectResult.Result?.ToList() ?? new();
+    }
+
+    private async Task<List<SelectListItem>> LoadClientListAsync()
+    {
+        var clientResult = await _clientService.GetAllClientsAsync();
+        return clientResult.Result!.Select(x => new SelectListItem
+        {
+            Value = x.Id.ToString(),
+            Text = x.ClientName
+        }).ToList();
+    }
+
+    private async Task<List<SelectListItem>> LoadStatusListAsync()
+    {
+        var statusResult = await _statusService.GetAllStatusesAsync();
+        return statusResult.Result!.Select(x => new SelectListItem
+        {
+            Value = x.Id.ToString(),
+            Text = x.StatusName
+        }).ToList();
+    }
+
+
 }
+
+    

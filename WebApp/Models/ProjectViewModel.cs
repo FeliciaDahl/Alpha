@@ -9,45 +9,19 @@ namespace WebApp.Models;
 
 public class ProjectViewModel
  {
-    private readonly IClientService _clientService;
-    private readonly IProjectService _projectService;
 
-     public ProjectViewModel()
-     {
-     }
-
-    public ProjectViewModel(IClientService clientService, IProjectService projectService)
+    public ProjectViewModel()
     {
-        _clientService = clientService;
-        _projectService = projectService;
+        Projects = new List<Project>();
+        ClientList = new List<SelectListItem>();
         ProjectRegistration = new ProjectRegistrationViewModel();
         ProjectEdit = new ProjectEditViewModel();
     }
-
-   
 
     public List<Project> Projects { get; set; } = new();
     public ProjectRegistrationViewModel ProjectRegistration { get; set; } 
     public ProjectEditViewModel ProjectEdit { get; set; } = new();
     public List<SelectListItem> ClientList { get; set; } = new ();
+    public List<SelectListItem> StatusList { get; set; } = new();
 
-    public async Task LoadProjectListAsync()
-    {
-        var projectResult = await _projectService.GetAllProjectsAsync();
-
-        Projects = projectResult.Result!.ToList();
-    }
-
-    public async Task LoadClientListAsync()
-    {
-        var clientResult = await _clientService.GetAllClientsAsync();
-
-        ClientList = clientResult.Result!.Select(x => new SelectListItem
-        {
-            Value = x.Id.ToString(),
-            Text = x.ClientName
-        })
-        .ToList();
-
-    }
 }

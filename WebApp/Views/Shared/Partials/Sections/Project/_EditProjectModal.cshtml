@@ -1,75 +1,75 @@
-﻿@model ProjectViewModel
+﻿@model ProjectEditViewModel
 
 <div id="editProjectModal" class="modal ">
 
     <div class="modal-content">
         <div class="modal-head">
-            <h3>Add Project</h3>
+            <h3>Edit Project</h3>
             <button class="close-btn" data-close="true"><i class="bi bi-x-lg"></i></button>
         </div>
-        <form asp-action="EditProject" asp-controller="Project" method="post" enctype="multipart/form-data" novalidate>
-            <input id="projectId" asp-for="@Model.ProjectEdit.Id" readonly type="hidden" value="@Model.ProjectEdit.Id" />
+        <form asp-action="EditProject" asp-controller="Project" method="post" enctype="multipart/form-data" data-method="patch" novalidate>
+            <input id="projectId" asp-for="Id" readonly type="hidden" value="Id" />
 
             <div class="form-group">
-                <div id="upload-trigger" class="image-preview-container preview-square">
-                    <div id="image-container" class="circle-grey">
-                        <i id="preview-camera" class="bi bi-camera-fill"></i>
-                        <i id="preview-pencil" class="bi bi-pencil-square hide"></i>
+                <div id="edit-upload-trigger" class="image-preview-container preview-square">
+                    <div id="edit-image-container" class="circle-grey">
+                        <i id="edit-preview-camera" class="bi bi-camera-fill"></i>
+                        <i id="edit-preview-pencil" class="bi bi-pencil-square hide"></i>
                     </div>
-                    <input id="file-upload" asp-for="@Model.ProjectEdit.ProjectImage" type="file" accept="image/*" class="hide" />
+                    <input id="edit-file-upload" asp-for="ProjectImage" type="file" accept="image/*" class="hide" />
 
-                    <img id="image-preview" src="#" class="hide" />
+                    <img id="edit-image-preview" src="" class="image-preview hide" />
                 </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.ProjectEdit.Title"></label>
+                <label asp-for="Title"></label>
                 <div class="field-group">
-                    <input id="projectTitle" asp-for="@Model.ProjectEdit.Title" />
-                    <span asp-validation-for="@Model.ProjectEdit.Title"></span>
+                    <input id="projectTitle" asp-for="Title" />
+                    <span asp-validation-for="Title"></span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.ProjectEdit.ClientId"></label>
-                <select id="projectClientId" asp-for="@Model.ProjectEdit.ClientId" asp-items="@Model.ClientList" class="form-select">
+                <label asp-for="ClientId"></label>
+                <select id="projectClientId" asp-for="ClientId" asp-items="@Model.ClientList" class="form-select">
                     <option value="">Choose client</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.ProjectEdit.Description"></label>
+                <label asp-for="Description"></label>
                 <div class="field-group">
-                    <textarea id="projectDescription" asp-for="@Model.ProjectEdit.Description"></textarea>
-                    <span asp-validation-for="@Model.ProjectEdit.Description"></span>
+                    <textarea id="projectDescription" asp-for="Description"></textarea>
+                    <span asp-validation-for="Description"></span>
                 </div>
             </div>
             <div class="form-date-group">
                 <div class="form-group">
-                    <label asp-for="@Model.ProjectEdit.StartDate"></label>
+                    <label asp-for="StartDate"></label>
                     <div class="field-group">
-                        <input id="projectStart" asp-for="@Model.ProjectEdit.StartDate" type="date" />
-                        <span asp-validation-for="@Model.ProjectEdit.StartDate"></span>
+                        <input id="projectStart" asp-for="StartDate" type="date" />
+                        <span asp-validation-for="StartDate"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label asp-for="@Model.ProjectEdit.EndDate"></label>
+                    <label asp-for="EndDate"></label>
                     <div class="field-group">
-                        <input id="projectEnd" asp-for="@Model.ProjectEdit.EndDate" type="date" />
-                        <span asp-validation-for="@Model.ProjectEdit.EndDate"> </span>
+                        <input id="projectEnd" asp-for="EndDate" type="date" />
+                        <span asp-validation-for="EndDate"> </span>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.ProjectEdit.Budget"></label>
+                <label asp-for="Budget"></label>
                 <div class="field-group">
-                    <input id="projectBudget" asp-for="@Model.ProjectEdit.Budget" />
-                    <span asp-validation-for="@Model.ProjectEdit.Budget"></span>
+                    <input id="projectBudget" asp-for="Budget" />
+                    <span asp-validation-for="Budget"></span>
                 </div>
             </div>
 
-            <button type="submit" class="btn-submit btn-standard mt-3">Add Project</button>
+            <button type="submit" class="btn-submit btn-standard mt-3">Save</button>
         </form>
     </div>
 </div>

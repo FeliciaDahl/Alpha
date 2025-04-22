@@ -91,12 +91,13 @@
                         document.querySelector('#projectTitle').value = project.title;
                         document.querySelector('#projectClientId').value = project.clientId;
                         document.querySelector('#projectDescription').value = project.description;
-                        document.querySelector('#projectStart').value = project.startDate;
-                        document.querySelector('#projectEnd').value = project.endDate;
+                        document.querySelector('#projectStart').value = project.startDate.split('T')[0];
+                        document.querySelector('#projectEnd').value = project.endDate.split('T')[0];
                         document.querySelector('#projectBudget').value = project.budget;
 
+                        console.log(project.projectImagePath);
 
-                        previewExitingImage('edit', project.imagePath);
+                        previewExitingImage('edit', project.projectImagePath);
 
                     }
                     else {
@@ -110,6 +111,8 @@
         });
     }
 
+
+    //Blir problematiskt att använda samma Id/namn  : const changeIcon osv, krockar med uploadEditImage.. hjälp.
     /*Preview Existing Image*/
     function previewExitingImage(modal, imagePath) {
         if (hasUploadedImage) return
@@ -122,11 +125,12 @@
         if (imagePath) {
             imagePreview.src = '/' + imagePath.replace(/\\/g, '/');
             imagePreview.classList.remove('hide');
-            uploadIcon.classList.remove('hide');
-            changeIcon.classList.add('hide');
+            uploadIcon.classList.add('hide');
+            changeIcon.classList.remove('hide');
             previewContainer.classList.add('image-change');
         }
         else {
+            imagePreview.src ='~/images/Avatar-2.svg';
 
             uploadIcon.classList.add('hide');
             changeIcon.classList.remove('hide');
