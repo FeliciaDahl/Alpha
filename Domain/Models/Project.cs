@@ -15,6 +15,7 @@ public class Project
     public DateTime? EndDate { get; set; }
 
     public decimal? Budget { get; set; }
+    public int StatusId { get; set; }
 
     public Client Client { get; set; } = null!;
 

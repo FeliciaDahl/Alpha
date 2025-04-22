@@ -18,10 +18,20 @@ public class ProjectViewModel
         ProjectEdit = new ProjectEditViewModel();
     }
 
+
     public List<Project> Projects { get; set; } = new();
-    public ProjectRegistrationViewModel ProjectRegistration { get; set; } 
-    public ProjectEditViewModel ProjectEdit { get; set; } = new();
+    public List<Project> ProjectsStarted => Projects.Where(p => p.StatusId == 1).ToList();
+    public List<Project> ProjectsCompleted => Projects.Where(p => p.StatusId == 2).ToList();
+    public List<Project> ProjectsOnHold => Projects.Where(p => p.StatusId == 3).ToList();
+
+    public int TotalCount => Projects.Count;
+    public int StartedCount => ProjectsStarted.Count;
+    public int CompletedCount => ProjectsCompleted.Count;
+    public int OnHoldCount => ProjectsOnHold.Count;
+
+
     public List<SelectListItem> ClientList { get; set; } = new ();
     public List<SelectListItem> StatusList { get; set; } = new();
-
+    public ProjectRegistrationViewModel ProjectRegistration { get; set; } 
+    public ProjectEditViewModel ProjectEdit { get; set; } = new();
 }

@@ -93,6 +93,7 @@
                         document.querySelector('#projectDescription').value = project.description;
                         document.querySelector('#projectStart').value = project.startDate.split('T')[0];
                         document.querySelector('#projectEnd').value = project.endDate.split('T')[0];
+                        document.querySelector('#projectStatusId').value = project.statusId;
                         document.querySelector('#projectBudget').value = project.budget;
 
                         console.log(project.projectImagePath);

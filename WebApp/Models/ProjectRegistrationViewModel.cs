@@ -32,7 +32,7 @@ public class ProjectRegistrationViewModel
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     public DateTime? EndDate { get; set; }
 
-    [Display(Name = "Budget", Prompt = "Enter project budget")]
+    [Display(Name = "Budget")]
     [Range(0, 10000000, ErrorMessage = "Budget had to be between 0 - 10.000000sek.")]
     public decimal? Budget { get; set; }
 

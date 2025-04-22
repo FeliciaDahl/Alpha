@@ -365,6 +365,8 @@ h6 {
     box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
 }
 
+
+
 .form-group {
     width: 100%;
 }
@@ -387,6 +389,22 @@ form textarea {
         outline: none;
         box-shadow: 0 0 5px var(--form-input-border-focus);
     }
+
+
+.input-with-icon {
+ position:relative;
+}
+    .input-with-icon i {
+        position:absolute;
+        z-index: 1;
+        left: 5px;
+        top: 10px;
+    }
+
+    .input-with-icon input {
+        padding-left: 2rem;
+    }
+
 
 form label {
     padding-top: 1rem;
@@ -668,6 +686,11 @@ form .input-validation-error {
     color: var(--side-nav-text-color);
     border-radius: 14px;
 }
+
+.nav-link.active {
+    color: var(--side-nav-text-hover-color);
+    background-color: var(--side-nav-background-hover-color);
+}
     .nav-link:hover,
     .nav-link:focus {
         color: var(--side-nav-text-hover-color);
@@ -901,11 +924,29 @@ table tbody a {
 
 /*PROJECTS*/
 
+.project-nav {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+.project-nav a {
+    color: var(--text-light);
+    font-weight: var(--font-bold);
+}
+
+    .project-nav .active {
+        font-weight: var(--font-bold);
+        color: var(--accent);
+        border-bottom: 2px solid var(--accent);
+    }
+
+
 .project-list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
-    margin: 2rem;
+    margin: 1rem;
 }
 
 .project-card {

@@ -13,14 +13,36 @@
         <h1>@ViewData["Title"]</h1>
         <button type="button" data-modal="true" data-target="#addProjectModal" class="btn-standard btn-add"><i class="bi bi-plus-lg"></i>Add Project</button>
     </div>
+  
     <div class="project-nav">
-        <a href="#"></a>
+        <div class="project-nav">
+            <a class="btn-filter @(ViewBag.Filter == null ? "active" : "")" asp-action="Projects">ALL [@Model.TotalCount]</a>
+            <a class="btn-filter @(ViewBag.Filter == 1 ? "active" : "")" asp-action="Projects" asp-route-statusId="1">STARTED [@Model.StartedCount]</a>
+            <a class="btn-filter @(ViewBag.Filter == 2 ? "active" : "")" asp-action="Projects" asp-route-statusId="2">COMPLETED [@Model.CompletedCount]</a>
+            <a class="btn-filter @(ViewBag.Filter == 3 ? "active" : "")" asp-action="Projects" asp-route-statusId="3">ON HOLD [@Model.OnHoldCount]</a>
+        </div>
     </div>
 
     <div class="client-table mt-4">
-        
-      
-        <partial name="Partials/Sections/Project/_ProjectList" model="Model.Projects" />
+
+
+        @if (ViewBag.Filter == null)
+        {
+            <partial name="Partials/Sections/Project/_ProjectList" model="Model.Projects" />
+        }
+        else if (ViewBag.Filter == 1)
+        {
+            <partial name="Partials/Sections/Project/_ProjectList" model="Model.ProjectsStarted" />
+        }
+        else if (ViewBag.Filter == 2)
+        {
+            <partial name="Partials/Sections/Project/_ProjectList" model="Model.ProjectsCompleted" />
+        }
+        else if (ViewBag.Filter == 3)
+        {
+            <partial name="Partials/Sections/Project/_ProjectList" model="Model.ProjectsOnHold" />
+        }
+       
 
     </div>
 </section>

@@ -26,19 +26,31 @@ public class AdminController(IClientService clientService, IMemberService member
         return View();
     }
 
-    public async Task<IActionResult> Projects()
+    //Lägg till route och en index..
+    public async Task<IActionResult> Projects(int? statusId = null)
     {
+       
         var viewModel = new ProjectViewModel
         {
             Projects = await LoadProjectListAsync(),
             ClientList = await LoadClientListAsync(),
             StatusList = await LoadStatusListAsync(),
-            ProjectRegistration = new ProjectRegistrationViewModel() { ClientList = new List<SelectListItem>() },
-            ProjectEdit = new ProjectEditViewModel() { ClientList = new List<SelectListItem>() }
+            ProjectRegistration = new ProjectRegistrationViewModel() { 
+                ClientList = new List<SelectListItem>(),
+                
+
+            },
+            ProjectEdit = new ProjectEditViewModel() { 
+                ClientList = new List<SelectListItem>(), 
+                StatusList = new List<SelectListItem>() 
+            }
         };
+
+        ViewBag.Filter = statusId;
 
         viewModel.ProjectRegistration.ClientList = viewModel.ClientList;
         viewModel.ProjectEdit.ClientList = viewModel.ClientList;
+        viewModel.ProjectEdit.StatusList = viewModel.StatusList;
 
         return View(viewModel);
     }

@@ -1,5 +1,4 @@
 ﻿using Business.Interfaces;
-using Business.Services;
 using Domain.Dto;
 using Domain.Extensions;
 using Domain.Models;
@@ -7,19 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Models;
 using WebApp.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApp.Controllers;
 
-public class ProjectController(IProjectService projectService, IFileService fileService, IClientService clientService) : Controller
+public class ProjectController(IProjectService projectService, IFileService fileService, IClientService clientService, IStatusService statusService) : Controller
 {
     private readonly IProjectService _projectService = projectService;
     private readonly IClientService _clientService = clientService;
+    private readonly IStatusService _statusService = statusService;
     private readonly IFileService _fileService = fileService;
 
     public IActionResult Index()
     {
-      
         return View();
     }
 
@@ -27,7 +25,7 @@ public class ProjectController(IProjectService projectService, IFileService file
     [HttpPost]
     public async Task<IActionResult> AddProject(ProjectRegistrationViewModel model)
     {
-        
+
         if (!ModelState.IsValid)
         {
             var errors = ModelState
@@ -76,6 +74,13 @@ public class ProjectController(IProjectService projectService, IFileService file
             Text = x.ClientName
         }).ToList();
 
+        var statuses = await _statusService.GetAllStatusesAsync();
+        var statusList = statuses.Result!.Select(x => new SelectListItem
+        {
+            Value = x.Id.ToString(),
+            Text = x.StatusName
+        }).ToList();
+
         var model = new ProjectEditViewModel
         {
             Id = result.Id,
@@ -87,21 +92,21 @@ public class ProjectController(IProjectService projectService, IFileService file
             Budget = result.Budget,
             ClientId = result.Client.Id,
             StatusId = result.Status.Id,
-            ClientList = clientList
+            ClientList = clientList,
+            StatusList = statusList
 
         };
 
         return Ok(model);
     }
 
- 
+
     [HttpPost]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> EditProject(int id, [FromForm] ProjectEditViewModel model)
     {
-       
 
-        if (!ModelState.IsValid)
+     if (!ModelState.IsValid)
         {
             var errors = ModelState
                 .Where(x => x.Value?.Errors.Count > 0)
@@ -155,7 +160,7 @@ public class ProjectController(IProjectService projectService, IFileService file
             return RedirectToAction("Projects", "Admin");
         }
 
-        return BadRequest(new { sucess = false});
+        return BadRequest(new { sucess = false });
 
     }
 
