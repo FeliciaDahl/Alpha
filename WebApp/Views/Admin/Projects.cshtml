@@ -14,7 +14,7 @@
         <button type="button" data-modal="true" data-target="#addProjectModal" class="btn-standard btn-add"><i class="bi bi-plus-lg"></i>Add Project</button>
     </div>
   
-    <div class="project-nav">
+    <div class="project-nav-container">
         <div class="project-nav">
             <a class="btn-filter @(ViewBag.Filter == null ? "active" : "")" asp-action="Projects">ALL [@Model.TotalCount]</a>
             <a class="btn-filter @(ViewBag.Filter == 1 ? "active" : "")" asp-action="Projects" asp-route-statusId="1">STARTED [@Model.StartedCount]</a>

@@ -924,6 +924,11 @@ table tbody a {
 
 /*PROJECTS*/
 
+.project-nav-container {
+    width: 100%;
+    border-bottom: 1px solid var(--border-200);
+}
+
 .project-nav {
     display: flex;
     gap: 1rem;
@@ -938,7 +943,7 @@ table tbody a {
     .project-nav .active {
         font-weight: var(--font-bold);
         color: var(--accent);
-        border-bottom: 2px solid var(--accent);
+        border-bottom: 3px solid var(--accent);
     }
 
 
