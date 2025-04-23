@@ -560,7 +560,6 @@ form .input-validation-error {
     color: var(--accent);
     font-size: 14px;
 }
-
     .forgot-password a:hover {
         text-decoration: underline;
     }

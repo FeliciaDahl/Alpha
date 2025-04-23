@@ -59,7 +59,23 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapStaticAssets();
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    string[] roleNames = { "Admin", "User" };
+
+    foreach( var roleName in roleNames)
+    {
+        var roleExists = await roleManager.RoleExistsAsync(roleName);
+        if(!roleExists)
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+        
+    }
+}
+
+    app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
