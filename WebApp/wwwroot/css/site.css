@@ -98,12 +98,13 @@
     --dropdown-account-name-background: var(--grey-200);
     --dropdown-account-img-border: var(--white-100);
     --separator: var(--border-200);
+    --dropdown-delete-text-color: var(--red);
+    --dropdown-background-hover-color: var(--white-200);
     /*FROMS*/
     /*IMAGE*/
     --img-background-grey: var(--grey-700-77);
     --img-border-grey: var(--border-300);
     --img-icon-color-grey: var(--grey-400);
-  
 }
 
     [data-theme="dark"]
@@ -752,21 +753,21 @@ main {
 }
     .dropdown-action:hover,
     .dropdown-action:focus {
-        color: var(--side-nav-text-hover-color);
-        background-color: var(--side-nav-background-hover-color);
+       
+        background-color: var(--dropdown-background-hover-color);
         transition: all 0.3s;
         cursor:pointer;
     }
 
-.btn-logout {
-    display:flex;
-    gap: 1rem;
+.btn-delete-project {
+    color: var(--dropdown-delete-text-color);
+   
 }
 
 .dropdown-header {
     display: flex;
-    justify-content: center;
     margin: 0.3rem;
+    justify-content: center;
     align-items: center;
 }
 .dropdown-body {
@@ -785,10 +786,18 @@ main {
 
 #account-container {
     position: relative;
+   
 }
     #account-container .dropdown {
         width: 230px;
     }
+
+    #account-container .dropdown-header {
+        border-radius: 12px;
+        background-color: var(--dropdown-account-name-background);
+    }
+  
+
 
 .account-name {
     display: flex;
@@ -796,9 +805,8 @@ main {
     gap: 1rem;
     align-items: center;
     color: var(--text-dark);
-    background-color: var(--dropdown-account-name-background);
     padding: 0.5rem 1rem;
-    border-radius: 12px;
+  
 }
     .account-name img{
         width: 40px;
@@ -920,7 +928,6 @@ table tbody a {
     border-radius: 16px;
    
 }
-
 
 /*PROJECTS*/
 
