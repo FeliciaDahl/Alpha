@@ -71,7 +71,7 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
     }
 
 
-    public async Task<ServiceResult<bool>> EditMember(string id, MemberEditForm form)
+    public async Task<ServiceResult<bool>> EditMemberAsync(string id, MemberEditForm form)
     {
         var existingMemberResult = await _memberRepository.GetEntityAsync(c => c.Id == id);
 
@@ -119,7 +119,7 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
         }
     }
 
-    public async Task<ServiceResult<bool>> DeleteMember(string id)
+    public async Task<ServiceResult<bool>> DeleteMemberAsync(string id)
     {
         var existingMemberResult = await _memberRepository.GetEntityAsync(c => c.Id == id);
 

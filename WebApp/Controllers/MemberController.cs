@@ -132,6 +132,12 @@ public class MemberController(IMemberService memberService, IFileService fileSer
         var editForm = model.MapTo<MemberEditForm>();
 
         var result = await _memberService.EditMemberAsync(id, editForm);
+        if (result.Succeeded)
+        {
+            return RedirectToAction("Members", "Admin");
+        }
+
+        return BadRequest(new { sucess = false });
 
     }
 

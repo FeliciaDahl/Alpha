@@ -113,6 +113,46 @@
     }
 
 
+    /*Edit Member*/
+
+    function EditMember() {
+        const editButtons = document.querySelectorAll('.btn-edit-member');
+        editButtons.forEach(button => {
+            button.addEventListener('click', async function () {
+                const projectId = this.getAttribute('data-id');
+                if (!projectId) return;
+
+                try {
+                    const res = await fetch(`/Member/EditMember?id=${memberId}`);
+                    if (res.ok) {
+                        const member = await res.json();
+
+                        document.querySelector('#memberId').value = member.id;
+                        document.querySelector('#memberFirstName').value = member.FirstName;
+                        document.querySelector('#memberLastName').value = member.LastName;
+                        document.querySelector('#memberJobTitle').value = member.JobTitle;
+                        document.querySelector('#memberEmail').value = member.Email;
+                        document.querySelector('#memberPhoneNumber').value = member.PhoneNumber;
+                        document.querySelector('#memberRole').value = member.Role;
+                       
+
+                        previewExitingImage('edit', project.projectImagePath);
+
+                    }
+                    else {
+                        console.error('Could not load data');
+                    }
+                }
+                catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    }
+
+
+
+
     //Blir problematiskt att använda samma Id/namn  : const changeIcon osv, krockar med uploadEditImage.. hjälp.
     /*Preview Existing Image*/
     function previewExitingImage(modal, imagePath) {
@@ -239,6 +279,8 @@
     function initDeleteModals() {
         deleteModal('.btn-delete-client', '#deleteClientModal', (id) => `/Client/DeleteClient/${id}`, 'Could not delete client. Make sure its not connected to a existing project');
         deleteModal('.btn-delete-project', '#deleteProjectModal', (id) => `/Project/DeleteProject/${id}`, 'Could not delete project. Try again.');
+        deleteModal('.btn-delete-member', '#deleteMemberModal', (id) => `/Member/DeleteMember/${id}`, 'Could not delete Member. Try again.');
+    }
     }
 
 

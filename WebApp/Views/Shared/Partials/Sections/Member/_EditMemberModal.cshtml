@@ -5,35 +5,39 @@
 
     <div class="modal-content">
         <div class="modal-head">
-            <h3>Add Member</h3>
+            <h3>Edit Member</h3>
             <button class="close-btn" data-close="true"><i class="bi bi-x-lg"></i></button>
         </div>
 
         <form asp-action="EditMember" asp-controller="Member" enctype="multipart/form-data" method="post" novalidate>
-
+            <input id="memberId" asp-for="Id" readonly type="hidden" value="Id" />
+           @*  //Koppla ihop allt med JS, edit och delete! *@ 
+           
             <div class="form-group">
-                <div id="upload-trigger" class="image-preview-container preview-circle">
-                    <div id="image-container" class="circle-grey">
-                        <i id="preview-camera" class="bi bi-camera-fill"></i>
-                        <i id="preview-pencil" class="bi bi-pencil-square hide"></i>
+                <div id="edit-upload-trigger" class="image-preview-container preview-circle">
+                    <div id="edit-image-container" class="circle-grey">
+                        <i id="edit-preview-camera" class="bi bi-camera-fill"></i>
+                        <i id="edit-preview-pencil" class="bi bi-pencil-square hide"></i>
                     </div>
-                    <input id="file-upload" asp-for="MemberImage" type="file" accept="image/*" class="hide" />
+                    <input id="edit-file-upload" asp-for="MemberImage" type="file" accept="image/*" class="hide" />
 
-                    <img id="image-preview" src="#" class="hide" />
+                    <img id="edit-image-preview" src="" class="image-preview hide" />
                 </div>
             </div>
+
+
             <div class="form-name-group">
                 <div class="form-group">
                     <label asp-for="FirstName"></label>
                     <div class="field-group">
-                        <input asp-for="FirstName" />
+                        <input id="memberFirstName" asp-for="FirstName" />
                         <span asp-validation-for="FirstName"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label asp-for="LastName"></label>
                     <div class="field-group">
-                        <input asp-for="LastName" />
+                        <input id="memberLastName" asp-for="LastName" />
                         <span asp-validation-for="LastName"></span>
                     </div>
                 </div>
@@ -42,7 +46,7 @@
             <div class="form-group">
                 <label asp-for="Email"></label>
                 <div class="field-group">
-                    <input asp-for="Email" />
+                    <input id="memberEmail" asp-for="Email" />
                     <span asp-validation-for="Email"></span>
                 </div>
             </div>
@@ -50,7 +54,7 @@
             <div class="form-group">
                 <label asp-for="JobTitle"></label>
                 <div class="field-group">
-                    <input asp-for="JobTitle" />
+                    <input id="memberJobTitle" asp-for="JobTitle" />
                     <span asp-validation-for="JobTitle"></span>
                 </div>
             </div>
@@ -58,13 +62,13 @@
             <div class="form-group">
                 <label asp-for="PhoneNumber"></label>
                 <div class="field-group">
-                    <input asp-for="PhoneNumber" class="form-control" />
+                    <input id="memberPhoneNumber" asp-for="PhoneNumber" class="form-control" />
                     <span asp-validation-for="PhoneNumber" class="form-error"></span>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="Role"></label>
-                <select id="projectrole" asp-for="Role" asp-items="@Model.Roles" class="form-select">
+                <select id="memberRole" asp-for="Role" asp-items="@Model.Roles" class="form-select">
                     <option value="">Add Role</option>
                 </select>
             </div>
