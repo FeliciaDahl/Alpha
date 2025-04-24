@@ -1,12 +1,6 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
 
-    //OpenCloseModals();
-    //EditClient();
-    //EditProject();
-    //initDeleteModals();
-    
     uploadImage();
-    //uploadEditImage();
     initForms();    
 
 
@@ -14,8 +8,12 @@
     function initForms() {
         const forms = document.querySelectorAll('form')
         forms.forEach(form => {
+
+            if (!form.closest('.modal')) return;
+
             form.addEventListener("submit", async (e) => {
                 e.preventDefault()
+
 
                 clearErrorMessage(form)
 

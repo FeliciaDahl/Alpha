@@ -51,48 +51,47 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
 
     }
 
+    [HttpGet]
     public IActionResult SignIn()
     {
-        ViewBag.ErrorMessage = null!;
         return View();
     }
 
-    //[HttpPost]
-    //public async Task<IActionResult> SignIn(MemberSignInViewModel model)
-    //{
-    //    ViewBag.ErrorMessage = null!;
+    [HttpPost]
+    public async Task<IActionResult> SignIn(MemberSignInViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            ViewBag.ErrorMessage = "Enter email and password to log in";
+            return View(model);
+        }
+           
 
-    //    if (string.IsNullOrEmpty(model.Email) || (string.IsNullOrEmpty(model.Password)))
-    //    {
-    //        ViewBag.ErrorMessage = "Enter email and password to log in";
-    //        return View(model);
-    //    }
+        var signInForm = model.MapTo<MemberSignInForm>();
 
-    //    if(!await _authenticationService.ExistAsync(model.Email))
-    //    {
-    //        ViewBag.ErrorMessage = "Email does not exist.";
-    //        return View(model);
-    //    }
+        ViewBag.ErrorMessage = null!;
 
-      
-    //        signInForm = model.MapTo<MemberSignInForm>();
+        if (!await _authenticationService.ExistAsync(signInForm.Email))
+        {
+            ViewBag.ErrorMessage = "Email does not exist.";
+            return View(model);
+        }
 
-    //    result = await _authenticationService.SignInAsync(signInForm)
-          
-    //            return RedirectToAction("Index", "Admin");
-          
+        var result = await _authenticationService.SignInAsync(signInForm);
 
-        
-            
-    //        ViewData["ErrorMessage"] = "Invalid email or password";
-    //        return View(model);
+        if (!result.Succeeded)
+        {
+            ViewData["ErrorMessage"] = "Invalid email or password";
+            return View(model);
+        }
 
-    //}
+        return RedirectToAction("Index", "Admin");
+    }
 
     public async new Task<IActionResult> SignOut()
     {
         await _authenticationService.SignOutAsync();
-        return RedirectToAction("Auth", "SignIn");
+        return RedirectToAction("SignIn", "Auth");
     }
 
 }

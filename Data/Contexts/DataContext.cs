@@ -14,7 +14,7 @@ public class DataContext(DbContextOptions<DataContext> options) : IdentityDbCont
     public virtual DbSet<StatusEntity> Statuses { get; set; }
 
 
-    //I denna del av koden har jag delvis fått hjälp av ChatGPT. Koden skapar relationer mellan entiteter i databasen.
+    //I denna del av koden har jag tagit hjälp av ChatGPT. Koden skapar relationer mellan entiteter i databasen.
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

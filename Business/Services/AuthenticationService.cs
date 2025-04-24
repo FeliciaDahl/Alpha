@@ -23,10 +23,14 @@ public class AuthenticationService : IAuthenticationService
     {
         if (form == null)
         {
-            return ServiceResult<bool>.Failed(400, "Form can not be empty");
+            return ServiceResult<bool>.Failed(400, "Required fields can not be empty");
         }
         var memberEntity = MemberFactory.ToEntity(form);
         var result = await _userManager.CreateAsync(memberEntity, form.Password!);
+        if (!result.Succeeded)
+        {
+            return ServiceResult<bool>.Failed(400, "Something went wrong when trying to create user");
+        }
         return ServiceResult<bool>.Success(true);
 
     }
@@ -34,10 +38,16 @@ public class AuthenticationService : IAuthenticationService
     {
         if (form == null)
         {
-           return ServiceResult<bool>.Failed(400, "Client name can not be empty");
+           return ServiceResult<bool>.Failed(400, "Required fields can not be empty");
         }
         
         var result = await _signInManager.PasswordSignInAsync(form.Email, form.Password, false, false);
+
+        if (!result.Succeeded)
+        {
+            return ServiceResult<bool>.Failed(400, "Invalid email or password");
+        }
+
         return ServiceResult<bool>.Success(true);
     }
     public async Task SignOutAsync()
