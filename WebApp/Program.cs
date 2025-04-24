@@ -92,7 +92,7 @@ using (var scope = app.Services.CreateScope())
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=Projects}/{id?}")
+    pattern: "{controller=Admin}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 

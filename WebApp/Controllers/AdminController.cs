@@ -17,7 +17,8 @@ namespace WebApp.Controllers;
 //[Authorize]
 public class AdminController() : Controller
 {
-   
+  
+
     public IActionResult Index()
     {
         return View();

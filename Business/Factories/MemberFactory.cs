@@ -29,6 +29,7 @@ public class MemberFactory
     {
         return user == null ? new Member() : new Member()
         {
+            Id = user.Id,
             Image = user.Image,
             FirstName = user.FirstName,
             LastName = user.LastName,

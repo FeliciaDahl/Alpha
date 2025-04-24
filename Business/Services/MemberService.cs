@@ -31,8 +31,6 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
         try
         {
 
-
-
             var memberEntity = MemberFactory.ToEntity(form);
           
             var result = await _userManager.CreateAsync(memberEntity);
@@ -60,6 +58,90 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
         return ServiceResult<IEnumerable<Member>>.Success(members!);
     }
 
+    public async Task<ServiceResult<Member>> GetMemberAsync(string id)
+    {
+        var memberResult = await _userManager.FindByIdAsync(id);
+
+        if (memberResult == null)
+            return ServiceResult<Member>.Failed(404, "Member not found");
+
+        var member = memberResult.MapTo<Member>();
+
+        return ServiceResult<Member>.Success(member);
+    }
 
 
+    public async Task<ServiceResult<bool>> EditMember(string id, MemberEditForm form)
+    {
+        var existingMemberResult = await _memberRepository.GetEntityAsync(c => c.Id == id);
+
+        if (!existingMemberResult.Succeeded || existingMemberResult.Result == null)
+            return ServiceResult<bool>.Failed(404, "Member not found");
+
+        var memberEntity = existingMemberResult.Result;
+
+        memberEntity.Image = string.IsNullOrWhiteSpace(form.MemberImagePath) ? memberEntity.Image : form.MemberImagePath;
+        memberEntity.FirstName = string.IsNullOrWhiteSpace(form.FirstName) ? memberEntity.FirstName : form.FirstName;
+        memberEntity.LastName = string.IsNullOrWhiteSpace(form.LastName) ? memberEntity.LastName : form.LastName;
+        memberEntity.PhoneNumber = string.IsNullOrWhiteSpace(form.PhoneNumber) ? memberEntity.PhoneNumber : form.PhoneNumber;
+        memberEntity.Email = string.IsNullOrWhiteSpace(form.Email) ? memberEntity.Email : form.Email;
+        memberEntity.JobTitle = string.IsNullOrWhiteSpace(form.JobTitle) ? memberEntity.JobTitle : form.JobTitle;
+
+        if (!string.IsNullOrWhiteSpace(form.Role))
+        {
+            var currentRole = await _userManager.GetRolesAsync(memberEntity);
+
+            var removeResult = await _userManager.RemoveFromRolesAsync(memberEntity, currentRole);
+            if (!removeResult.Succeeded)
+                return ServiceResult<bool>.Failed(500, "Failed to remove existing role");
+
+            var addRole = await _userManager.AddToRoleAsync(memberEntity, form.Role);
+            if (!addRole.Succeeded)
+                return ServiceResult<bool>.Failed(500, "Failed to assign new role");
+        }
+
+        await _memberRepository.BeginTransactionAsync();
+
+        try
+        {
+            var result = await _userManager.UpdateAsync(memberEntity);
+
+          
+            await _memberRepository.SaveAsync();
+
+            await _memberRepository.CommitTransactionAsync();
+            return ServiceResult<bool>.Success(true);
+        }
+        catch (Exception e)
+        {
+            await _memberRepository.RollbackTransactionAsync();
+            return ServiceResult<bool>.Failed(500, e.Message);
+        }
+    }
+
+    public async Task<ServiceResult<bool>> DeleteMember(string id)
+    {
+        var existingMemberResult = await _memberRepository.GetEntityAsync(c => c.Id == id);
+
+        if (!existingMemberResult.Succeeded || existingMemberResult.Result == null)
+            return ServiceResult<bool>.Failed(404, "Member not found");
+
+        var existingMember = existingMemberResult.Result;
+
+        await _memberRepository.BeginTransactionAsync();
+
+        try
+        {
+            var result = await _userManager.DeleteAsync(existingMember);
+            await _memberRepository.SaveAsync();
+
+            await _memberRepository.CommitTransactionAsync();
+            return ServiceResult<bool>.Success(true);
+        }
+        catch (Exception e)
+        {
+            await _memberRepository.RollbackTransactionAsync();
+            return ServiceResult<bool>.Failed(500, e.Message);
+        }
+    }
 }

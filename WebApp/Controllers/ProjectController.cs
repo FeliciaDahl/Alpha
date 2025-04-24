@@ -16,7 +16,7 @@ public class ProjectController(IProjectService projectService, IFileService file
     private readonly IStatusService _statusService = statusService;
     private readonly IFileService _fileService = fileService;
 
-    public async Task<IActionResult> Index(int? statusId = null)
+    public async Task<IActionResult> Projects(int? statusId = null)
     {
 
         var viewModel = new ProjectViewModel
@@ -27,7 +27,6 @@ public class ProjectController(IProjectService projectService, IFileService file
             ProjectRegistration = new ProjectRegistrationViewModel()
             {
                 ClientList = new List<SelectListItem>(),
-
 
             },
             ProjectEdit = new ProjectEditViewModel()
@@ -88,7 +87,7 @@ public class ProjectController(IProjectService projectService, IFileService file
 
         var result = project.Result;
         if (result == null)
-        {
+        {   
             return NotFound();
         }
 

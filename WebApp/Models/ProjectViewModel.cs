@@ -1,9 +1,6 @@
-﻿using Business.Interfaces;
-using Business.Models;
-using Business.Services;
-using Domain.Models;
+﻿using Domain.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
+
 
 namespace WebApp.Models;
 

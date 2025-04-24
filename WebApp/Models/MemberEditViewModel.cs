@@ -5,6 +5,9 @@ namespace WebApp.Models;
 
 public class MemberEditViewModel
 {
+
+    public string Id { get; set; } = null!;
+
     [Display(Name = "Member Image", Prompt = "Enter image")]
     [DataType(DataType.Upload)]
     public IFormFile? MemberImage { get; set; }

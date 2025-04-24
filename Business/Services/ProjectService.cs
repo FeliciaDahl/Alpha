@@ -85,8 +85,6 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
 
     }
 
-   
-
     public async Task<ServiceResult<bool>> EditProjectAsync(int id, ProjectEditForm form)
     {
 
@@ -110,21 +108,22 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
 
         await _projectRepository.BeginTransactionAsync();
 
-        try
-        {
-            await _projectRepository.UpdateAsync(projectEntity);
-            await _projectRepository.SaveAsync();
-            await _projectRepository.CommitTransactionAsync();
+            try
+            {
+               var result = await _projectRepository.UpdateAsync(projectEntity);
 
-            return ServiceResult<bool>.Success(true);
+                await _projectRepository.SaveAsync();
+                await _projectRepository.CommitTransactionAsync();
 
-        }
-        catch (Exception e)
-        {
-            await _projectRepository.RollbackTransactionAsync();
-            return ServiceResult<bool>.Failed(500, e.Message);
+                return ServiceResult<bool>.Success(true);
 
-        }
+            }
+            catch (Exception e)
+            {
+                await _projectRepository.RollbackTransactionAsync();
+                return ServiceResult<bool>.Failed(500, e.Message);
+
+            }
     }
 
 
@@ -141,9 +140,9 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
 
         try
         {
-            await _projectRepository.DeleteAsync(existingProject);
+            var result = await _projectRepository.DeleteAsync(existingProject);
+    
             await _projectRepository.SaveAsync();
-
             await _projectRepository.CommitTransactionAsync();
             return ServiceResult<bool>.Success(true);
         }
