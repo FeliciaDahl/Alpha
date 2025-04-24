@@ -8,29 +8,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services;
 
-public class AuthenticationService : IAuthenticationService
+public class AuthenticationService(UserManager<MemberEntity> userManager, SignInManager<MemberEntity> signInManager) : IAuthenticationService
 {
 
-    private readonly UserManager<MemberEntity> _userManager;
-    private readonly SignInManager<MemberEntity> _signInManager;
-    public AuthenticationService(UserManager<MemberEntity> userManager, SignInManager<MemberEntity> signInManager)
-    {
-        _userManager = userManager;
-        _signInManager = signInManager;
-    }
-  
+    private readonly UserManager<MemberEntity> _userManager = userManager;
+    private readonly SignInManager<MemberEntity> _signInManager = signInManager;
+   
+
     public async Task<ServiceResult<bool>> CreateAsync(MemberSignUpForm form)
     {
         if (form == null)
         {
             return ServiceResult<bool>.Failed(400, "Required fields can not be empty");
         }
+     
         var memberEntity = MemberFactory.ToEntity(form);
-        var result = await _userManager.CreateAsync(memberEntity, form.Password!);
-        if (!result.Succeeded)
+
+        var member = await _userManager.CreateAsync(memberEntity, form.Password!);
+        if (!member.Succeeded)
         {
             return ServiceResult<bool>.Failed(400, "Something went wrong when trying to create user");
         }
+
+        var roleResult = await _userManager.AddToRoleAsync(memberEntity, "User");
+        if (!roleResult.Succeeded)
+        {
+            return ServiceResult<bool>.Failed(400, "Something went wrong when trying to add role to user");
+        }
+
         return ServiceResult<bool>.Success(true);
 
     }

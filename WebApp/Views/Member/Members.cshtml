@@ -3,15 +3,15 @@
     ViewData["Title"] = "Members";
 }
 
-<partial name="Partials/Sections/Member/_AddMemberModal" model="Model.MemberRegistration"/>
+<partial name="Partials/Sections/Member/_AddMemberModal" model="Model.MemberRegistration" />
 
 <section id="members">
-<div class="page-header">
-    <h1>@ViewData["Title"]</h1>
+    <div class="page-header">
+        <h1>@ViewData["Title"]</h1>
         <button type="button" data-modal="true" data-target="#addMemberModal" class="btn-standard btn-add"><i class="bi bi-plus-lg"></i>Add Member</button>
     </div>
 
     <partial name="Partials/Sections/Member/_MemberList" model="Model.Members" />
 
-    
+
 </section>

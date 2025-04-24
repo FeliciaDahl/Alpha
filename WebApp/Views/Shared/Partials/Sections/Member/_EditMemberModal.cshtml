@@ -1,15 +1,15 @@
-﻿@model MemberRegistrationViewModel
+﻿@model MemberEditViewModel
 
 
-<div id="addMemberModal" class="modal member-modal">
+<div id="editMemberModal" class="modal member-modal">
 
     <div class="modal-content">
         <div class="modal-head">
             <h3>Add Member</h3>
             <button class="close-btn" data-close="true"><i class="bi bi-x-lg"></i></button>
         </div>
-  
-    <form asp-action="AddMember" asp-controller="Member" enctype="multipart/form-data" method="post" novalidate>
+
+        <form asp-action="EditMember" asp-controller="Member" enctype="multipart/form-data" method="post" novalidate>
 
             <div class="form-group">
                 <div id="upload-trigger" class="image-preview-container preview-circle">
@@ -23,29 +23,29 @@
                 </div>
             </div>
             <div class="form-name-group">
-        <div class="form-group">
-            <label asp-for="FirstName"></label>
-            <div class="field-group">
-                <input asp-for="FirstName" />
-                <span asp-validation-for="FirstName"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="LastName"></label>
-            <div class="field-group">
-                <input asp-for="LastName" />
-                <span asp-validation-for="LastName"></span>
-            </div>
-        </div>
+                <div class="form-group">
+                    <label asp-for="FirstName"></label>
+                    <div class="field-group">
+                        <input asp-for="FirstName" />
+                        <span asp-validation-for="FirstName"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName"></label>
+                    <div class="field-group">
+                        <input asp-for="LastName" />
+                        <span asp-validation-for="LastName"></span>
+                    </div>
+                </div>
             </div>
 
-        <div class="form-group">
-            <label asp-for="Email"></label>
-            <div class="field-group">
-                <input asp-for="Email" />
-                <span asp-validation-for="Email"></span>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <div class="field-group">
+                    <input asp-for="Email" />
+                    <span asp-validation-for="Email"></span>
+                </div>
             </div>
-        </div>
 
             <div class="form-group">
                 <label asp-for="JobTitle"></label>
@@ -55,14 +55,13 @@
                 </div>
             </div>
 
-        <div class="form-group">
+            <div class="form-group">
                 <label asp-for="PhoneNumber"></label>
-            <div class="field-group">
-                <input asp-for="PhoneNumber" class="form-control" />
+                <div class="field-group">
+                    <input asp-for="PhoneNumber" class="form-control" />
                     <span asp-validation-for="PhoneNumber" class="form-error"></span>
+                </div>
             </div>
-        </div>
-
             <div class="form-group">
                 <label asp-for="Role"></label>
                 <select id="projectrole" asp-for="Role" asp-items="@Model.Roles" class="form-select">
@@ -70,8 +69,9 @@
                 </select>
             </div>
 
-        <button type="submit" class="btn-submit btn-standard mt-3">Add Member</button>
-         
-    </form>
+            <button type="submit" class="btn-submit btn-standard mt-3">Add Member</button>
+
+        </form>
     </div>
 </div>
+

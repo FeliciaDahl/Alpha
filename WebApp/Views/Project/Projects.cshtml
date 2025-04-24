@@ -4,16 +4,20 @@
     ViewData["Title"] = "Projects";
 }
 
-<partial name="Partials/Sections/Project/_AddProjectModal" model="Model.ProjectRegistration" /> 
-<partial name="Partials/Sections/Project/_EditProjectModal" model="Model.ProjectEdit"/>
-<partial name="Partials/Sections/Project/_DeleteProjectModal"/>
+<partial name="Partials/Sections/Project/_AddProjectModal" model="Model.ProjectRegistration" />
+<partial name="Partials/Sections/Project/_EditProjectModal" model="Model.ProjectEdit" />
+<partial name="Partials/Sections/Project/_DeleteProjectModal" />
 
 <section id="projects">
     <div class="page-header">
         <h1>@ViewData["Title"]</h1>
-        <button type="button" data-modal="true" data-target="#addProjectModal" class="btn-standard btn-add"><i class="bi bi-plus-lg"></i>Add Project</button>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <button type="button" data-modal="true" data-target="#addProjectModal" class="btn-standard btn-add"><i class="bi bi-plus-lg"></i>Add Project</button>
+        }
     </div>
-  
+
     <div class="project-nav-container">
         <div class="project-nav">
             <a class="btn-filter @(ViewBag.Filter == null ? "active" : "")" asp-action="Projects">ALL [@Model.TotalCount]</a>
@@ -42,7 +46,7 @@
         {
             <partial name="Partials/Sections/Project/_ProjectList" model="Model.ProjectsOnHold" />
         }
-       
+
 
     </div>
 </section>

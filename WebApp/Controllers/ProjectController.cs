@@ -16,9 +16,34 @@ public class ProjectController(IProjectService projectService, IFileService file
     private readonly IStatusService _statusService = statusService;
     private readonly IFileService _fileService = fileService;
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index(int? statusId = null)
     {
-        return View();
+
+        var viewModel = new ProjectViewModel
+        {
+            Projects = await LoadProjectListAsync(),
+            ClientList = await LoadClientListAsync(),
+            StatusList = await LoadStatusListAsync(),
+            ProjectRegistration = new ProjectRegistrationViewModel()
+            {
+                ClientList = new List<SelectListItem>(),
+
+
+            },
+            ProjectEdit = new ProjectEditViewModel()
+            {
+                ClientList = new List<SelectListItem>(),
+                StatusList = new List<SelectListItem>()
+            }
+        };
+
+        ViewBag.Filter = statusId;
+
+        viewModel.ProjectRegistration.ClientList = viewModel.ClientList;
+        viewModel.ProjectEdit.ClientList = viewModel.ClientList;
+        viewModel.ProjectEdit.StatusList = viewModel.StatusList;
+
+        return View(viewModel);
     }
 
 
@@ -163,5 +188,32 @@ public class ProjectController(IProjectService projectService, IFileService file
         return BadRequest(new { sucess = false });
 
     }
+
+    private async Task<List<Project>> LoadProjectListAsync()
+    {
+        var projectResult = await _projectService.GetAllProjectsAsync();
+        return projectResult.Result?.ToList() ?? new();
+    }
+
+    private async Task<List<SelectListItem>> LoadClientListAsync()
+    {
+        var clientResult = await _clientService.GetAllClientsAsync();
+        return clientResult.Result!.Select(x => new SelectListItem
+        {
+            Value = x.Id.ToString(),
+            Text = x.ClientName
+        }).ToList();
+    }
+
+    private async Task<List<SelectListItem>> LoadStatusListAsync()
+    {
+        var statusResult = await _statusService.GetAllStatusesAsync();
+        return statusResult.Result!.Select(x => new SelectListItem
+        {
+            Value = x.Id.ToString(),
+            Text = x.StatusName
+        }).ToList();
+    }
+
 
 }

@@ -30,6 +30,9 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
 
         try
         {
+
+
+
             var memberEntity = MemberFactory.ToEntity(form);
           
             var result = await _userManager.CreateAsync(memberEntity);

@@ -16,12 +16,23 @@ public class ClientController(IClientService clientService, IFileService fileSer
 
     private readonly IFileService _fileService = fileService;
 
-    public IActionResult Index()
+    public async Task<IActionResult> Clients()
     {
-        return View();
+        var clientResult = await _clientService.GetAllClientsAsync();
+
+        var viewModel = new ClientViewModel
+        {
+            Clients = clientResult.Result!.ToList(),
+
+            ClientRegistration = new ClientRegistrationViewModel(),
+
+            ClientEdit = new ClientEditViewModel()
+        };
+
+        return View(viewModel);
+
     }
 
- 
     [HttpPost]
     public async Task<IActionResult> AddClient(ClientRegistrationViewModel model)
     {

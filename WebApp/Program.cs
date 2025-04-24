@@ -73,6 +73,19 @@ using (var scope = app.Services.CreateScope())
         }
         
     }
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<MemberEntity>>();
+    var member = new MemberEntity { UserName = "admin@domain.com", FirstName= "admin", LastName="admin", Email = "admin@domain.com" };
+
+    var memberExists = await userManager.Users.AnyAsync(x => x.Email == member.Email);
+    if(!memberExists) {
+
+        var result = await userManager.CreateAsync(member, "BytMig123!");
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(member, "Admin");
+        }
+    }
 }
 
     app.MapStaticAssets();

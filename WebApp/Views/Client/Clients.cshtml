@@ -1,27 +1,26 @@
-﻿
-@model ClientViewModel
+﻿@model ClientViewModel
 @{
     ViewData["Title"] = "Clients";
 }
 
 
-<partial name="Partials/Sections/Client/_AddClientModal" model="Model.ClientRegistration" /> 
+<partial name="Partials/Sections/Client/_AddClientModal" model="Model.ClientRegistration" />
 <partial name="Partials/Sections/Client/_EditClientModal" model="Model.ClientEdit" />
 <partial name="Partials/Sections/Client/_DeleteClientModal" />
 
 
 <section id="clients">
-<div class="page-header">
-    <h1>@ViewData["Title"]</h1>
+    <div class="page-header">
+        <h1>@ViewData["Title"]</h1>
         <button type="button" data-modal="true" data-target="#addClientModal" class="btn-standard btn-add"><i class="bi bi-plus-lg"></i>Add Client</button>
     </div>
-     
-<div class="client-table mt-4">
+
+    <div class="client-table mt-4">
 
         <partial name="Partials/Sections/Client/_ClientList" model="Model.Clients" />
-       
-</div>
+
+    </div>
 </section>
 
-
-@await Html.PartialAsync("_ValidationScripts")
+@* 
+@await Html.PartialAsync("_ValidationScripts") *@

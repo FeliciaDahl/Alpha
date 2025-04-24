@@ -1,11 +1,9 @@
-﻿using Business.Models;
-using Domain.Dto;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Models;
 
-public class MemberRegistrationViewModel
+public class MemberEditViewModel
 {
     [Display(Name = "Member Image", Prompt = "Enter image")]
     [DataType(DataType.Upload)]
@@ -28,9 +26,6 @@ public class MemberRegistrationViewModel
     [Display(Name = "Job Title", Prompt = "Select Title")]
     public string JobTitle { get; set; } = null!;
 
-   
-    [DataType(DataType.Text)]
-    [Display(Name = "Role", Prompt = "Enter a role")]
     public string? Role { get; set; } = null!;
 
     [Required(ErrorMessage = "You must enter a email")]
@@ -43,7 +38,5 @@ public class MemberRegistrationViewModel
     [Display(Name = "PhoneNumber", Prompt = "Enter phone number")]
     public string? PhoneNumber { get; set; }
 
-
     public List<SelectListItem> Roles { get; set; } = new();
-
 }
