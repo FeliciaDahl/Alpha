@@ -49,6 +49,9 @@ builder.Services.ConfigureApplicationCookie(x =>
 });
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
+
 
 var app = builder.Build();
 
@@ -56,7 +59,7 @@ var app = builder.Build();
 app.UseHsts();
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.UseSession(); 
 app.UseAuthorization();
 
 using (var scope = app.Services.CreateScope())
@@ -92,7 +95,7 @@ using (var scope = app.Services.CreateScope())
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=Index}/{id?}")
+    pattern: "{controller=Auth}/{action=SignIn}/{id?}")
     .WithStaticAssets();
 
 

@@ -23,7 +23,9 @@ public class MemberController(IMemberService memberService, IFileService fileSer
     public async Task<IActionResult> Members()
     {
         var membersResult = await _memberService.GetAllMembersAsync();
+
         var roles = await LoadRoleListAsync();
+
         var viewModel = new MemberViewModel
         {
             Roles = roles,
@@ -73,7 +75,7 @@ public class MemberController(IMemberService memberService, IFileService fileSer
 
         if (result.Succeeded)
         {
-            return RedirectToAction("Members", "Admin");
+            return RedirectToAction("Members", "Member");
         }
 
         return BadRequest(new { sucess = false });
@@ -97,11 +99,11 @@ public class MemberController(IMemberService memberService, IFileService fileSer
         var model = new MemberEditViewModel
         {
             Id = result.Id,
+            MemberImagePath = result.Image,
             FirstName = result.FirstName,
             LastName = result.LastName,
             Email = result.Email ?? string.Empty,
             PhoneNumber = result.PhoneNumber,
-            MemberImagePath = result.Image,
             Roles = roles
         };
 
@@ -134,7 +136,7 @@ public class MemberController(IMemberService memberService, IFileService fileSer
         var result = await _memberService.EditMemberAsync(id, editForm);
         if (result.Succeeded)
         {
-            return RedirectToAction("Members", "Admin");
+            return RedirectToAction("Members", "Member");
         }
 
         return BadRequest(new { sucess = false });

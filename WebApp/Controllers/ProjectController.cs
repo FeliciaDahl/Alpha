@@ -72,7 +72,7 @@ public class ProjectController(IProjectService projectService, IFileService file
         var result = await _projectService.CreateProjectAsync(registrationForm);
         if (result.Succeeded)
         {
-            return RedirectToAction("Projects", "Admin");
+            return RedirectToAction("Projects", "Project");
         }
 
         return BadRequest(new { sucess = false });
@@ -154,7 +154,7 @@ public class ProjectController(IProjectService projectService, IFileService file
 
         if (result.Succeeded)
         {
-            return RedirectToAction("Projects", "Admin");
+            return RedirectToAction("Projects", "Project");
         }
 
         return BadRequest(new { sucess = false });
@@ -181,7 +181,7 @@ public class ProjectController(IProjectService projectService, IFileService file
 
         if (result.Succeeded)
         {
-            return RedirectToAction("Projects", "Admin");
+            return RedirectToAction("Projects", "Project");
         }
 
         return BadRequest(new { sucess = false });

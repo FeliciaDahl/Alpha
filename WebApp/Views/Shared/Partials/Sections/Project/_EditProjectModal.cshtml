@@ -10,17 +10,27 @@
         <form asp-action="EditProject" asp-controller="Project" method="post" enctype="multipart/form-data" data-method="patch" novalidate>
             <input id="projectId" asp-for="Id" readonly type="hidden" value="Id" />
 
-            <div class="form-group">
-                <div id="edit-upload-trigger" class="image-preview-container preview-square">
-                    <div id="edit-image-container" class="circle-grey">
-                        <i id="edit-preview-camera" class="bi bi-camera-fill"></i>
-                        <i id="edit-preview-pencil" class="bi bi-pencil-square hide"></i>
-                    </div>
-                    <input id="edit-file-upload" asp-for="ProjectImage" type="file" accept="image/*" class="hide" />
+          
 
-                    <img id="edit-image-preview" src="" class="image-preview hide" />
+
+            <div class="form-group">
+                <div class="image-preview-container edit-upload-trigger preview-square">
+                    <div class="circle-grey edit-image-container">
+
+                        <i class="bi bi-camera-fill edit-preview-camera "></i>
+                        <i class="bi bi-pencil-square edit-preview-pencil"></i>
+
+                    </div>
+
+                    <input type="file" asp-for="ProjectImage" class="hide edit-file-upload" />
+                    <img asp-for="ProjectImagePath" src="" class="image-preview hide edit-image-preview" alt="Client Image" />
+
                 </div>
             </div>
+
+
+
+
 
             <div class="form-group">
                 <label asp-for="Title"></label>

@@ -3,8 +3,9 @@
     OpenCloseModals();
     EditClient();
     EditProject();
+    EditMember();
     initDeleteModals();
-    uploadEditImage();
+   
 
 
     let hasUploadedImage = false;
@@ -15,8 +16,10 @@
         modalButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const modalTarget = button.getAttribute('data-target')
+                
                 const modal = document.querySelector(modalTarget)
 
+             
                 if (modal)
                     modal.style.display = 'flex';
             })
@@ -59,8 +62,9 @@
                         document.querySelector('#clientLocation').value = client.location;
                         document.querySelector('#clientPhone').value = client.phone;
 
+                     
                         previewExitingImage('edit', client.imagePath);
-
+                        uploadEditImage('edit');
 
                     }
                     else {
@@ -96,10 +100,10 @@
                         document.querySelector('#projectStatusId').value = project.statusId;
                         document.querySelector('#projectBudget').value = project.budget;
 
-                        console.log(project.projectImagePath);
-
+                       
+                        
                         previewExitingImage('edit', project.projectImagePath);
-
+                        uploadEditImage('edit');
                     }
                     else {
                         console.error('Could not load data');
@@ -119,15 +123,20 @@
         const editButtons = document.querySelectorAll('.btn-edit-member');
         editButtons.forEach(button => {
             button.addEventListener('click', async function () {
-                const projectId = this.getAttribute('data-id');
-                if (!projectId) return;
+                const memberId = this.getAttribute('data-id');
+
+                console.log(memberId)
+                if (!memberId) return;
 
                 try {
+
                     const res = await fetch(`/Member/EditMember?id=${memberId}`);
+                    console.log(res);
                     if (res.ok) {
                         const member = await res.json();
-
-                        document.querySelector('#memberId').value = member.id;
+                        console.log(member);
+                        document.querySelector('#memberId').value = member.Id;
+                        
                         document.querySelector('#memberFirstName').value = member.FirstName;
                         document.querySelector('#memberLastName').value = member.LastName;
                         document.querySelector('#memberJobTitle').value = member.JobTitle;
@@ -135,9 +144,9 @@
                         document.querySelector('#memberPhoneNumber').value = member.PhoneNumber;
                         document.querySelector('#memberRole').value = member.Role;
                        
-
-                        previewExitingImage('edit', project.projectImagePath);
-
+                        
+                        //previewExitingImage('edit', member.ImagePath);
+                        //uploadEditImage('edit');
                     }
                     else {
                         console.error('Could not load data');
@@ -151,17 +160,20 @@
     }
 
 
+    
 
 
-    //Blir problematiskt att använda samma Id/namn  : const changeIcon osv, krockar med uploadEditImage.. hjälp.
+
     /*Preview Existing Image*/
     function previewExitingImage(modal, imagePath) {
-        if (hasUploadedImage) return
 
-        const imagePreview = document.getElementById(`${modal}-image-preview`);
-        const uploadIcon = document.getElementById(`${modal}-preview-camera`);
-        const changeIcon = document.getElementById(`${modal}-preview-pencil`);
-        const previewContainer = document.getElementById(`${modal}-image-container`);
+       
+        
+        const imagePreview = document.querySelector(`.${modal}-image-preview`);
+        const uploadIcon = document.querySelector(`.${modal}-preview-camera`);
+        const changeIcon = document.querySelector(`.${modal}-preview-pencil`);
+        const previewContainer = document.querySelector(`.${modal}-image-container`);
+
 
         if (imagePath) {
             imagePreview.src = '/' + imagePath.replace(/\\/g, '/');
@@ -177,19 +189,22 @@
             changeIcon.classList.remove('hide');
             previewContainer.classList.remove('image-change');
         }
+
+      
     }
 
     /*UploadEdit Image*/
 
-    function uploadEditImage() {
-        const uploadTrigger = document.getElementById('edit-upload-trigger')
-        const fileInput = document.getElementById('edit-file-upload')
-        const imagePreview = document.getElementById('edit-image-preview')
-        const previewContainer = document.getElementById('edit-image-container')
-        const uploadIcon = document.getElementById('edit-preview-camera')
-        const changeIcon = document.getElementById('edit-preview-pencil')
+    function uploadEditImage(modal) {
 
-        if (!uploadTrigger || !fileInput) console.log('not found');
+        const uploadTrigger = document.querySelector(`.${modal}-upload-trigger`);
+        const fileInput = document.querySelector(`.${modal}-file-upload`);
+        const imagePreview = document.querySelector(`.${modal}-image-preview`);
+        const previewContainer = document.querySelector(`.${modal}-image-container`);
+        const uploadIcon = document.querySelector(`.${modal}-preview-camera`);
+        const changeIcon = document.querySelector(`.${modal}-preview-pencil`);
+
+        if (!uploadTrigger || !fileInput) console.log('Elements not found');
 
         uploadTrigger.addEventListener('click', function () {
             fileInput.click()
@@ -281,9 +296,11 @@
         deleteModal('.btn-delete-project', '#deleteProjectModal', (id) => `/Project/DeleteProject/${id}`, 'Could not delete project. Try again.');
         deleteModal('.btn-delete-member', '#deleteMemberModal', (id) => `/Member/DeleteMember/${id}`, 'Could not delete Member. Try again.');
     }
-    }
-
 
 
 
 })
+
+
+
+

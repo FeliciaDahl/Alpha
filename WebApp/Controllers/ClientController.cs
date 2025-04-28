@@ -16,6 +16,7 @@ public class ClientController(IClientService clientService, IFileService fileSer
 
     private readonly IFileService _fileService = fileService;
 
+
     public async Task<IActionResult> Clients()
     {
         var clientResult = await _clientService.GetAllClientsAsync();
@@ -58,7 +59,7 @@ public class ClientController(IClientService clientService, IFileService fileSer
         var result = await _clientService.CreateClientAsync(registrationForm);
         if (result.Succeeded)
         {
-            return RedirectToAction("Clients", "Admin");
+            return RedirectToAction("Clients", "Client");
         }
 
         return BadRequest(new { sucess = false });
@@ -117,7 +118,7 @@ public class ClientController(IClientService clientService, IFileService fileSer
 
         if (result.Succeeded)
         {
-            return RedirectToAction("Clients", "Admin");
+            return RedirectToAction("Clients", "Client");
         }
 
         return BadRequest(new { sucess = false });
@@ -146,7 +147,7 @@ public class ClientController(IClientService clientService, IFileService fileSer
 
         if (result.Succeeded)
         {
-            return RedirectToAction("Clients", "Admin");
+            return RedirectToAction("Clients", "Client");
         }
 
         return BadRequest(new { sucess = false });

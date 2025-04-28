@@ -1,4 +1,8 @@
-﻿
+﻿document.addEventListener('DOMContentLoaded', function () {
+    window.initValidation();
+
+
+
 window.validateField = (field) => {
     const errorSpan = document.querySelector(`span[data-valmsg-for='${field.name}']`);
 
@@ -44,10 +48,8 @@ window.initValidation = () => {
     });
 };
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    window.initValidation();
 });
+
 
 
 

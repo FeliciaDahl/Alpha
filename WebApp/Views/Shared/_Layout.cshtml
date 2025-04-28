@@ -23,7 +23,8 @@
         </div>
 
         <div class="top">
-            <partial name="Partials/_Header" />
+            @await Component.InvokeAsync("Header")
+            @* <partial name="Partials/_Header" /> *@
         </div>
    
 

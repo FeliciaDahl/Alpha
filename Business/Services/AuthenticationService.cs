@@ -3,17 +3,18 @@ using Business.Interfaces;
 using Business.Models;
 using Data.Entites;
 using Domain.Dto;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services;
 
-public class AuthenticationService(UserManager<MemberEntity> userManager, SignInManager<MemberEntity> signInManager) : IAuthenticationService
+public class AuthenticationService(UserManager<MemberEntity> userManager, SignInManager<MemberEntity> signInManager, IHttpContextAccessor httpContextAccessor) : IAuthenticationService
 {
 
     private readonly UserManager<MemberEntity> _userManager = userManager;
     private readonly SignInManager<MemberEntity> _signInManager = signInManager;
-   
+    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
     public async Task<ServiceResult<bool>> CreateAsync(MemberSignUpForm form)
     {
@@ -21,7 +22,7 @@ public class AuthenticationService(UserManager<MemberEntity> userManager, SignIn
         {
             return ServiceResult<bool>.Failed(400, "Required fields can not be empty");
         }
-     
+
         var memberEntity = MemberFactory.ToEntity(form);
 
         var member = await _userManager.CreateAsync(memberEntity, form.Password!);
@@ -43,9 +44,9 @@ public class AuthenticationService(UserManager<MemberEntity> userManager, SignIn
     {
         if (form == null)
         {
-           return ServiceResult<bool>.Failed(400, "Required fields can not be empty");
+            return ServiceResult<bool>.Failed(400, "Required fields can not be empty");
         }
-        
+
         var result = await _signInManager.PasswordSignInAsync(form.Email, form.Password, false, false);
 
         if (!result.Succeeded)
@@ -63,6 +64,19 @@ public class AuthenticationService(UserManager<MemberEntity> userManager, SignIn
     public async Task<bool> ExistAsync(string email)
     {
         return await _userManager.Users.AnyAsync(x => x.Email == email);
+    }
+
+
+    public async Task<MemberEntity?> GetLoggedInUserAsync()
+    {
+        var userId = _userManager.GetUserId(_httpContextAccessor.HttpContext.User);
+
+        if (userId == null)
+            return null;
+
+        var member = await _userManager.FindByIdAsync(userId);
+
+        return member;
     }
 
 }

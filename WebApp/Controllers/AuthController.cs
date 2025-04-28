@@ -85,6 +85,16 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
             return View(model);
         }
 
+        var user = await _signInManager.UserManager.FindByEmailAsync(signInForm.Email);
+        if (user != null)
+        {
+            HttpContext.Session.SetString("UserId", user.Id);
+            HttpContext.Session.SetString("FirstName", user.FirstName);
+            HttpContext.Session.SetString("LastName", user.LastName);
+        }
+
+
+
         return RedirectToAction("Index", "Admin");
     }
 
