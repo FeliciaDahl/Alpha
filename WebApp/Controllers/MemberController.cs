@@ -1,4 +1,5 @@
 ﻿using Business.Interfaces;
+using Business.Services;
 using Data.Entites;
 using Domain.Dto;
 using Domain.Extensions;
@@ -82,17 +83,19 @@ public class MemberController(IMemberService memberService, IFileService fileSer
     }
 
     [HttpGet]
-
     public async Task<IActionResult> EditMember(string id)
     {
         var member = await _memberService.GetMemberAsync(id);
 
         var result = member.Result;
 
+
         if (result == null)
         {
             return NotFound();
         }
+
+      
 
         var roles = await LoadRoleListAsync();
 
@@ -102,8 +105,10 @@ public class MemberController(IMemberService memberService, IFileService fileSer
             MemberImagePath = result.Image,
             FirstName = result.FirstName,
             LastName = result.LastName,
+            JobTitle = result.JobTitle!,
             Email = result.Email ?? string.Empty,
             PhoneNumber = result.PhoneNumber,
+            Role = result.Role,
             Roles = roles
         };
 
@@ -148,7 +153,7 @@ public class MemberController(IMemberService memberService, IFileService fileSer
     {
         return await _roleManager.Roles.Select(x => new SelectListItem
         {
-            Value = x.Id,
+            Value = x.Name,
             Text = x.Name
         }).ToListAsync();
     }

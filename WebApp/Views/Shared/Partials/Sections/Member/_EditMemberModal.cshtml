@@ -14,18 +14,21 @@
             
             <input id="memberId" asp-for="Id" readonly type="hidden" />
         
-           
             <div class="form-group">
-                <div id="edit-upload-trigger" class="image-preview-container preview-circle">
-                    <div id="edit-image-container" class="circle-grey">
-                        <i id="edit-preview-camera" class="bi bi-camera-fill"></i>
-                        <i id="edit-preview-pencil" class="bi bi-pencil-square hide"></i>
-                    </div>
-                    <input id="edit-file-upload" asp-for="MemberImage" type="file" accept="image/*" class="hide" />
+                <div class="image-preview-container edit-upload-trigger preview-circle">
+                    <div class="circle-grey edit-image-container">
 
-                    <img id="edit-image-preview" src="" class="image-preview hide" />
+                        <i class="bi bi-camera-fill edit-preview-camera "></i>
+                        <i class="bi bi-pencil-square edit-preview-pencil"></i>
+                    </div>
+
+                    <input type="file" asp-for="MemberImage" class="hide edit-file-upload" />
+                    <img asp-for="MemberImagePath" src="" class="image-preview hide edit-image-preview" alt="Member image" />
+
                 </div>
             </div>
+
+         
 
 
             <div class="form-name-group">

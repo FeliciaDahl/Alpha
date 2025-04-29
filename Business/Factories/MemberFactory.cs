@@ -33,6 +33,7 @@ public class MemberFactory
             Image = user.Image,
             FirstName = user.FirstName,
             LastName = user.LastName,
+           
             JobTitle = user.JobTitle,
             Email = user.Email!,
             PhoneNumber = user.PhoneNumber

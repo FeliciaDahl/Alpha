@@ -10,9 +10,10 @@
 <div id="signin" class="center-screen">
     <div class="card form-card">
         <h1>@ViewData["Title"]</h1>
-
-        <button class="btn-grey mt-4 btn-google"><img src="~/images/google-icon.svg"> Login with google</button>
-
+        <form asp-action="ExternalSignIn" asp-controller="Auth" method="post" novalidate >
+            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+        <button type="submit" name="provider" class="btn-grey mt-4 btn-google"><img src="~/images/google-icon.svg"> Login with google</button>
+        </form>
         <div class="separator pt-4 pb-2">
             <span>OR</span>
         </div>

@@ -181,7 +181,7 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
     }
 
 
-    public virtual async Task<RepositoryResults<TEntity>> GetEntityAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes)
+    public virtual async Task<RepositoryResults<TEntity?>> GetEntityAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes)
     {
 
         try
@@ -200,13 +200,13 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
 
 
             if (entity == null)
-                return RepositoryResults<TEntity>.Failed(404, $"{nameof(TEntity)} not found");
+                return RepositoryResults<TEntity?>.Failed(404, $"{nameof(TEntity)} not found");
 
-            return RepositoryResults<TEntity>.Success(entity);
+            return RepositoryResults<TEntity?>.Success(entity);
         }
         catch (Exception ex)
         {
-            return RepositoryResults<TEntity>.Failed(500, $"An error occurred: {ex.Message}");
+            return RepositoryResults<TEntity?>.Failed(500, $"An error occurred: {ex.Message}");
 
         }
 

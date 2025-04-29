@@ -43,7 +43,9 @@ builder.Services.AddIdentity<MemberEntity, IdentityRole>(x =>
 builder.Services.ConfigureApplicationCookie(x =>
 {
     x.LoginPath = "/Auth/SignIn";
-    x.AccessDeniedPath = "/Account/AccessDenied";
+    x.Cookie.SameSite = SameSiteMode.None;
+    x.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    x.AccessDeniedPath = "/Admin/Denied";
     x.ExpireTimeSpan = TimeSpan.FromMinutes(60);
     x.SlidingExpiration = true;
 });
@@ -59,7 +61,9 @@ var app = builder.Build();
 app.UseHsts();
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseSession(); 
+app.UseSession();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 using (var scope = app.Services.CreateScope())

@@ -12,11 +12,8 @@ public class MemberEditForm
     public string? PhoneNumber { get; set; }
     public string? Role { get; set; }
     public string? Street { get; set; } = null!;
-
     public string? City { get; set; } = null!;
-
     public string? PostalCode { get; set; } = null!;
-
     public string? Country { get; set; } = null!;
 
 }

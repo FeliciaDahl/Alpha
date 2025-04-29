@@ -1,5 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
-    window.initValidation();
+﻿
 
 
 
@@ -46,7 +45,10 @@ window.initValidation = () => {
             });
         });
     });
-};
+    };
+
+document.addEventListener('DOMContentLoaded', function () {
+    window.initValidation();
 
 });
 

@@ -60,12 +60,17 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
 
     public async Task<ServiceResult<Member>> GetMemberAsync(string id)
     {
-        var memberResult = await _userManager.FindByIdAsync(id);
+        var memberEntity = await _userManager.FindByIdAsync(id);
 
-        if (memberResult == null)
+
+        if (memberEntity == null)
             return ServiceResult<Member>.Failed(404, "Member not found");
 
-        var member = memberResult.MapTo<Member>();
+        var member = MemberFactory.ToModel(memberEntity);
+
+        var roles = await _userManager.GetRolesAsync(memberEntity);
+        member.Role = roles.FirstOrDefault();
+
 
         return ServiceResult<Member>.Success(member);
     }

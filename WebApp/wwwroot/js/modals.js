@@ -100,7 +100,6 @@
                         document.querySelector('#projectStatusId').value = project.statusId;
                         document.querySelector('#projectBudget').value = project.budget;
 
-                       
                         
                         previewExitingImage('edit', project.projectImagePath);
                         uploadEditImage('edit');
@@ -134,19 +133,21 @@
                     console.log(res);
                     if (res.ok) {
                         const member = await res.json();
-                        console.log(member);
-                        document.querySelector('#memberId').value = member.Id;
-                        
-                        document.querySelector('#memberFirstName').value = member.FirstName;
-                        document.querySelector('#memberLastName').value = member.LastName;
-                        document.querySelector('#memberJobTitle').value = member.JobTitle;
-                        document.querySelector('#memberEmail').value = member.Email;
-                        document.querySelector('#memberPhoneNumber').value = member.PhoneNumber;
-                        document.querySelector('#memberRole').value = member.Role;
+                          
+                        document.querySelector('#memberId').value = member.id;
+     
+                        document.querySelector('#memberFirstName').value = member.firstName;
+                        document.querySelector('#memberLastName').value = member.lastName;
+                        document.querySelector('#memberJobTitle').value = member.jobTitle;
+                        document.querySelector('#memberEmail').value = member.email;
+                        document.querySelector('#memberPhoneNumber').value = member.phoneNumber;
+                        document.querySelector('#memberRole').value = member.role;
+
                        
+                        console.log(member.memberImagePath);
                         
-                        //previewExitingImage('edit', member.ImagePath);
-                        //uploadEditImage('edit');
+                        previewExitingImage('edit', member.memberImagePath);
+                        uploadEditImage('edit');
                     }
                     else {
                         console.error('Could not load data');
@@ -154,6 +155,7 @@
                 }
                 catch (error) {
                     console.error('Error:', error);
+                    console.log(error);
                 }
             });
         });
@@ -166,14 +168,17 @@
 
     /*Preview Existing Image*/
     function previewExitingImage(modal, imagePath) {
-
-       
-        
+ 
         const imagePreview = document.querySelector(`.${modal}-image-preview`);
         const uploadIcon = document.querySelector(`.${modal}-preview-camera`);
         const changeIcon = document.querySelector(`.${modal}-preview-pencil`);
         const previewContainer = document.querySelector(`.${modal}-image-container`);
 
+        imagePreview.src = '';
+        imagePreview.classList.add('hide');
+        previewContainer.classList.remove('image-change');
+        uploadIcon.classList.remove('hide');
+        changeIcon.classList.add('hide');
 
         if (imagePath) {
             imagePreview.src = '/' + imagePath.replace(/\\/g, '/');
@@ -182,15 +187,8 @@
             changeIcon.classList.remove('hide');
             previewContainer.classList.add('image-change');
         }
-        else {
-            imagePreview.src ='~/images/Avatar-2.svg';
-
-            uploadIcon.classList.add('hide');
-            changeIcon.classList.remove('hide');
-            previewContainer.classList.remove('image-change');
-        }
-
-      
+       
+  
     }
 
     /*UploadEdit Image*/

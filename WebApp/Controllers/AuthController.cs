@@ -104,4 +104,15 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
         return RedirectToAction("SignIn", "Auth");
     }
 
+
+    //public IActionResult ExternalSignIn(string provider, string returnUrl = null!)
+    //{
+    //   if(string.IsNullOrEmpty(provider))
+    //    {
+    //        ModelState.AddModelError("", "Provider is not valid");
+    //        return View("SignIn");
+    //    }
+
+    //   string redirectUrl = Url.Action("ExternalLoginCallback", "Auth", new { ReturnUrl = returnUrl });
+    //}
 }

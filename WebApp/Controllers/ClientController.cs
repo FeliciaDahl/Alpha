@@ -71,6 +71,7 @@ public class ClientController(IClientService clientService, IFileService fileSer
         var client = await _clientService.GetClientAsync(id);
 
         var result = client.Result;
+
         if (result == null)
         {
             return NotFound();
