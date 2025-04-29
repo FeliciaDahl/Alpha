@@ -678,6 +678,13 @@ form .input-validation-error {
 .btn-account {
     border: none;
 }
+.nav-account img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    
+}
+
 
 .nav-link {
     width: 200px;
@@ -766,6 +773,7 @@ main {
 .dropdown-header {
     display: flex;
     margin: 0.3rem;
+   
     justify-content: center;
     align-items: center;
 }
@@ -794,6 +802,8 @@ main {
     #account-container .dropdown-header {
         border-radius: 12px;
         background-color: var(--dropdown-account-name-background);
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
     }
   
 
@@ -804,18 +814,19 @@ main {
     gap: 1rem;
     align-items: center;
     color: var(--text-dark);
-    padding: 0.5rem 1rem;
+    padding: 1rem;
   
 }
-    .account-name img{
-        width: 40px;
-        height: 40px;
+    .account-name img {
+        width: 60px;
+        height: 60px;
         border: 1px solid var(--dropdown-account-img-border);
         border-radius: 50%;
+        object-fit: cover;
     }
 
-/*TABLES*/
 
+/*TABLES*/
 table {
     width: 100%;
     border-collapse: collapse;

@@ -32,12 +32,29 @@
 
     <div id="account-container">
     <button type="button" data-type="dropdown" data-target="#account-dropdown" class="btn-account">
-       <img src="~/images/avatar-icon.svg" alt="profile picture">
+        <div class="nav-account">
+            @if (!string.IsNullOrEmpty(Model.Image))
+            {
+                <img src="@Url.Content("~/" + Model.Image)" alt="profile picture">
+            }
+            else
+            {
+                <img src="~/images/avatar-icon.svg" alt="profile picture">
+            }
+            </div>
+  @*      <img src="~/images/avatar-icon.svg" alt="profile picture"> *@
     </button>
         <div id="account-dropdown" class="dropdown">
             <div class="dropdown-header">
                 <div class="account-name">
-                    <img src="~/images/avatar-icon.svg" alt="profile picture">
+                    @if (!string.IsNullOrEmpty(Model.Image))
+                    {
+                        <img src="@Url.Content("~/" + Model.Image)" alt="profile picture">
+                    }
+                    else
+                    {
+                        <img src="~/images/avatar-icon.svg" alt="profile picture">
+                    }
                     <h5>@Model.FirstName @Model.LastName</h5>
                 </div>
             </div>
