@@ -19,9 +19,16 @@ public class MemberFactory
             LastName = form.LastName,
             JobTitle = form.JobTitle,
             Email = form.Email,
-            PhoneNumber = form.PhoneNumber
-            
-          
+            PhoneNumber = form.PhoneNumber,
+            MemberAdress = new MemberAdressEntity
+            {
+                Street = form.Street,
+                City = form.City,
+                PostalCode = form.PostalCode,
+                Country = form.Country
+                
+            }
+
         };
     }
 
@@ -33,10 +40,13 @@ public class MemberFactory
             Image = user.Image,
             FirstName = user.FirstName,
             LastName = user.LastName,
-           
             JobTitle = user.JobTitle,
             Email = user.Email!,
-            PhoneNumber = user.PhoneNumber
+            PhoneNumber = user.PhoneNumber,
+            Street = user.MemberAdress?.Street,
+            City = user.MemberAdress?.City,
+            PostalCode = user.MemberAdress?.PostalCode,
+            Country = user.MemberAdress?.Country
         };
     }
 

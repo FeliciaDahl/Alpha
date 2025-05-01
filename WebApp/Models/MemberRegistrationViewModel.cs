@@ -2,6 +2,7 @@
 using Domain.Dto;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApp.Models;
 
@@ -40,9 +41,24 @@ public class MemberRegistrationViewModel
     public string Email { get; set; } = null!;
 
     [DataType(DataType.PhoneNumber)]
-    [Display(Name = "PhoneNumber", Prompt = "Enter phone number")]
+    [Display(Name = "Phone Number", Prompt = "Enter phone number")]
     public string? PhoneNumber { get; set; }
 
+    [DataType(DataType.Text)]
+    [Display(Name = "Street", Prompt = "Enter streetname")]
+    public string? Street { get; set; }
+
+    [DataType(DataType.Text)]
+    [Display(Name = "Postalcode", Prompt = "Enter a postalcode")]
+    public string? PostalCode { get; set; } 
+
+    [DataType(DataType.Text)]
+    [Display(Name = "City", Prompt = "Enter city")]
+    public string? City { get; set; }
+
+    [DataType(DataType.Text)]
+    [Display(Name = "Country", Prompt = "Enter Country")]
+    public string? Country { get; set; }
 
     public List<SelectListItem> Roles { get; set; } = new();
 

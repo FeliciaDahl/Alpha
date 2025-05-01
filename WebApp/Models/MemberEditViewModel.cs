@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApp.Models;
 
@@ -40,6 +41,22 @@ public class MemberEditViewModel
     [DataType(DataType.PhoneNumber)]
     [Display(Name = "PhoneNumber", Prompt = "Enter phone number")]
     public string? PhoneNumber { get; set; }
+
+
+    [Column(TypeName = "nvarchar(150)")]
+    public string? Street { get; set; } = null!;
+
+
+    [Column(TypeName = "nvarchar(100)")]
+    public string? City { get; set; } = null!;
+
+
+    [Column(TypeName = "nvarchar(100)")]
+    public string? PostalCode { get; set; } = null!;
+
+    [Column(TypeName = "nvarchar(100)")]
+    public string? Country { get; set; } = null!;
+
 
     public List<SelectListItem> Roles { get; set; } = new();
 }
