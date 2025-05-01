@@ -39,24 +39,24 @@ public class MemberEditViewModel
     public string Email { get; set; } = null!;
 
     [DataType(DataType.PhoneNumber)]
-    [Display(Name = "PhoneNumber", Prompt = "Enter phone number")]
+    [Display(Name = "Phone Number", Prompt = "Enter phone number")]
     public string? PhoneNumber { get; set; }
 
+    [DataType(DataType.Text)]
+    [Display(Name = "Street", Prompt = "Enter streetname")]
+    public string? Street { get; set; }
 
-    [Column(TypeName = "nvarchar(150)")]
-    public string? Street { get; set; } = null!;
+    [DataType(DataType.Text)]
+    [Display(Name = "Postalcode", Prompt = "Enter a postalcode")]
+    public string? PostalCode { get; set; }
 
+    [DataType(DataType.Text)]
+    [Display(Name = "City", Prompt = "Enter city")]
+    public string? City { get; set; }
 
-    [Column(TypeName = "nvarchar(100)")]
-    public string? City { get; set; } = null!;
-
-
-    [Column(TypeName = "nvarchar(100)")]
-    public string? PostalCode { get; set; } = null!;
-
-    [Column(TypeName = "nvarchar(100)")]
-    public string? Country { get; set; } = null!;
-
+    [DataType(DataType.Text)]
+    [Display(Name = "Country", Prompt = "Enter Country")]
+    public string? Country { get; set; }
 
     public List<SelectListItem> Roles { get; set; } = new();
 }

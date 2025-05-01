@@ -33,11 +33,12 @@
             <td class="client-contact">@client.ContactPerson</td>
             <td class="client-phone">@client.Phone</td>
             <td class="client-location">@client.Location</td>
-            <td class="client-status">
-                <div class="badge-success">
-                    active
-                </div>
-            </td>
+                <td class="client-status">
+                    @if (client.Projects != null && client.Projects.Any())
+                    {
+                        <div class="badge-success">active</div>
+                    }
+                </td>
             <td class="client-actions">
                     <a data-modal="true" data-target="#editClientModal" class=" btn-edit-client" data-id="@client.Id">
                         <i class="bi bi-pencil-fill"></i></a>

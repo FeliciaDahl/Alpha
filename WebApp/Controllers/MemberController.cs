@@ -109,7 +109,11 @@ public class MemberController(IMemberService memberService, IFileService fileSer
             Email = result.Email ?? string.Empty,
             PhoneNumber = result.PhoneNumber,
             Role = result.Role,
-            Roles = roles
+            Roles = roles,
+            Street = result.Street,
+            City = result.City,
+            PostalCode = result.PostalCode,
+            Country = result.Country
         };
 
         return Ok(model);

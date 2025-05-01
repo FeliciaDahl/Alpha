@@ -1,7 +1,7 @@
 ﻿@model MemberEditViewModel
 
 
-@*  BEHÖVER HJÄLP ATT HITTA FELET I DENNA! ALLA FUNGERAR UTOM DENNA *@
+
 <div id="editMemberModal" class="modal member-modal">
 
     <div class="modal-content">
@@ -27,10 +27,6 @@
 
                 </div>
             </div>
-
-         
-
-
             <div class="form-name-group">
                 <div class="form-group">
                     <label asp-for="FirstName"></label>
@@ -78,6 +74,39 @@
                     <option value="">Add Role</option>
                 </select>
             </div>
+            <div class="form-name-group">
+                <div class="form-group">
+                    <label asp-for="Street"></label>
+                    <div class="field-group">
+                        <input id="memberStreet" asp-for="Street" />
+                        <span asp-validation-for="Street"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PostalCode"></label>
+                    <div class="field-group">
+                        <input id="memberPostalCode" asp-for="PostalCode" />
+                        <span asp-validation-for="PostalCode"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-name-group">
+                <div class="form-group">
+                    <label asp-for="City"></label>
+                    <div class="field-group">
+                        <input id="memberCity" asp-for="City" />
+                        <span asp-validation-for="City"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Country"></label>
+                    <div class="field-group">
+                        <input id="memberCountry" asp-for="Country" />
+                        <span asp-validation-for="Country"></span>
+                    </div>
+                </div>
+            </div>
+
 
             <button type="submit" class="btn-submit btn-standard mt-3">Save</button>
 

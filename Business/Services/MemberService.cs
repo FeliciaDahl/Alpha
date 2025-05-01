@@ -60,8 +60,9 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
 
     public async Task<ServiceResult<Member>> GetMemberAsync(string id)
     {
-        var memberEntity = await _userManager.FindByIdAsync(id);
+        var memberResult = await _memberRepository.GetEntityAsync(m => m.Id == id, m => m.MemberAdress!);
 
+        var memberEntity = memberResult.Result;
 
         if (memberEntity == null)
             return ServiceResult<Member>.Failed(404, "Member not found");
@@ -78,7 +79,7 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
 
     public async Task<ServiceResult<bool>> EditMemberAsync(string id, MemberEditForm form)
     {
-        var existingMemberResult = await _memberRepository.GetEntityAsync(c => c.Id == id);
+        var existingMemberResult = await _memberRepository.GetEntityAsync(m => m.Id == id, m => m.MemberAdress!);
 
         if (!existingMemberResult.Succeeded || existingMemberResult.Result == null)
             return ServiceResult<bool>.Failed(404, "Member not found");
@@ -91,6 +92,25 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
         memberEntity.PhoneNumber = string.IsNullOrWhiteSpace(form.PhoneNumber) ? memberEntity.PhoneNumber : form.PhoneNumber;
         memberEntity.Email = string.IsNullOrWhiteSpace(form.Email) ? memberEntity.Email : form.Email;
         memberEntity.JobTitle = string.IsNullOrWhiteSpace(form.JobTitle) ? memberEntity.JobTitle : form.JobTitle;
+
+        if (memberEntity.MemberAdress == null)
+        {
+            memberEntity.MemberAdress = new MemberAdressEntity
+            {
+                UserId = memberEntity.Id, 
+                Street = form.Street,
+                PostalCode = form.PostalCode,
+                City = form.City,
+                Country = form.Country
+            };
+        }
+        else
+        {
+            memberEntity.MemberAdress.Street = string.IsNullOrWhiteSpace(form.Street) ? memberEntity.MemberAdress.Street : form.Street;
+            memberEntity.MemberAdress.PostalCode = string.IsNullOrWhiteSpace(form.PostalCode) ? memberEntity.MemberAdress.PostalCode : form.PostalCode;
+            memberEntity.MemberAdress.City = string.IsNullOrWhiteSpace(form.City) ? memberEntity.MemberAdress.City : form.City;
+            memberEntity.MemberAdress.Country = string.IsNullOrWhiteSpace(form.Country) ? memberEntity.MemberAdress.Country : form.Country;
+        }
 
         if (!string.IsNullOrWhiteSpace(form.Role))
         {

@@ -142,10 +142,12 @@
                         document.querySelector('#memberEmail').value = member.email;
                         document.querySelector('#memberPhoneNumber').value = member.phoneNumber;
                         document.querySelector('#memberRole').value = member.role;
+                        document.querySelector('#memberStreet').value = member.street;
+                        document.querySelector('#memberPostalCode').value = member.postalCode;
+                        document.querySelector('#memberCity').value = member.city;
+                        document.querySelector('#memberCountry').value = member.country;
 
                        
-                        console.log(member.memberImagePath);
-                        
                         previewExitingImage('edit', member.memberImagePath);
                         uploadEditImage('edit');
                     }
