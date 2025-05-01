@@ -102,6 +102,10 @@
     --separator: var(--border-200);
     --dropdown-delete-text-color: var(--red);
     --dropdown-background-hover-color: var(--white-200);
+    /*    SWITCH*/
+    --switch-background-before: var(--border-200);
+    --switch-background-after:var(--accent);
+    --switch-toggle: var(--white-100);
     /*FROMS*/
     /*IMAGE*/
     --img-background-grey: var(--grey-700-77);
@@ -375,7 +379,6 @@ h6 {
     padding: 1.5rem;
     box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
 }
-
 
 
 .form-group {
@@ -675,6 +678,7 @@ form .input-validation-error {
         .icon-nav .btn-notification:hover {
             color: var(--text-light);
         }
+
 .btn-setting {
     color: var(--text-dark);
 }
@@ -694,7 +698,6 @@ form .input-validation-error {
     border-radius: 50%;
     
 }
-
 
 .nav-link {
     width: 200px;
@@ -739,11 +742,63 @@ main {
     
 }
 
+
+/*DARKMODE SWITCH*/
+
+.switch-lable {
+    display: flex;
+    gap: 1rem;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 1px;
+    bottom: 0;
+    border-radius: 15px;
+    background-color: var(--switch-background-before);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        background-color: var(--switch-toggle);
+    }
+
+input:checked + .slider {
+    border-radius: 20px;
+    background-color: var(--switch-background-after);
+}
+
+input:checked + .slider:before {
+   transform: translateX(19px);
+}
+
 /*DROPDOWN*/
 .dropdown {
     position: absolute;
-    display:none;
-    z-index:100;
+    display: none;
+    z-index: 100;
     right: 0;
     top: 100%;
     background-color: var(--dropdown-background);
@@ -806,7 +861,7 @@ main {
    
 }
     #account-container .dropdown {
-        width: 230px;
+        width: 250px;
     }
 
     #account-container .dropdown-header {
@@ -817,19 +872,18 @@ main {
     }
   
 
-
 .account-name {
     display: flex;
     justify-content: center;
     gap: 1rem;
     align-items: center;
     color: var(--text-dark);
-    padding: 1rem;
+    padding: 0.5rem 1rem;
   
 }
     .account-name img {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         border: 1px solid var(--dropdown-account-img-border);
         border-radius: 50%;
         object-fit: cover;

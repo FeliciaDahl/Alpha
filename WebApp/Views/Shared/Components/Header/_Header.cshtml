@@ -60,13 +60,21 @@
             </div>
           
             <div class="dropdown-body">
-                <a class=" dropdown-action" asp-controller="Auth" asp-action="SignOut"><i class="bi bi-box-arrow-right"></i>Dark Mode</a>
+                <div class="dropdown-action">
+                    <label for="darkModelToggle" class="switch-lable">
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Dark Mode</span>
+                        </label>
+                    <label class="switch">
+                        <input type="checkbox" id="darkModelToggle" data-type="toggle" data-func="darkmode" />
+                        <span class="slider"></span>
+                    </label>
+                </div>
                 
                 <div class="separator"></div>
                 <a class="btn-logout dropdown-action" asp-controller="Auth" asp-action="SignOut"><i class="bi bi-box-arrow-right"></i>Log Out</a>
             </div>
         </div>
-
 
     </div>
     
