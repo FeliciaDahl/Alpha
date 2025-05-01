@@ -19,7 +19,7 @@ public class ClientController(IClientService clientService, IFileService fileSer
 
     public async Task<IActionResult> Clients()
     {
-        var clientResult = await _clientService.GetAllClientsAsync();
+        var clientResult = await _clientService.GetClientsWithProjectStatusAsync();
 
         var viewModel = new ClientViewModel
         {

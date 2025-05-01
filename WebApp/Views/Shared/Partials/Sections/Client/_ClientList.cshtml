@@ -34,9 +34,17 @@
             <td class="client-phone">@client.Phone</td>
             <td class="client-location">@client.Location</td>
                 <td class="client-status">
-                    @if (client.Projects != null && client.Projects.Any())
+                    @if (client.HasProjects)
                     {
-                        <div class="badge-success">active</div>
+                        <div class="badge-success">
+                            Active
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="badge-danger">
+                            Not active
+                        </div>
                     }
                 </td>
             <td class="client-actions">

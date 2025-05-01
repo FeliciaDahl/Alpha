@@ -89,6 +89,8 @@
     --status-badge-text-active: var(--green);
     --status-badge-background-active: var(--green-10);
     --status-background-completed: var(--green-10);
+    --status-badge-text-danger: var(--red);
+    --status-badge-background-danger: var(--red-10);
     /*MODALS*/
     --modal-screen-background: var(--dark-600-30);
     --modal-background-color: var(--white-100);
@@ -216,6 +218,14 @@ h6 {
     display: inline-block;
     color: var(--status-badge-text-active);
     background-color: var(--status-badge-background-active);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    text-align: center;
+}
+.badge-danger {
+    display: inline-block;
+    color: var(--status-badge-text-danger);
+    background-color: var(--status-badge-background-danger);
     padding: 0.5rem 1rem;
     border-radius: 12px;
     text-align: center;

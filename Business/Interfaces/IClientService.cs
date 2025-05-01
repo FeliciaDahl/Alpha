@@ -11,5 +11,6 @@ namespace Business.Interfaces
         Task<ServiceResult<bool>> EditClientAsync(int id, ClientEditForm form);
         Task<ServiceResult<Client>> GetClientAsync(int id);
         Task<ServiceResult<IEnumerable<Client>>> GetAllClientsAsync();
+        Task<ServiceResult<List<Client>>> GetClientsWithProjectStatusAsync();
     }
 }

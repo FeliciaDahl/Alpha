@@ -10,5 +10,5 @@ public class Client
     public string Location { get; set; } = null!;
     public string? Phone { get; set; }
 
-    public Project? Project { get; set; } = null!;
+    public bool HasProjects { get; set; }
 }

@@ -125,11 +125,38 @@ public class ClientService(IClientRepository clientRepository) : IClientService
 
     }
 
+    public async Task<ServiceResult<List<Client>>> GetClientsWithProjectStatusAsync()
+    {
+        try
+        {
+            var clients = await _clientRepository.GetAllClientsWithProjectStatusAsync();
+
+      
+            if (clients == null)
+            {
+                return ServiceResult<List<Client>>.Failed(404, "No clients found.");
+            }
+
+            return ServiceResult<List<Client>>.Success(clients);
+        }
+        catch (Exception ex)
+        {
+            return ServiceResult<List<Client>>.Failed(500, $"An error occurred: {ex.Message}");
+        }
+    }
+
     public async Task<ServiceResult<IEnumerable<Client>>> GetAllClientsAsync()
     {
         var result = await _clientRepository.GetAllAsync();
+        if(result == null)
+        {
+            return ServiceResult<IEnumerable<Client>>.Failed(404, "No clients found.");
+        }
         var clients = result.Result?.Select(c => c.MapTo<Client>());
 
-        return ServiceResult<IEnumerable<Client>>.Success(clients!);
+        return result.Succeeded
+           ? ServiceResult<IEnumerable<Client>>.Success(clients!)
+           : ServiceResult<IEnumerable<Client>>.Failed(result.StatusCode, "Clients not found");
+        
     }
 }

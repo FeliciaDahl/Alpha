@@ -5,6 +5,7 @@ using Data.Contexts;
 using Data.Entites;
 using Data.Interfaces;
 using Data.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Services;
@@ -49,6 +50,18 @@ builder.Services.ConfigureApplicationCookie(x =>
     x.ExpireTimeSpan = TimeSpan.FromMinutes(60);
     x.SlidingExpiration = true;
 });
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+.AddCookie()
+.AddGoogle(options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+});
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
@@ -99,7 +112,7 @@ using (var scope = app.Services.CreateScope())
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=Index}/{id?}")
+    pattern: "{controller=Auth}/{action=SignIn}/{id?}")
     .WithStaticAssets();
 
 

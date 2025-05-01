@@ -1,22 +1,24 @@
 ﻿using Business.Interfaces;
-using Business.Models;
-using Business.Services;
+
 using Data.Entites;
 using Domain.Dto;
 using Domain.Extensions;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebApp.Models;
 
 
 namespace WebApp.Controllers;
 
-public class AuthController(IAuthenticationService authenticationService,  SignInManager<MemberEntity> signInManager) : Controller
+public class AuthController(IAuthenticationService authenticationService,  SignInManager<MemberEntity> signInManager, UserManager<MemberEntity> userManager) : Controller
 {
    
     private readonly IAuthenticationService _authenticationService = authenticationService;
     private readonly SignInManager<MemberEntity> _signInManager = signInManager;
+    private readonly UserManager<MemberEntity> _userManager = userManager;
 
     public IActionResult SignUp()
     {
@@ -104,15 +106,72 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
         return RedirectToAction("SignIn", "Auth");
     }
 
+    [HttpPost]
+    public IActionResult ExternalSignIn(string provider, string returnUrl = null!)
+    {
+        if (string.IsNullOrEmpty(provider))
+        {
+            ModelState.AddModelError("", "Provider is not valid");
+            return View("SignIn");
+        }
 
-    //public IActionResult ExternalSignIn(string provider, string returnUrl = null!)
-    //{
-    //   if(string.IsNullOrEmpty(provider))
-    //    {
-    //        ModelState.AddModelError("", "Provider is not valid");
-    //        return View("SignIn");
-    //    }
+        var redirectUrl = Url.Action("ExternalLoginCallback", "Auth", new { returnUrl });
+        var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+        return Challenge(properties, provider);
+    }
 
-    //   string redirectUrl = Url.Action("ExternalLoginCallback", "Auth", new { ReturnUrl = returnUrl });
-    //}
+    public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null!, string remoteError = null!)
+    {
+        returnUrl ??= Url.Content("~/");
+
+        if(!string.IsNullOrEmpty(remoteError))
+        {
+            ModelState.AddModelError("", $"Error from external provider: {remoteError}");
+            return View("SignIn");
+        }
+
+        var externalInfo = await _signInManager.GetExternalLoginInfoAsync();
+        if (externalInfo == null)
+        {
+            ModelState.AddModelError("", "Error loading external login information");
+            return View("SignIn");
+        }
+        var signInResult = await _signInManager.ExternalLoginSignInAsync(externalInfo.LoginProvider, externalInfo.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+        if (signInResult.Succeeded)
+        {
+            return LocalRedirect(returnUrl);
+        }
+        else
+        {
+            string firstName = externalInfo.Principal.FindFirstValue(ClaimTypes.GivenName) ?? string.Empty;
+            string lastName = externalInfo.Principal.FindFirstValue(ClaimTypes.Surname) ?? string.Empty;
+            string email = externalInfo.Principal.FindFirstValue(ClaimTypes.Email)!;
+            string username = $"ext_{externalInfo.LoginProvider.ToLower()}_{email}";
+
+            var user = new MemberEntity
+            {
+                UserName = username,
+                Email = email,
+                FirstName = firstName, 
+                LastName = lastName 
+            };
+
+            var identityResult = await _userManager.CreateAsync(user);
+            if (identityResult.Succeeded)
+            {
+                    await _userManager.AddLoginAsync(user, externalInfo);
+                    await _signInManager.SignInAsync(user, isPersistent: false);                   
+                    return LocalRedirect(returnUrl);
+            }
+            foreach (var error in identityResult.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+
+            }
+
+                return View("SignIn");
+            
+
+        }
+    }
 }
