@@ -160,7 +160,7 @@
     --status-background-completed: transparent;
     --status-badge-background-danger: transparent;
 
-     --status-project-background:var(--dark-300);
+    --status-project-background:var(--dark-300);
 
 
 
@@ -866,7 +866,7 @@ main {
     border-radius: 50%;
 }
 
-.notification-body {
+.notification-content {
     display: grid;
     grid-template-columns: auto 1fr auto;
     grid-template-areas: "img message close";
@@ -874,7 +874,7 @@ main {
     padding: 0.8rem 1rem;
     border-radius: 12px;
 }
-    .notification-body img {
+    .notification-content img {
         grid-column: 1;
         grid-area: img;
     }
@@ -882,18 +882,18 @@ main {
         grid-area: message;
     }
 
-.notification-body close-btn {
+.notification-content close-btn {
     font-size: 12px;
     grid-area: close;
 }
-.notification-body:hover,
-.notification-body:focus {
+.notification-content :hover,
+.notification-content :focus {
     background-color: var(--dropdown-background-hover-color);
     transition: all 0.3s;
     cursor: pointer;
 }
 
-.notification-body .time {
+.notification-content .time {
     color: var(--text-light);
     font-size: 14px;
 }

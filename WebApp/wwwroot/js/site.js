@@ -1,5 +1,26 @@
-﻿
-    /*Handle Form Submisson*/
+﻿/*Notification*/
+
+//I VIDEO 45MIN , KOLLA CONTAINER SÅ DET BLIR RÄTT DESSUTOM NOT-CONTENT.
+
+const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/notificationHub")
+    .build()
+
+connection.on("ReceiveMessage", function (notification) {
+    const container = document.querySelector('.notifications')
+    const content = document.createElement('div')
+    content.innerHTML =
+        `   <div class="notification-content" data-id="">
+                <img src="~/images/avatar-icon.svg" alt="profile picture">
+                <div class="notification-info">
+                <div class="message">Message here</div>
+                <div class="time">Time here</div>
+                </div>
+                <button class="notification-close-btn" onclick="dissmissNotification()">X</button>
+            </div>
+        `
+})
+/*Handle Form Submisson*/
     function initForms() {
         const forms = document.querySelectorAll('form')
         forms.forEach(form => {
