@@ -13,6 +13,11 @@ public class DataContext(DbContextOptions<DataContext> options) : IdentityDbCont
     public virtual DbSet<ProjectMemberEntity> ProjectMembers { get; set; }
     public virtual DbSet<StatusEntity> Statuses { get; set; }
 
+    public virtual DbSet<NotificationDissmissEnity> NotificationDissmiss { get; set; }
+    public virtual DbSet<NotificationEntity> Notifications { get; set; }
+    public virtual DbSet<NotificationTypeEntity> NotificationTypes { get; set; }
+    public virtual DbSet<TargetGroupEntity> TargetGroups { get; set; }
+
 
     //I denna del av koden har jag tagit hjälp av ChatGPT. Koden skapar relationer mellan entiteter i databasen.
 

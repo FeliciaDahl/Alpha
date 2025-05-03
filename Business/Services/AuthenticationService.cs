@@ -3,6 +3,7 @@ using Business.Interfaces;
 using Business.Models;
 using Data.Entites;
 using Domain.Dto;
+using Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -78,5 +79,6 @@ public class AuthenticationService(UserManager<MemberEntity> userManager, SignIn
 
         return member;
     }
+
 
 }

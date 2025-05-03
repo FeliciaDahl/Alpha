@@ -339,6 +339,17 @@ h6 {
     cursor: pointer;
 }
 
+.notification-close-btn {
+    color: var(--btn-close);
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    font-size: 15px;
+}
+.notification-close-btn:hover {
+  font-weight: var(--font-semibold);
+}
+
 .btn-submit {
     width: 100%;
 }
@@ -755,12 +766,24 @@ form .input-validation-error {
     align-items: center;
 }
     .icon-nav .btn-notification {
+        position:relative;
         color: var(--header-icons-color);
         border: none;
         background-color: transparent;
     }
         .icon-nav .btn-notification:hover {
             color: var(--header-icons-hover-color);
+        }
+
+        .dot-red {
+            position:absolute;
+            z-index: 100;
+            width: 8px;
+            height:8px;
+            border-radius: 50%;
+            background-color: red;
+            top: 0;
+            right: 0;
         }
 
 .btn-setting {
@@ -824,10 +847,60 @@ main {
     padding: 1rem;
     
 }
+/*NOTIFICATIONS*/
 
+.notification-header {
+    display: flex;
+   justify-content: space-between;
+    padding: 0.5rem;
+}
+.notification-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--orange);
+
+    color: var(--white-100);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.notification-body {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "img message close";
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+}
+    .notification-body img {
+        grid-column: 1;
+        grid-area: img;
+    }
+    .notification-info{
+        grid-area: message;
+    }
+
+.notification-body close-btn {
+    font-size: 12px;
+    grid-area: close;
+}
+.notification-body:hover,
+.notification-body:focus {
+    background-color: var(--dropdown-background-hover-color);
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.notification-body .time {
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+    
 
 /*DARKMODE SWITCH*/
-
 .switch-lable {
     display: flex;
     gap: 1rem;
@@ -883,7 +956,6 @@ input:checked + .slider:before {
     display: none;
     z-index: 100;
     right: 0;
-   
     background-color: var(--dropdown-background);
     border: 1px solid var(--dropdown-border);
     color: var(--text-dark);
@@ -1146,7 +1218,6 @@ table tbody a {
     height: 56px;
     border-radius: 8px;   
 }
-
 
 
 .card-top .title {

@@ -22,7 +22,7 @@ public class HeaderViewComponent(IAuthenticationService authService) : ViewCompo
             return View("_Header", loggedInMember);
         }
 
-        return View("_Header" );
+        return View("_Header");
     }
 
 }
