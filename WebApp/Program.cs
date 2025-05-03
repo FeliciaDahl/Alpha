@@ -8,6 +8,7 @@ using Data.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Hubs;
 using WebApp.Services;
 
 
@@ -64,6 +65,7 @@ builder.Services.AddAuthentication(options =>
 
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
@@ -115,5 +117,6 @@ app.MapControllerRoute(
     pattern: "{controller=Admin}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-
+app.MapHub<NotificationHub>("/notificationHub");
+  
 app.Run();
