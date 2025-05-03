@@ -22,6 +22,7 @@
     --border-100: #EBEEF2;
     --border-200: #E3E5E8;
     --border-300: #C6C8CC;
+    --border-400: #232324;
     --white-100: #FFFFFF;
     --white-200: #F1F3F7;
     --grey-100: #F5F7FA;
@@ -52,6 +53,7 @@
     --blue-dark: #2D7DCC;
     --accent: #2D99FF;
     --accent-10: rgba(45, 153, 255, 0.1);
+    --accent-12: rgba(45, 153, 255, 0.12);
     --accent-dark: #2682D9;
     --purple: #826AF9;
     --purple-dark: #634CD4;
@@ -65,7 +67,7 @@
     --text-dark: var(--dark-400);
     --list-card-text-color: var(--dark-600);
     /*BORDERS*/
-    --border: var(--border-200);
+    --border-standard: var(--border-200);
     --form-input-border: var(--border-100);
     --form-input-border-focus: var(--accent);
     /*BUTTONS*/
@@ -76,6 +78,9 @@
     --btn-grey-bg-color: var(--grey-100);
     --btn-grey-border-color: var(--grey-100);
     --btn-grey-bg-hover-color: var(--grey-300);
+    /*    HEADER*/
+    --header-icons-color: var(--dark-400);
+    --header-icons-hover-color: var(--dark-200);
     /*SIDE NAVIGATION*/
     --side-nav-text-color: var(--dark-600);
     --side-nav-text-hover-color: var(--accent);
@@ -102,9 +107,10 @@
     --separator: var(--border-200);
     --dropdown-delete-text-color: var(--red);
     --dropdown-background-hover-color: var(--white-200);
-    /*    SWITCH*/
+    --dropdown-box-shadow: var(--box-shadow);
+    /* SWITCH*/
     --switch-background-before: var(--border-200);
-    --switch-background-after:var(--accent);
+    --switch-background-after: var(--accent);
     --switch-toggle: var(--white-100);
     /*FROMS*/
     /*IMAGE*/
@@ -113,17 +119,30 @@
     --img-icon-color-grey: var(--grey-400);
 }
 
-    [data-theme="dark"]
-
-{
+[data-theme="dark"] {
     --background: var(--dark-600);
     --surface: var(--dark-500);
-    --border: var(--border-200);
+    --border-standard: var(--border-400);
     --headline-color: var(--white-100);
-    --text-light: var(--grey-500);
-    --text-dark: var(--grey-600);
+    --text-light: var(--grey-600);
+    --text-dark: var(--grey-500);
     --btn-standard-border-color: var(--accent);
     --btn-grey-bg-color: var(--grey-300);
+    --header-icons-color: var(--dark-200);
+    --header-icons-hover-color: var(--dark-400);
+    /*SIDE NAVIGATION*/
+    --side-nav-text-color: var(--white-100);
+    --side-nav-background-hover-color: var(--accent-12);
+    /*DROPDOWNS*/
+    --dropdown-background: var(--dark-600);
+    --dropdown-border: var(--border-400);
+    --dropdown-account-name-background: var(--dark-400);
+    --dropdown-account-img-border: var(--white-100);
+    --separator: var(--border-400);
+    --dropdown-delete-text-color: var(--red);
+    --dropdown-background-hover-color: var(--dark-400);
+    --dropdown-box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    
 }
 
 
@@ -530,7 +549,7 @@ form .input-validation-error {
     }
 
 
-/*FORMS SIGN IN AND OUT*/
+/*FORMS SIGN IN/UP*/
 .btn-google {
     display: grid;
     align-items: center;
@@ -622,7 +641,7 @@ form .input-validation-error {
     align-items: center;
     padding: 1rem;
     padding-right: 3rem;
-    border-right: 1px solid var(--border-200);
+    border-right: 1px solid var(--border-standard);
 }
 
 .alpha-logo {
@@ -642,11 +661,15 @@ form .input-validation-error {
     padding: 1rem;
     align-items: center;
     grid-template-columns: 1fr auto;
-    border-bottom: 1px solid var(--border-200);
+    border-bottom: 1px solid var(--border-standard);
 }
 
 .search {
     align-items: center;
+}
+
+.search-icon {
+    color: var(--header-icons-color);
 }
 
 .search-bar {
@@ -663,7 +686,7 @@ form .input-validation-error {
 }
 
 .break {
-    color: var(--border-200);
+    color: var(--border-standard);
     font-size: 24px;
 }
 
@@ -673,24 +696,25 @@ form .input-validation-error {
     align-items: center;
 }
     .icon-nav .btn-notification {
-        color: var(--text-dark);
+        color: var(--header-icons-color);
+        border: none;
+        background-color: transparent;
     }
         .icon-nav .btn-notification:hover {
-            color: var(--text-light);
+            color: var(--header-icons-hover-color);
         }
 
 .btn-setting {
-    color: var(--text-dark);
+    color: var(--header-icons-color);
 }
     .btn-setting:hover {
-        color: var(--text-light);
+        color: var(--header-icons-hover-color);
     }
 
-.btn-notification {
-    border: none;
-}
+
 .btn-account {
     border: none;
+    background-color: transparent;
 }
 .nav-account img {
     width: 50px;
@@ -725,7 +749,7 @@ form .input-validation-error {
 
 .side {
     grid-area: side;
-    border-right: 1px solid var(--border-200);
+    border-right: 1px solid var(--border-standard);
     height: 100dvh;
 }
 
@@ -802,11 +826,11 @@ input:checked + .slider:before {
     right: 0;
     top: 100%;
     background-color: var(--dropdown-background);
-    border: var(--dropdown-border);
+    border: 1px solid var(--dropdown-border);
     color: var(--text-dark);
     border-radius: 8px;
     padding: 0.3rem;
-    box-shadow: var(--box-shadow);
+    box-shadow: var(--dropdown-box-shadow);
 }
 
     .dropdown-show {
@@ -1007,7 +1031,7 @@ table tbody a {
 
 .project-nav-container {
     width: 100%;
-    border-bottom: 1px solid var(--border-200);
+    border-bottom: 1px solid var(--border-standard);
     padding-top:2rem;
     padding-left: 1rem;
 }
