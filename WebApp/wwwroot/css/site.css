@@ -39,6 +39,7 @@
     --dark-500: #202123;
     --dark-600: #1A1926;
     --dark-600-30: rgba(26, 25, 38, 0.30);
+    --dark-700: #1C1D1F;
     --yellow: #FFD422;
     --yellow-dark: #FCBB42;
     --orange: #FF9640;
@@ -60,31 +61,33 @@
     /*BACKGROUND*/
     --background: var(--white-200);
     --surface: var(--white-100);
-    --list-card-background-color: var(--white-100);
     /*TEXT*/
     --headline-color: var(--dark-600);
     --text-light: var(--dark-200);
     --text-dark: var(--dark-400);
-    --list-card-text-color: var(--dark-600);
-    /*BORDERS*/
+    /*BORDER*/
     --border-standard: var(--border-200);
-    --form-input-border: var(--border-100);
-    --form-input-border-focus: var(--accent);
     /*BUTTONS*/
     --btn-standard-text-color: var(--white-100);
     --btn-standard-bg-color: var(--accent);
     --btn-standard-border-color: var(--white-100);
+    --btn-standard-box-shadow: var(--box-shadow);
     --btn-grey-text-color: var(--dark-600);
     --btn-grey-bg-color: var(--grey-100);
     --btn-grey-border-color: var(--grey-100);
     --btn-grey-bg-hover-color: var(--grey-300);
-    /*    HEADER*/
+    --btn-close: var(--dark-600);
+    /* HEADER*/
     --header-icons-color: var(--dark-400);
     --header-icons-hover-color: var(--dark-200);
     /*SIDE NAVIGATION*/
     --side-nav-text-color: var(--dark-600);
     --side-nav-text-hover-color: var(--accent);
     --side-nav-background-hover-color: var(--accent-10);
+    /* LIST CARDS*/
+    --list-card-text-color: var(--dark-600);
+    --jobtitle-background-color: var(--grey-100);
+    --jobtitle-text-color: var(--dark-600);
     /*TABLE*/
     --table-background: var(--white-100);
     --table-head-background-color: var(--white-200);
@@ -96,6 +99,7 @@
     --status-background-completed: var(--green-10);
     --status-badge-text-danger: var(--red);
     --status-badge-background-danger: var(--red-10);
+    --status-project-background: var(--grey-200);
     /*MODALS*/
     --modal-screen-background: var(--dark-600-30);
     --modal-background-color: var(--white-100);
@@ -113,6 +117,10 @@
     --switch-background-after: var(--accent);
     --switch-toggle: var(--white-100);
     /*FROMS*/
+    --input-text-color: var(--dark-600);
+    --form-placeholder-text: var(--dark-200);
+    --form-input-border: var(--border-100);
+    --form-input-border-focus: var(--accent);
     /*IMAGE*/
     --img-background-grey: var(--grey-700-77);
     --img-border-grey: var(--border-300);
@@ -120,32 +128,59 @@
 }
 
 [data-theme="dark"] {
-    --background: var(--dark-600);
+    --background: var(--dark-700);
     --surface: var(--dark-500);
     --border-standard: var(--border-400);
     --headline-color: var(--white-100);
     --text-light: var(--grey-600);
     --text-dark: var(--grey-500);
+    /*BUTTONS*/
+    --btn-standard-box-shadow: 0 0 4px rgba(45, 153, 255, 0.3);
     --btn-standard-border-color: var(--accent);
     --btn-grey-bg-color: var(--grey-300);
-    --header-icons-color: var(--dark-200);
-    --header-icons-hover-color: var(--dark-400);
+    --btn-close: var(--white-100);
+ 
     /*SIDE NAVIGATION*/
     --side-nav-text-color: var(--white-100);
     --side-nav-background-hover-color: var(--accent-12);
+    /* HEADER*/
+    --header-icons-color: var(--white-100);
+    --header-icons-hover-color: var(--dark-400);
     /*DROPDOWNS*/
-    --dropdown-background: var(--dark-600);
+    --dropdown-background: var(--dark-700);
     --dropdown-border: var(--border-400);
-    --dropdown-account-name-background: var(--dark-400);
-    --dropdown-account-img-border: var(--white-100);
-    --separator: var(--border-400);
-    --dropdown-delete-text-color: var(--red);
-    --dropdown-background-hover-color: var(--dark-400);
+    --dropdown-background-hover-color: var(--dark-500);
     --dropdown-box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    
+    --dropdown-account-name-background: var(--dark-500);
+    --dropdown-account-img-border: var(--white-100);
+    --separator: var(--border-300);
+    --dropdown-delete-text-color: var(--red);
+    /*STATUS-BADGES*/
+    --status-badge-background-active: transparent;
+    --status-background-completed: transparent;
+    --status-badge-background-danger: transparent;
+
+     --status-project-background:var(--dark-300);
+
+
+
+    /* LIST CARDS*/
+    --list-card-text-color: var(--dark-600);
+    --jobtitle-background-color: var(--dark-400);
+    --jobtitle-text-color: var(--dark-600);
+    /*TABLE*/
+    --table-background: var(--dark-500);
+    --table-head-background-color: var(--dark-700);
+    --table-head-text-color: var(--white-100);
+    --table-tbody-row-background-hover-color: var(--accent-10);
+    --table-icon-color: var(--grey-500);
+    --table-icon-hover-color: var(--grey-600);
+    /*FROMS*/
+    --input-text-color: var(--grey-500);
+    --form-placeholder-text: var(--grey-600);
+    --form-input-border: #2F2F30;
+    --form-input-border-focus: var(--grey-600);
 }
-
-
 
 
 html, body {
@@ -260,9 +295,10 @@ h6 {
 .btn-standard {
     color: var(--btn-standard-text-color);
     background-color: var(--btn-standard-bg-color);
-    border: 1px solid var(--btn-grey-border-color);
+    border: 1px solid var(--btn-standard-border-color);
     border-radius: 14px;
     padding: 0.5em;
+    box-shadow: var(--btn-standard-box-shadow);
 }
 .btn-standard:hover {
     background-color: var(--accent-dark);
@@ -296,7 +332,7 @@ h6 {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: black;
+    color: var(--btn-close);
     background-color: transparent;
     border: none;
     font-size: 25px;
@@ -357,7 +393,7 @@ h6 {
     .modal .modal-content {
         max-width: 600px;
         padding: 2rem;
-        background-color: var(--modal-background-color);
+        background-color: var(--surface);
         border-radius: 14px;
         box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
     }
@@ -395,7 +431,7 @@ h6 {
     border-radius: 16px;
     justify-content: center;
     align-items: center;
-    padding: 1.5rem;
+    padding: 2rem 2rem 1rem 2rem;
     box-shadow: 0 5px 8px 1px rgb(0, 0, 0, 0.1);
 }
 
@@ -410,6 +446,8 @@ form textarea {
     border: 1px solid var(--form-input-border);
     border-radius: 8px;
     font-size: 0,8rem;
+    background-color: var(--surface);
+    color: var(--input-text-color);
 }
     form input:active,
     form input:focus {
@@ -422,6 +460,11 @@ form textarea {
         outline: none;
         box-shadow: 0 0 5px var(--form-input-border-focus);
     }
+
+input::placeholder {
+    color: var(--form-placeholder-text); 
+    opacity: 1; 
+}
 
 
 .input-with-icon {
@@ -442,6 +485,7 @@ form textarea {
 form label {
     padding-top: 1rem;
     font-weight: var(--font-semibold);
+    color: var(--headline-color);
 }
 
 form input[type="checkbox"] {
@@ -464,6 +508,8 @@ form input[type="checkbox"] {
     border: 1px solid var(--form-input-border);
     border-radius: 8px;
     font-size: 0,8rem;
+    background-color: var(--surface);
+    color: var(--form-placeholder-text);
 }
     .form-select:active,
     .form-select:focus {
@@ -551,12 +597,16 @@ form .input-validation-error {
 
 /*FORMS SIGN IN/UP*/
 .btn-google {
-    display: grid;
+    display: flex;
     align-items: center;
-    grid-template-columns: auto 1fr;
+    justify-content:center;
+    gap: 1rem;
     font-size: 15px;
     width: 100%;
     padding-left: 0.8rem;
+}
+.google-form {
+    width: 100%;
 }
 
 #signup-form {
@@ -570,8 +620,7 @@ form .input-validation-error {
 
 .checkbox-signup {
     display: flex;
-    align-content: center;
-    align-items: center;
+    align-content:flex-end;
     gap: 1rem;
     width:100%;
 }
@@ -596,26 +645,36 @@ form .input-validation-error {
         text-decoration: underline;
     }
 
-.modal-footer {
+.form-bottom {
     display: flex;
     gap: 0.5rem;
-    padding-top: 1rem;
+    padding-top: 2rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 }
 
-    .modal-footer a {
-       
-        color: var(--accent);
-        font-size: 14px;
+.form-bottomspan {
+    color: var(--text-dark);
+}
+
+.form-bottom a {
+    color: var(--accent);
+    
+}
+    .form-bottom a:hover {
+        text-decoration: underline;
     }
-        .modal-footer a:hover {
-            text-decoration: underline;
-        }
 
 .remember {
     display: flex;
     gap: 1rem;
     align-items: center;
     align-content: center;
+}
+
+.remember span {
+    color: var(--text-dark);
 }
 
 .checkbox-terms {
@@ -824,7 +883,7 @@ input:checked + .slider:before {
     display: none;
     z-index: 100;
     right: 0;
-    top: 100%;
+   
     background-color: var(--dropdown-background);
     border: 1px solid var(--dropdown-border);
     color: var(--text-dark);
@@ -970,14 +1029,14 @@ table thead tr {
 table tbody a {
     width: 20px;
     height: 20px;
-    color: var(--text-dark);
+    color: var(--table-icon-color);
     background-color: transparent;
     border: none;
 }
 
     table tbody a:hover {
-        cursor:pointer;
-        color: var(--text-light);
+        cursor: pointer;
+        color: var(--table-icon-hover-color);
     }
 
 
@@ -1021,7 +1080,7 @@ table tbody a {
 
 /*VIEW-CARDS*/
 .list-cards {
-    background-color: var(--list-card-background-color);
+    background-color: var(--surface);
     margin: 0.5rem;
     border-radius: 16px;
    
@@ -1137,18 +1196,13 @@ table tbody a {
 }
 
     .card-bottom .status {
-        background-color: var(--grey-200);
+        background-color: var(--status-project-background);
         color: var(--text-dark);
         padding: 0.5rem;
         border-radius: 8px;
     }
 
-    .card-bottom .started {
-        background-color: var(--grey-200);
-    }
-    .card-bottom .completed {
-        background-color: var(--status-background-completed);
-    }
+  
 
 
 
@@ -1227,5 +1281,6 @@ table tbody a {
         border-radius: 8px;
         min-height: 50px;
         padding: 0.5rem;
+        color: var(--jobtitle-text-color);
     }
             

@@ -10,8 +10,11 @@
     <div class="card form-card">
         <h1>@ViewData["Title"]</h1>
 
-    
-        <button class="btn-grey mt-4 mb-2 btn-google"><img src="~/images/google-icon.svg"> Sign Up with Google</button>
+
+        <form class="google-form" asp-action="ExternalSignIn" asp-controller="Auth" method="post" novalidate>
+            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+            <button type="submit" name="provider" value="Google" class="btn-grey mt-4 mb-2 btn-google"><img src="~/images/google-icon.svg"> Sign up with google</button>
+        </form>
 
         <div class="separator pt-4 pb-2">
             <span>OR</span>
@@ -87,11 +90,14 @@
             }
 
             <button type="submit" class="btn-standard btn-submit mt-3">Create Account</button>
+
+            <div class="form-bottom">
+                <span>Already have an account?</span> <a asp-controller="Auth" asp-action="SignIn">Log In</a>
+            </div>
+
         </form>
 
-        <div class="modal-footer">
-            <span>Already have an account? <a asp-controller="Auth" asp-action="SignIn">Log In</a></span>
-    </div>
+  
 </div>
 </div>
 
