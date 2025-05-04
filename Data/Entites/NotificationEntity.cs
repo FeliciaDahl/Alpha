@@ -20,6 +20,6 @@ public class NotificationEntity
     public string Message { get; set; } = null!;
     public DateTime Created { get; set; } = DateTime.Now;
 
-    public ICollection<NotificationDissmissEnity> NotificationDissmiss { get; set; } = [];
+    public ICollection<NotificationDismissEnity> NotificationDismiss { get; set; } = [];
 
 }

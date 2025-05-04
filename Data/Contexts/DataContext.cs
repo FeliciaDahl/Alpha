@@ -13,7 +13,7 @@ public class DataContext(DbContextOptions<DataContext> options) : IdentityDbCont
     public virtual DbSet<ProjectMemberEntity> ProjectMembers { get; set; }
     public virtual DbSet<StatusEntity> Statuses { get; set; }
 
-    public virtual DbSet<NotificationDissmissEnity> NotificationDissmiss { get; set; }
+    public virtual DbSet<NotificationDismissEnity> NotificationDissmiss { get; set; }
     public virtual DbSet<NotificationEntity> Notifications { get; set; }
     public virtual DbSet<NotificationTypeEntity> NotificationTypes { get; set; }
     public virtual DbSet<TargetGroupEntity> TargetGroups { get; set; }

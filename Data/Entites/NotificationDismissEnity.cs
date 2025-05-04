@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Entites;
 
-public class NotificationDissmissEnity
+public class NotificationDismissEnity
 {
     [Key]
     public int Id { get; set; }

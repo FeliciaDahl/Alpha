@@ -9,17 +9,44 @@ const connection = new signalR.HubConnectionBuilder()
 connection.on("ReceiveMessage", function (notification) {
     const container = document.querySelector('.notifications')
     const content = document.createElement('div')
+    content.className = 'notification-content'
+    content.setAttribute('data-id', notification.id)
     content.innerHTML =
-        `   <div class="notification-content" data-id="">
-                <img src="~/images/avatar-icon.svg" alt="profile picture">
-                <div class="notification-info">
-                <div class="message">Message here</div>
-                <div class="time">Time here</div>
-                </div>
-                <button class="notification-close-btn" onclick="dissmissNotification()">X</button>
-            </div>
+
         `
+                <img class="norification-image"src="${notification.icon}">
+                <div class="notification-info">
+                <div class="message">${notification.message}</div>
+                <div class="time data-created="${new Date(notification.created).toISOString()}">${notification.created}</div>
+                </div>
+                <button class="notification-close-btn" onclick="dismissNotification('${notification.id}')">X</button>
+        `
+    container.insertBefore(content, container.firstChild)
+    updateRelativeTimes()
+    updateNotificationCount()
 })
+
+connection.on("NotificationDismissed", function (notificationId)) {
+    const element = document.querySelector(`.notification-content[data-id="${notificationId}"]`)
+    if (element) {
+        element.remove()
+        updateNotificationCount()
+    }
+}
+
+connection.start().catch(error => console.error(error))
+
+async function dismissNotification(notificationId) {
+    try {
+
+        const
+    }
+    catch (error) {
+        console.error('Error:', error)
+    }
+}
+
+
 /*Handle Form Submisson*/
     function initForms() {
         const forms = document.querySelectorAll('form')

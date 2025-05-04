@@ -26,5 +26,5 @@ public class MemberEntity : IdentityUser
 public virtual MemberAdressEntity? MemberAdress { get; set; } = null!;
 
 public virtual ICollection<ProjectMemberEntity> ProjectMembers { get; set; } = null!;
-public virtual ICollection<NotificationDissmissEnity> NotificationDissmiss { get; set; } = null!;
+public virtual ICollection<NotificationDismissEnity> NotificationDismiss { get; set; } = null!;
 }
