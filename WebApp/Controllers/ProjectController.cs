@@ -2,6 +2,7 @@
 using Domain.Dto;
 using Domain.Extensions;
 using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Models;
@@ -9,6 +10,7 @@ using WebApp.Services;
 
 namespace WebApp.Controllers;
 
+[Authorize]
 public class ProjectController(IProjectService projectService, IFileService fileService, IClientService clientService, IStatusService statusService) : Controller
 {
     private readonly IProjectService _projectService = projectService;

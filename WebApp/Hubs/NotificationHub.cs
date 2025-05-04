@@ -14,5 +14,9 @@ public class NotificationHub : Hub
         await Clients.All.SendAsync("AdminReceiveNotification", notification);
     }
 
+    public async Task DismissNotification(string notificationId)
+    {
+        await Clients.All.SendAsync("DismissNotification", notificationId);
+    }
 
 }

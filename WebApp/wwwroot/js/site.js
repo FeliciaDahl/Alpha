@@ -1,9 +1,4 @@
-﻿/*Notification*/
-
-
-
-
-
+﻿
 /*Handle Form Submisson*/
     function initForms() {
         const forms = document.querySelectorAll('form')

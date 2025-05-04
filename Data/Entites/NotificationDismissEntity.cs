@@ -8,6 +8,7 @@ public class NotificationDismissEntity
 {
     [Key]
     public int Id { get; set; }
+
     [ForeignKey(nameof(Member))]
     public string UserId { get; set; } = null!;
     public MemberEntity Member { get; set; } = null!;

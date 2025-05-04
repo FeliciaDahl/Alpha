@@ -12,7 +12,7 @@ public class NotificationRepository(DataContext context) : BaseRepository<Notifi
   
     public async Task<IEnumerable<NotificationEntity>> GetNotificationsAsync(string userId, int take = 20)
     {
-        var dismissedIds = await _context.NotificationDismiss
+        var dismissedIds = await _context.DismissedNotifications
             .Where(x => x.UserId == userId)
             .Select(x => x.NotificationId)
             .ToListAsync();
@@ -28,7 +28,7 @@ public class NotificationRepository(DataContext context) : BaseRepository<Notifi
 
     public async Task DismissNotificationAsync(string userId, string notificationId)
     {
-        var dismissedNotification = await _context.NotificationDismiss
+        var dismissedNotification = await _context.DismissedNotifications
             .AnyAsync(x => x.UserId == userId && x.NotificationId == notificationId);
 
         if(!dismissedNotification)
@@ -39,7 +39,7 @@ public class NotificationRepository(DataContext context) : BaseRepository<Notifi
             NotificationId = notificationId
         };
 
-            _context.NotificationDismiss.Add(dismissed);
+            _context.DismissedNotifications.Add(dismissed);
             await _context.SaveChangesAsync();
         }
        

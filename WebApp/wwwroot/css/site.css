@@ -350,6 +350,10 @@ h6 {
   font-weight: var(--font-semibold);
 }
 
+.notification-image {
+
+}
+
 .btn-submit {
     width: 100%;
 }
@@ -859,7 +863,6 @@ main {
     align-items: center;
     justify-content: center;
     background-color: var(--orange);
-
     color: var(--white-100);
     width: 20px;
     height: 20px;
@@ -877,6 +880,11 @@ main {
     .notification-content img {
         grid-column: 1;
         grid-area: img;
+        width: 50px;
+        height: 50px;
+        border: 1px solid var(--dropdown-account-img-border);
+        border-radius: 50%;
+        object-fit: cover;
     }
     .notification-info{
         grid-area: message;
@@ -886,8 +894,8 @@ main {
     font-size: 12px;
     grid-area: close;
 }
-.notification-content :hover,
-.notification-content :focus {
+.notification-content:hover,
+.notification-content:focus {
     background-color: var(--dropdown-background-hover-color);
     transition: all 0.3s;
     cursor: pointer;
@@ -1008,7 +1016,7 @@ input:checked + .slider:before {
     position: relative;
 }
 #notification-container .dropdown {
-    width: 300px;
+    width: 400px;
 }
 
 #account-container {

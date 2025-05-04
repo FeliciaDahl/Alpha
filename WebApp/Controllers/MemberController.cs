@@ -3,6 +3,7 @@ using Business.Services;
 using Data.Entites;
 using Domain.Dto;
 using Domain.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using WebApp.Services;
 
 namespace WebApp.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class MemberController(IMemberService memberService, IFileService fileService, RoleManager<IdentityRole> roleManager, UserManager<MemberEntity> userManager) : Controller
 {
 

@@ -3,6 +3,7 @@ using Data.Entites;
 using Domain.Dto;
 using Domain.Extensions;
 using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 using WebApp.Services;
@@ -10,6 +11,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApp.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class ClientController(IClientService clientService, IFileService fileService) : Controller
 {
     private readonly IClientService _clientService = clientService;

@@ -1,30 +1,35 @@
-﻿const connection = new signalR.HubConnectionBuilder()
+﻿
+
+
+const connection = new signalR.HubConnectionBuilder()
     .withUrl("/notificationHub")
     .build()
 
 
-
 connection.on("ReceiveNotification", function (notification) {
-    console.log("Handling notification:", notification);
-    const container = document.querySelector('.notifications')
+    
+    const notifications = document.querySelector('.notifications')
+
     const content = document.createElement('div')
     content.className = 'notification-content'
-    content.setAttribute('data-id', notificationid)
+    content.setAttribute('data-id', notificationId)
 
     content.innerHTML =
         
         `
-                <img class="norification-image" src="/${notification.icon}">
+                <img class="notification-image" src="/${notification.icon}">
                 <div class="notification-info">
                 <div class="message">${notification.message}</div>
                 <div class="time" data-created="${new Date(notification.created).toISOString()}">${notification.created}</div>
                 </div>
-                <button class="notification-close-btn" onclick="console.log('Clicked dismiss button for ${notification.id}'); dismissNotification('${notification.id}')">X</button>
+                <button class="notification-close-btn" onclick="dismissNotification('${notification.id}')">X</button> 
+
         `
-    container.insertBefore(content, container.firstChild)
+    notifications.insertBefore(content, notifications.firstChild)
     updateRelativeTimes()
     updateNotificationCount()
 })
+
 
 connection.on("DismissNotification", function(notificationId) {
     removeNotification(notificationId)

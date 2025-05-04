@@ -19,13 +19,13 @@ public class NotificationService(INotificationRepository notificationRepository)
             switch (notificationEntity.NotificationTypeId)
             {
                 case 1:
-                    notificationEntity.Icon = "~/images/project-img.svg";
+                    notificationEntity.Icon = "images/project-img.svg";
                     break;
                 case 2:
-                    notificationEntity.Icon = "~/images/Avatar-2.svg";
+                    notificationEntity.Icon = "images/Avatar-2.svg";
                     break;
                 case 3:
-                    notificationEntity.Icon = "~/images/avatar-member.svg";
+                    notificationEntity.Icon = "images/avatar-member.svg";
                     break;
             }
         }

@@ -13,7 +13,7 @@ public class DataContext(DbContextOptions<DataContext> options) : IdentityDbCont
     public virtual DbSet<ProjectMemberEntity> ProjectMembers { get; set; }
     public virtual DbSet<StatusEntity> Statuses { get; set; }
 
-    public virtual DbSet<NotificationDismissEntity> NotificationDismiss { get; set; }
+    public virtual DbSet<NotificationDismissEntity> DismissedNotifications { get; set; }
     public virtual DbSet<NotificationEntity> Notifications { get; set; }
     public virtual DbSet<NotificationTypeEntity> NotificationTypes { get; set; }
     public virtual DbSet<TargetGroupEntity> TargetGroups { get; set; }
@@ -60,7 +60,10 @@ public class DataContext(DbContextOptions<DataContext> options) : IdentityDbCont
             .HasOne(pm => pm.Member)
             .WithMany(m => m.ProjectMembers)
             .HasForeignKey(pm => pm.MemberId)
-            .OnDelete(DeleteBehavior.Cascade); 
+            .OnDelete(DeleteBehavior.Cascade);
+
+
+   
     }
 }
 

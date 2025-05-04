@@ -36,19 +36,18 @@
                 @foreach(var notification in notifications)
                 {  
                     
-                <div class="notification-content" data-id="">
-                        <img src="@Url.Content("~/" + notification.Icon)" alt="profile picture">
+                    <div class="notification-content" data-id="">
+                        <img class="notification-image" src="@Url.Content("~/" + notification.Icon)" alt="profile picture">
                      
                     <div class="notification-info">
                             <div class="message">@notification.Message</div>
                             <div class="time" data-created="@notification.Created.ToString("s")">@notification.Created</div>
                     </div>
-                    <button class="notification-close-btn" onclick="dissmissNotification(@notification.Id)">X</button>
+                    <button class="notification-close-btn" onclick="dismissNotification(@notification.Id)">X</button>
                 </div>
                     
                 }
               
-
             </div>
         </div>
 
@@ -109,3 +108,4 @@
     </div>
     
 </div>
+

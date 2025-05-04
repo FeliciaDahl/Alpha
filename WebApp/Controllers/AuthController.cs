@@ -23,8 +23,7 @@ public class AuthController(IAuthenticationService authenticationService, SignIn
     private readonly SignInManager<MemberEntity> _signInManager = signInManager;
     private readonly UserManager<MemberEntity> _userManager = userManager;
     private readonly INotificationDispatcherService _notificationDispatch = notificationDispatch;
-    //private readonly INotificationService _notificationService = notificationService;
-    //private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
+
 
     public IActionResult SignUp()
     {
@@ -135,12 +134,12 @@ public class AuthController(IAuthenticationService authenticationService, SignIn
             return View("SignIn");
         }
 
-        var redirectUrl = Url.Action("ExternalLoginCallback", "Auth", new { returnUrl });
+        var redirectUrl = Url.Action("ExternalLogInCallback", "Auth", new { returnUrl })!;
         var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
         return Challenge(properties, provider);
     }
 
-    public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null!, string remoteError = null!)
+    public async Task<IActionResult> ExternalLogInCallback(string returnUrl = null!, string remoteError = null!)
     {
         returnUrl ??= Url.Content("~/");
 
@@ -154,7 +153,7 @@ public class AuthController(IAuthenticationService authenticationService, SignIn
         if (externalInfo == null)
         {
             ModelState.AddModelError("", "Error loading external login information");
-            return View("SignIn");
+            return RedirectToAction("SignIn");
         }
         var signInResult = await _signInManager.ExternalLoginSignInAsync(externalInfo.LoginProvider, externalInfo.ProviderKey, isPersistent: false, bypassTwoFactor: true);
         if (signInResult.Succeeded)
