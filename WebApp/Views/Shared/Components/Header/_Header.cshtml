@@ -1,7 +1,12 @@
 ﻿@using Domain.Models
 
-@model Member
 
+@model Member
+@{
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "anonymous";
+    var notifications = await notificationService.GetNotificationsAsync(userId);
+    notifications = notifications.OrderByDescending(x => x.Created);
+}
 
 <form class="search" role="search" method="get">
     <span class="search-icon" href="#"><i class=" bi bi-search"></i></span>
@@ -12,27 +17,37 @@
     <div id="notification-container">
         <button  type="button" data-type="dropdown" data-target="#notification-dropdown" class="btn-notification">
             <i class="bi bi-bell-fill"></i>
-            <div class="dot dot-red"></div>
+            @if (notifications.Any())
+            {
+                <div class="dot dot-red"></div>
+            }  
         </button>
 
         <div id="notification-dropdown" class="dropdown">
-           
+
             <div class="notification-header">
                 <h4>Notifications</h4>
-                <span class="notification-number">0</span>
+                <span class="notification-number">@notifications.Count()</span>
             </div>
 
             <div class="separator"></div>
 
             <div class="notifications">
+                @foreach(var notification in notifications)
+                {  
+                    
                 <div class="notification-content" data-id="">
-                    <img src="~/images/avatar-icon.svg" alt="profile picture">
+                        <img src="@Url.Content("~/" + notification.Icon)" alt="profile picture">
+                     
                     <div class="notification-info">
-                    <div class="message">Message here</div>
-                    <div class="time">Time here</div>
+                            <div class="message">@notification.Message</div>
+                            <div class="time" data-created="@notification.Created.ToString("s")">@notification.Created</div>
                     </div>
-                    <button class="notification-close-btn" onclick="dissmissNotification()">X</button>
+                    <button class="notification-close-btn" onclick="dissmissNotification(@notification.Id)">X</button>
                 </div>
+                    
+                }
+              
 
             </div>
         </div>

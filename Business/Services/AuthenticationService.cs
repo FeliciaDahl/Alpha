@@ -6,6 +6,7 @@ using Domain.Dto;
 using Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services;
@@ -16,6 +17,7 @@ public class AuthenticationService(UserManager<MemberEntity> userManager, SignIn
     private readonly UserManager<MemberEntity> _userManager = userManager;
     private readonly SignInManager<MemberEntity> _signInManager = signInManager;
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+
 
     public async Task<ServiceResult<bool>> CreateAsync(MemberSignUpForm form)
     {

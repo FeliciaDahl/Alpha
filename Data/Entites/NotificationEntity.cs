@@ -10,7 +10,7 @@ public class NotificationEntity
     [Key]
     public string Id { get; set; } = Guid.NewGuid().ToString();
     [ForeignKey(nameof(TargetGroup))]
-    public int TargetGroupId { get; set; } 
+    public int TargetGroupId { get; set; } = 1;
     public TargetGroupEntity TargetGroup { get; set; } = null!;
 
     [ForeignKey(nameof(NotificationType))]
@@ -20,6 +20,6 @@ public class NotificationEntity
     public string Message { get; set; } = null!;
     public DateTime Created { get; set; } = DateTime.Now;
 
-    public ICollection<NotificationDismissEnity> NotificationDismiss { get; set; } = [];
+    public ICollection<NotificationDismissEntity> NotificationDismiss { get; set; } = [];
 
 }

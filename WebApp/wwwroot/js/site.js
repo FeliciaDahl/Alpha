@@ -1,81 +1,8 @@
 ﻿/*Notification*/
 
-//I VIDEO 45MIN , KOLLA CONTAINER SÅ DET BLIR RÄTT DESSUTOM NOT-CONTENT.
 
-const connection = new signalR.HubConnectionBuilder()
-    .withUrl("/notificationHub")
-    .build()
 
-connection.on("ReceiveMessage", function (notification) {
-    const container = document.querySelector('.notifications')
-    const content = document.createElement('div')
-    content.className = 'notification-content'
-    content.setAttribute('data-id', notification.id)
-    content.innerHTML =
 
-        `
-                <img class="norification-image"src="${notification.icon}">
-                <div class="notification-info">
-                <div class="message">${notification.message}</div>
-                <div class="time data-created="${new Date(notification.created).toISOString()}">${notification.created}</div>
-                </div>
-                <button class="notification-close-btn" onclick="dismissNotification('${notification.id}')">X</button>
-        `
-    container.insertBefore(content, container.firstChild)
-    updateRelativeTimes()
-    updateNotificationCount()
-})
-
-connection.on("NotificationDismissed", function(notificationId)) {
-    removeNotification(notificationId)
-}
-
-connection.start().catch(error => console.error(error))
-
-async function dismissNotification(notificationId) {
-    try {
-
-        const res = await fetch(`/api/notifications/dismiss/${notificationId}`, { method: 'POST' })
-        if (res.ok) {
-            removeNotification(notificationId)
-        }
-        else {
-            console.error('Failed to remove notification:')
-        }
-    }
-    catch (error) {
-        console.error('Failed to remove notification:', error)
-    }
-}
-
-function removeNotification(notificationId) {
-    const element = document.querySelector(`.notification-content[data-id="${notificationId}"]`)
-    if (element) {
-        element.remove()
-        updateNotificationCount()
-    }
-}
-
-function updateNotificationCount() {
-    const notifications = document.querySelector('.notifications')
-    const notificationNumber = document.querySelector('.notification-number')
-    const notificationDropDownBtn = document.querySelector('.btn-notification')
-    const count = notifications.querySelectorAll('.notification-content').length
-
-    if (notificationNumber) {
-        notificationNumber.textContent = count
-    }
-
-    let dot = notificationDropDownBtn.querySelector('.dot.dot-red')
-    if (count > 0 && !dot) {
-        dot = document.createElement('div')
-        dot.className = 'dot dot-red'
-        notificationDropDownBtn.appendChild(dot)
-    }
-    if (count === 0 && dot) {
-        dot.remove()
-    }
-}
 
 /*Handle Form Submisson*/
     function initForms() {
@@ -241,12 +168,50 @@ function darkModeToggle() {
     })
 }
 
+function updateRelativeTimes() {
+    const elements = document.querySelectorAll('.notification-content .time');
+    const now = new Date();
+
+    elements.forEach(element => {
+        const created = new Date(element.getAttribute('data-created'));
+        const diff = now - created;
+        const diffSeconds = Math.floor(diff / 1000);
+        const diffMinutes = Math.floor(diffSeconds / 60);
+        const diffHours = Math.floor(diffMinutes / 60);
+        const diffDays = Math.floor(diffHours / 24);
+        const diffWeeks = Math.floor(diffDays / 7);
+
+        let relativeTime = '';
+        if (diffMinutes < 1) {
+            realtiveTime = 'Just now';
+        } else if (diffMinutes < 60) {
+            relativeTime = diffMinutes + ' minutes ago';
+        } else if (diffHours < 2) {
+            relativeTime = diffHours + ' hour ago';
+        } else if (diffHours < 24) {
+            relativeTime = diffHours + ' hours ago';
+        } else if (diffDays < 2) {
+            relativeTime = diffDays + ' day ago';
+        } else if (diffDays < 7) {
+            relativeTime = diffDays + ' days ago';
+        } else {
+            relativeTime = diffWeeks + ' weeks ago';
+        }
+        element.textContent = relativeTime;
+
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     uploadImage();
     initForms();
-    handleDropDowns()
+    handleDropDowns();
     darkModeToggle();
+    updateRelativeTimes();
+    setInterval(updateRelativeTimes, 6000);
 })
+
+
 
 
    

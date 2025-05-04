@@ -9,10 +9,10 @@ public class NotificationHub : Hub
     {
         await Clients.All.SendAsync("ReceiveNotification", notification);
     }
-    //public async Task SendNotificationToAdmins(object notification)
-    //{
-    //    await Clients.All.SendAsync("AdminReceiveNotification", notification);
-    //}
+    public async Task SendNotificationToAdmins(object notification)
+    {
+        await Clients.All.SendAsync("AdminReceiveNotification", notification);
+    }
 
 
 }

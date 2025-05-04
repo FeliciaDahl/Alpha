@@ -6,19 +6,25 @@ using Domain.Extensions;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using WebApp.Hubs;
 using WebApp.Models;
+using WebApp.Services;
 
 
 namespace WebApp.Controllers;
 
-public class AuthController(IAuthenticationService authenticationService,  SignInManager<MemberEntity> signInManager, UserManager<MemberEntity> userManager) : Controller
+public class AuthController(IAuthenticationService authenticationService, SignInManager<MemberEntity> signInManager, UserManager<MemberEntity> userManager,  INotificationDispatcherService notificationDispatch) : Controller
 {
-   
+
     private readonly IAuthenticationService _authenticationService = authenticationService;
     private readonly SignInManager<MemberEntity> _signInManager = signInManager;
     private readonly UserManager<MemberEntity> _userManager = userManager;
+    private readonly INotificationDispatcherService _notificationDispatch = notificationDispatch;
+    //private readonly INotificationService _notificationService = notificationService;
+    //private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
 
     public IActionResult SignUp()
     {
@@ -32,7 +38,7 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
         if (!ModelState.IsValid)
             return View(model);
 
-         var signUpForm = model.MapTo<MemberSignUpForm>();
+        var signUpForm = model.MapTo<MemberSignUpForm>();
 
 
         if (await _authenticationService.ExistAsync(model.Email))
@@ -43,7 +49,7 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
 
         var result = await _authenticationService.CreateAsync(signUpForm);
 
-        if(!result.Succeeded)
+        if (!result.Succeeded)
         {
             ModelState.AddModelError("NotCreated", "Something went wrong, User not created.");
             return View(model);
@@ -67,7 +73,7 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
             ViewBag.ErrorMessage = "Enter email and password to log in";
             return View(model);
         }
-           
+
 
         var signInForm = model.MapTo<MemberSignInForm>();
 
@@ -88,11 +94,25 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
         }
 
         var user = await _signInManager.UserManager.FindByEmailAsync(signInForm.Email);
+
+
         if (user != null)
         {
+
             HttpContext.Session.SetString("UserId", user.Id);
             HttpContext.Session.SetString("FirstName", user.FirstName);
             HttpContext.Session.SetString("LastName", user.LastName);
+
+            var notificationEntity = new NotificationEntity
+            {
+                Message = $"{user.FirstName} {user.LastName} signed in",
+                NotificationTypeId = 3,
+                Icon = user.Image!,
+                TargetGroupId = 1
+            };
+
+            await _notificationDispatch.DispatchAsync(notificationEntity, user.Id);
+
         }
 
 
@@ -124,7 +144,7 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
     {
         returnUrl ??= Url.Content("~/");
 
-        if(!string.IsNullOrEmpty(remoteError))
+        if (!string.IsNullOrEmpty(remoteError))
         {
             ModelState.AddModelError("", $"Error from external provider: {remoteError}");
             return View("SignIn");
@@ -152,16 +172,16 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
             {
                 UserName = username,
                 Email = email,
-                FirstName = firstName, 
-                LastName = lastName 
+                FirstName = firstName,
+                LastName = lastName
             };
 
             var identityResult = await _userManager.CreateAsync(user);
             if (identityResult.Succeeded)
             {
-                    await _userManager.AddLoginAsync(user, externalInfo);
-                    await _signInManager.SignInAsync(user, isPersistent: false);                   
-                    return LocalRedirect(returnUrl);
+                await _userManager.AddLoginAsync(user, externalInfo);
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return LocalRedirect(returnUrl);
             }
             foreach (var error in identityResult.Errors)
             {
@@ -169,8 +189,8 @@ public class AuthController(IAuthenticationService authenticationService,  SignI
 
             }
 
-                return View("SignIn");
-            
+            return View("SignIn");
+
 
         }
     }

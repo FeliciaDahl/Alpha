@@ -1,4 +1,8 @@
 ﻿
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject INotificationService notificationService
+@using Business.Interfaces
 @using Business.Models
 @using WebApp.Models
+
+@using System.Security.Claims
